@@ -1,4 +1,5 @@
 #0.open script, set names and parameters
+#trial update for git
 dShell <- read.csv('./shells_Expt1.csv', skip=22)
 
 dateFormat <- '%m/%d/%y %H:%M'
@@ -18,28 +19,51 @@ dShell$shape <- 'cylinder'
 dShell[(dShell$taxon == 'Aragonite'),'shape'] <- 'cube'
 dShell[(dShell$taxon == 'Tridacna'),'shape'] <- 'cube'
 
-#pingui and abra technically ovular cylinder
-dShell[(dShell$taxon == 'Pinguitellina'), 'shape'] <- 'ovular'
-dShell[(dShell$taxon == 'Abranda'), 'shape'] <- 'ovular'
+#turbo is dome + circle aka hemisphere
+dShell[(dShell$taxon == 'Turbo'), 'shape'] <- 'hemisphere'
+
+#pingui,abra, and scaph technically two domes
+dShell[(dShell$taxon == 'Pinguitellina'), 'shape'] <- '2dome'
+dShell[(dShell$taxon == 'Abranda'), 'shape'] <- '2dome'
+dShell[(dShell$taxon == 'Scaphopod'), 'shape'] <- '2dome'
 
 #halimeda different shape entirely... diamond/rhombus
 dShell[(dShell$taxon =='Halimeda'), 'shape'] <- 'rhombus'
 
+#finally, nat and eth are spherical
+dShell[(dShell$taxon == 'Natica'), 'shape'] <-'sphere'
+dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
+
 #basic rectangular cube surface area. does not work for halimeda based off how measurements were taken.
+#is 2xy + 2yz + 2xz
 dShell$cSA1 <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
 
 #next lines for surface area of cylindrical specimens
+#equal to 2piR^2 + 2*h*pi*r
 subCyl <- which(dShell$shape == 'cylinder')
 dShell[subCyl,'cSA1'] <- 2 * (pi* dShell[subCyl,'xDim']/2 * dShell[subCyl,'yDim']/2) + dShell[subCyl,'zDim']*pi*(dShell[subCyl,'yDim'] + dShell[subCyl,'xDim'])/2
 
-#next lines for surface area of ovular specimens
-subOv <- which(dShell$shape == 'ovular')
-dShell[subOv,'cSA1'] <- 2 * (pi* dShell[subOv,'xDim']/2*dShell[subOv,'yDim']/2) + (pi* dShell[subOv,'zDim']* (dShell[subOv,'xDim']/2 + dShell[subOv,'yDim']/2))
+#next turbo, a hemisphere
+#is pi*r^2 + 2*pi*r*h + 
+subHemi <- which(dShell$shape == 'hemisphere')
+dShell[subHemi,'cSA1'] <-  pi * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2) + 2 * pi * (dShell[subHemi,'xDim']/2 + dShell[subHemi,'yDim']/2)/2 * dShell[subHemi,'zDim'] 
 
-#finally, rough surface area for rhomboid Halimeda - do you need another line to account for the skinny faces?
+#next lines for surface area of domed specimens
+# is 2 * (2*pi*r*h)
+subDome <- which(dShell$shape == '2dome')
+dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim'] + dShell[subDome,'yDim'])/2) * dShell[subDome,'zDim']
+
+#then, rough surface area for rhomboid Halimeda
+#surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
 subRhom <- which(dShell$shape == 'rhombus')
-dShell[subRhom,'cSA1'] <- 2 * ((dShell[subRhom,'xDim']*dShell[subRhom,'yDim'])/2)
+dShell[subRhom,'cDim'] <- sqrt((dShell[subRhom,'xDim']/2)^2 + (dShell[subRhom,'yDim']/2)^2)
+dShell[subRhom,'cSA1'] <- 2 * ((dShell[subRhom,'xDim']*dShell[subRhom,'yDim'])/2) + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'cDim']
   
+#finally, nat and eth spherical calc
+#is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
+subSphere <- which(dShell$shape == 'sphere')
+dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'yDim']/2)/3)^2
+
 #1.1 just having a look at the measurements to check for errors 
 
 pData <- dShell
@@ -173,6 +197,9 @@ dev.off()
 #4.2 
 #general calculation of surface area for each taxa based on flat shape
 #do you need to edit next line? 
+
+
+
 calcSA <- (pData$calcSA1 + pData$calcSA2) * (1/2) * 2
 
 pData$taxon <- as.factor(pData$taxon)
