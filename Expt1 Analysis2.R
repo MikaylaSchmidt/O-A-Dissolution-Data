@@ -15,7 +15,8 @@ dShell$cDuration <- dShell$cTime2 - dShell$cTime1
 #General calculation of shell surface area for each taxa based on generalized shape
 dShell$cSize <- (dShell$xDim * dShell$yDim * dShell$zDim) ^ (1/3)
 
-dShell$shape <- 'cylinder'
+dShell$shape <- 'cylinder1'
+dShell[(dShell$taxon == 'Liloa'),'shape'] <-'cylinder2'
 dShell[(dShell$taxon == 'Aragonite'),'shape'] <- 'cube'
 dShell[(dShell$taxon == 'Tridacna'),'shape'] <- 'cube'
 
@@ -38,10 +39,13 @@ dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
 #is 2xy + 2yz + 2xz
 dShell$cSA1 <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
 
-#next lines for surface area of cylindrical specimens
+#next lines for surface area of cylindrical specimen, for margi cylinder
 #equal to 2piR^2 + 2*h*pi*r
-subCyl <- which(dShell$shape == 'cylinder')
-dShell[subCyl,'cSA1'] <- 2 * (pi* dShell[subCyl,'xDim']/2 * dShell[subCyl,'yDim']/2) + dShell[subCyl,'zDim']*pi*(dShell[subCyl,'yDim'] + dShell[subCyl,'xDim'])/2
+subCyl1 <- which(dShell$shape == 'cylinder1')
+dShell[subCyl1,'cSA1'] <- 2 * (pi* dShell[subCyl1,'xDim']/2 * dShell[subCyl1,'yDim']/2) + dShell[subCyl1,'zDim']*pi*(dShell[subCyl1,'yDim'] + dShell[subCyl1,'xDim'])/2
+#for liloa cylinder
+subCyl2 <- which(dShell$shape == 'cylinder2')
+dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'xDim']/2 * dShell[subCyl2,'yDim']/2) + dShell[subCyl2,'zDim']*pi*(dShell[subCyl2,'yDim'] + dShell[subCyl2,'xDim'])/2
 
 #next turbo, a hemisphere
 #is pi*r^2 + 2*pi*r*h + 
@@ -51,7 +55,7 @@ dShell[subHemi,'cSA1'] <-  pi * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim
 #next lines for surface area of domed specimens
 # is 2 * (2*pi*r*h)
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim'] + dShell[subDome,'yDim'])/2) * dShell[subDome,'zDim']
+dShell[subDome,'cSA1'] <- 2 * pi * 2 *(dShell[subDome,'xDim']/2 + dShell[subDome,'yDim']/2)/2 * dShell[subDome,'zDim']
 
 #then, rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
@@ -63,6 +67,10 @@ dShell[subRhom,'cSA1'] <- 2 * ((dShell[subRhom,'xDim']*dShell[subRhom,'yDim'])/2
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
 dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'yDim']/2)/3)^2
+
+#1.0 a quick check - dissolution (mg) relationship to surface area (mm^2)
+
+plot(cMass ~ cSA1, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)')
 
 #1.1 just having a look at the measurements to check for errors 
 
@@ -94,6 +102,7 @@ a <- lm(pMass ~ cSA1  + mass1 + taxon, data=pData)
 a <- lm(pMass ~ cSA1  + mass1 + density, data=pData)
 summary(a)
 
+a <- lm(pMass ~ cSA1  + mass1 + taxon + density, data=pData)
 a$residuals
 
 
@@ -196,21 +205,62 @@ dev.off()
 
 #4.2 
 #general calculation of surface area for each taxa based on flat shape
-#do you need to edit next line? 
+#you need to run this BEFORE sorting for graph purposes otherwise it'll vectorize your factors 
+
+#SA for cube
+dShell$calcSA <- dShell$calcSA1 + dShell$calcSA2 + 2*(dShell$calcY * dShell$zDim) + 2*(dShell$calcX * dShell$zDim)
+
+#next lines for surface area of cylindrical specimens
+# need to figure this out better for Liloa...
+#equal to 2piR^2 + 2*h*pi*r
+
+dShell[(dShell$taxon == 'Liloa'),'shape'] <-'cylinder2'
+
+#you don't need above lines to run because that's already in earlier part
+subCyl1 <- which(dShell$shape == 'cylinder1')
+#next line isn't working?????
+dShell[subCyl1,'calcSA'] <- dShell[subCyl1,'calcSA1'] + dShell[subCyl1,'calcSA2'] + dShell[subCyl1,'zDim'] * pi * (dShell[subCyl1,'calcY'] + dShell[subCyl1,'calcX'])/2
+
+#liloa calc based on imageJ
+subCyl2 <- which(dShell$shape == 'cylinder2')
+dShell[subCyl2,'calcSA'] <- dShell[subCyl2,'calcSA1'] + dShell[subCyl2,'calcSA1'] + 2 * pi * (dShell[subCyl2,'calcY']/2)^2
+
+#next turbo, a hemisphere
+#is pi*r^2 + 2*pi*r*h
+subHemi <- which(dShell$shape == 'hemisphere')
+dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHemi,'calcX']/2 + dShell[subHemi,'calcY']/2)/2 * dShell[subHemi,'zDim'] 
+
+#next lines for surface area of domed specimens
+#is this correct? NO
+#calcSA1 = pi *r^2
+subDome <- which(dShell$shape == '2dome')
+dShell[subDome,'calcSA'] <- dShell[subDome,'zDim'] * dShell[subDome,'calcSA1'] + dShell[subDome,'zDim'] * dShell[subHemi,'calcSA2']
 
 
+#then, rough surface area for rhomboid Halimeda
+#surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
+subRhom <- which(dShell$shape == 'rhombus')
+dShell[subRhom,'calcC'] <- sqrt((dShell[subRhom,'calcX']/2)^2 + (dShell[subRhom,'calcY']/2)^2)
+dShell[subRhom,'cSA1'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
 
-calcSA <- (pData$calcSA1 + pData$calcSA2) * (1/2) * 2
+#scaphopod comes next.....
+#this one subset NEEDS to be run for this specific one
+subDome2 <- which(dShell$taxon == 'Scaphopod')
+dShell[subDome2,'calcSA'] <- 2 * (dShell[subDome2,'calcSA1'] + dShell[subDome2,'calcSA2'])
 
+#finally, nat and eth spherical calc
+#is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
+subSphere <- which(dShell$shape == 'sphere')
+dShell[subSphere,'cSA1'] <- dShell[subSphere,'calcSA1'] + dShell[subSphere,'calcSA2'] + pi * (dShell[subSphere, 'zDim'] * dShell[subSphere,'calcY'])
+
+#finally! this bit!
+pData <- dShell
+TAXA <- unique(pData$taxon)
 pData$taxon <- as.factor(pData$taxon)
 taxa <- sort(unique(pData$taxon))
 tFont <- rep(3,length(taxa))
 tFont[which(taxa == 'Aragonite')] <- 1
 taxaAbrev <- substring(taxa,0,5)
-#this flat surface calculation works well for margi, hali, pingui, and abra.
-#it should work okay for turbo, arag, tri, and scaph.
-#will most likely be worst with liloa, ethalia, and nat.
-#but how do we test all of this???
 
 #4.3 first, compare the two calculations of surface area for similarity
 pdf('./surfaceAreaCalculation.pdf', width=8, height=6, page='A4')
@@ -218,14 +268,22 @@ par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
 #can get this to run but it replicates a million times?
 
-plot(cSA1/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='', xlim=c(0,10))
+plot(cSA1/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='', xlim=c(0,11))
 points(cSA1/calcSA ~ taxon, data=pData)
 abline(a=1, b=0)
 mtext('Caliper SA / Calculated SA', side=2, line=3)
 axis(2, las=1)
 axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
+pData2 <- pData[!is.na(pData$calcSA),]
+plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy')
+abline(a=0, b=1)
+levels(pData$taxon)
 
+pData[(pData$taxon=='Abranda'), c('xDim', 'cSA1', 'calcSA')]
+
+plot((cSA1-calcSA)/calcSA~taxon, data=pData2, pch=substring(pData$taxon, 0, 2))
+log2(((pData2$cSA1-pData2$calcSA)/pData2$calcSA)+1)
 #4.4 second, plot the mass vs calc by taxon
 
 plot(cMass/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
