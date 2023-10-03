@@ -1,6 +1,9 @@
 #0.open script, set names and parameters
 #trial update for git
-dShell <- read.csv('./shells_Expt1.csv', skip=22)
+dShellFull <- read.csv('./shells_Expt1.csv', skip=22)
+
+#remove missing and broken taxon
+dShell<- dShellFull[-c(10,38,39,77,79,91),]
 
 dateFormat <- '%m/%d/%y %H:%M'
 EXPID <- unique(dShell$exptID)
@@ -45,7 +48,7 @@ subCyl1 <- which(dShell$shape == 'cylinder1')
 dShell[subCyl1,'cSA1'] <- 2 * (pi* dShell[subCyl1,'xDim']/2 * dShell[subCyl1,'yDim']/2) + dShell[subCyl1,'zDim']*pi*(dShell[subCyl1,'yDim'] + dShell[subCyl1,'xDim'])/2
 #for liloa cylinder
 subCyl2 <- which(dShell$shape == 'cylinder2')
-dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'xDim']/2 * dShell[subCyl2,'yDim']/2) + dShell[subCyl2,'zDim']*pi*(dShell[subCyl2,'yDim'] + dShell[subCyl2,'xDim'])/2
+dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'yDim']/2 * dShell[subCyl2,'yDim']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'yDim']/2 
 
 #next turbo, a hemisphere
 #is pi*r^2 + 2*pi*r*h + 
@@ -69,9 +72,12 @@ subSphere <- which(dShell$shape == 'sphere')
 dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'yDim']/2)/3)^2
 
 #1.0 a quick check - dissolution (mg) relationship to surface area (mm^2)
+#need to separate these out by taxon!!
 
-plot(cMass ~ cSA1, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)')
-
+plot(cMass ~ cSA1, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
+fit <- glm(cMass~cSA1, data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
 #1.1 just having a look at the measurements to check for errors 
 
 pData <- dShell
@@ -223,7 +229,7 @@ dShell[subCyl1,'calcSA'] <- dShell[subCyl1,'calcSA1'] + dShell[subCyl1,'calcSA2'
 
 #liloa calc based on imageJ
 subCyl2 <- which(dShell$shape == 'cylinder2')
-dShell[subCyl2,'calcSA'] <- dShell[subCyl2,'calcSA1'] + dShell[subCyl2,'calcSA1'] + 2 * pi * (dShell[subCyl2,'calcY']/2)^2
+dShell[subCyl2,'calcSA'] <- 2 * (pi* dShell[subCyl2,'calcY']/2 * dShell[subCyl2,'calcY']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'calcY']/2 
 
 #next turbo, a hemisphere
 #is pi*r^2 + 2*pi*r*h
@@ -234,24 +240,19 @@ dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHem
 #is this correct? NO
 #calcSA1 = pi *r^2
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'calcSA'] <- dShell[subDome,'zDim'] * dShell[subDome,'calcSA1'] + dShell[subDome,'zDim'] * dShell[subHemi,'calcSA2']
-
+dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subDome,'calcY']/2)/2 * dShell[subDome,'zDim']
 
 #then, rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
 subRhom <- which(dShell$shape == 'rhombus')
 dShell[subRhom,'calcC'] <- sqrt((dShell[subRhom,'calcX']/2)^2 + (dShell[subRhom,'calcY']/2)^2)
-dShell[subRhom,'cSA1'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
+dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
 
-#scaphopod comes next.....
-#this one subset NEEDS to be run for this specific one
-subDome2 <- which(dShell$taxon == 'Scaphopod')
-dShell[subDome2,'calcSA'] <- 2 * (dShell[subDome2,'calcSA1'] + dShell[subDome2,'calcSA2'])
 
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
-dShell[subSphere,'cSA1'] <- dShell[subSphere,'calcSA1'] + dShell[subSphere,'calcSA2'] + pi * (dShell[subSphere, 'zDim'] * dShell[subSphere,'calcY'])
+dShell[subSphere,'calcSA'] <- dShell[subSphere,'calcSA1'] + dShell[subSphere,'calcSA2'] + pi * (dShell[subSphere, 'zDim'] * dShell[subSphere,'calcY'])
 
 #finally! this bit!
 pData <- dShell
