@@ -103,12 +103,14 @@ dev.off()
 
 summary(pData)
 
-
+#start with basic linear models
 a <- lm(pMass ~ cSA1  + mass1 + taxon, data=pData)
+summary(a)
 a <- lm(pMass ~ cSA1  + mass1 + density, data=pData)
 summary(a)
 
 a <- lm(pMass ~ cSA1  + mass1 + taxon + density, data=pData)
+summary(a)
 a$residuals
 
 
@@ -167,7 +169,7 @@ pdf('./deltaMass.pdf', width=8, height=6, page='A4')
   if (length(which(!is.na(pData$cSA1))) > 0) {
     plot(cMass/cSA1 ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
     points(cMass/cSA1 ~ taxon, data=pData)
-    mtext('Mass lost / SA', side=2, line=3)
+    mtext('Mass lost / SA (mg/mm\u00b2)', side=2, line=3)
     axis(2, las=1)
     axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
  #   mtext(e)
@@ -215,6 +217,8 @@ dev.off()
 
 #SA for cube
 dShell$calcSA <- dShell$calcSA1 + dShell$calcSA2 + 2*(dShell$calcY * dShell$zDim) + 2*(dShell$calcX * dShell$zDim)
+#SA for cube, resolved for aragonite
+dShell$calcSA <- 2*(dShell$calcX * dShell$calcY) + 2*(dShell$calcY * dShell$zDim) + 2*(dShell$calcX * dShell$zDim)
 
 #next lines for surface area of cylindrical specimens
 # need to figure this out better for Liloa...
@@ -277,7 +281,7 @@ axis(2, las=1)
 axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
 pData2 <- pData[!is.na(pData$calcSA),]
-plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy')
+plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy', xlab='log(ImageJSA)', ylab='log(CaliperSA)')
 abline(a=0, b=1)
 levels(pData$taxon)
 
