@@ -134,7 +134,7 @@ pdf('./deltaMass.pdf', width=8, height=6, page='A4')
   #what does following line do? likely have to change integers
   taxaAbrev <- substring(taxa,0,5)
   
-  #could skip - just mass lost in mg
+  #mass lost in mg
   plot(cMass ~ taxon, data=pData[!is.na(pData$cMass),], ylim=c(0,max(pData$cMass, na.rm=TRUE)), ann=FALSE, axes=FALSE)
   points(cMass ~ taxon, data=pData[!is.na(pData$cMass),])
   mtext('Mass lost (mg)', side=2, line=3)
@@ -319,6 +319,31 @@ rep1.1 <- subset(pData,exptID =='T1.1')
 rep1.2 <- subset(pData,exptID =='T1.2')
 rep1.3 <- subset(pData,exptID =='T1.3')
 
+
+#trying to plot the means
+rep1mean <- mean(rep1.1$pMass)
+rep2mean <- mean(rep1.2$pMass)
+rep3mean <- mean(rep1.3$pMass)
+  
+pData$exptID <- as.factor(pData$exptID)
+rep <- sort(unique(pData$exptID))
+tFont <- rep(3,length(rep))
+tFont[which(rep == 'T1.1')] <- 1
+repAbrev <- substring(rep,0,5)
+
+#comparing three replicates by both mass lost/SA ratio and % mass lost
+plot(cMass/cSA1 ~ exptID, data=pData, ann=FALSE, axes=FALSE, ylab='', main='Replicates')
+points(cMass/cSA1 ~ exptID, data=pData)
+mtext('Mass lost / SA', side=2, line=3)
+axis(2, las=1)
+axis(1, at=1:length(rep), labels=rep, font=tFont, cex=0.5, las=2)
+
+plot(pMass ~ exptID, data=pData, ann=FALSE, axes=FALSE, ylab='', main='Replicates')
+points(pMass ~ exptID, data=pData)
+mtext('% Mass Lost', side=2, line=3)
+axis(2, las=1)
+axis(1, at=1:length(rep), labels=rep, font=tFont, cex=0.5, las=2)
+
 #5.1 Comparison of X, Y, Z, + thickness by taxon per replicate
 
 pdf('./measureCheckReplicates.pdf', width=6, height=8, page='A4')
@@ -385,56 +410,8 @@ par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
   dev.off()  
   
-  
-#5.3 Comparison of density by taxon per replicate
-  pData <- dShell
-  TAXA <- unique(pData$taxon)
-  
-  pdf('./ReplicatesDensity.pdf', width=8, height=6, page='A4')
-  
-  par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
-
-  #attempt to plot them all together but not giving me anything useful
-  #SKIP THIS BIT
-  plot(cMass/density ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
-  points(cMass/density ~ taxon, data=rep1.1, pch=15)
-  points(cMass/density ~ taxon, data=rep1.2, pch=16)
-  points(cMass/density ~ taxon, data=rep1.3, pch=17)
-  mtext('Mass lost / density', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-  
-  #for 1.1
-  pdf('./ReplicatesMassDensity.pdf', width=8, height=6, page='A4')
-  
-  par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
-  #for 1.1
-  
-  plot(cMass/density ~ taxon, data=rep1.1, ann=FALSE, axes=FALSE, ylab='')
-  points(cMass/density ~ taxon, data=rep1.1)
-  mtext('Mass lost / density', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-  
-  #for 1.2
-  
-  plot(cMass/density ~ taxon, data=rep1.2, ann=FALSE, axes=FALSE, ylab='')
-  points(cMass/density ~ taxon, data=rep1.2)
-  mtext('Mass lost / density', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-  
-  #for 1.3
-  plot(cMass/density ~ taxon, data=rep1.3, ann=FALSE, axes=FALSE, ylab='')
-  points(cMass/density ~ taxon, data=rep1.3)
-  mtext('Mass lost / density', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-  
-  dev.off()  
-  
-#5.4 Comparison of % mass lost (by taxon?) per replicate
-  pdf('./ReplicatesPMassLost.pdf', width=8, height=6, page='A4')
+#5.3 Comparison of % mass lost (by taxon?) per replicate
+  pdf('./ReplicatesPMass.pdf', width=8, height=6, page='A4')
   
   par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
   #for 1.1
@@ -461,9 +438,8 @@ par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
   axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
   
   dev.off()  
-  
-#now altogether???
-  
+
+#5.4 Compare each taxon by replicate 
   
 #5.5 Compare pH increase over time by replicate (using Hanna logs)
   
@@ -471,18 +447,27 @@ pH1.1 <- read.csv('./Expt 1.1 Log 1.csv')
 pH1.2 <- read.csv('./Expt 1.2 Log 1.csv')
 pH1.3 <- read.csv('./Expt 1.3 Log 1.csv')
 
-#how to combine date and time from two columns into one that makes up time?
-dateFormat <- '%m/%d/%y'
-timeFormat <- '%H:%M:%S'
-
-#hours since start?
-#change to r date (stringtime) and subtract minimum value
+#do you want to do a little math to change time in # of intervals to minutes then hours?
 
 #after combining date/time, need to plot date/time ~ pH. shouldn't need ylim if done correctly
-plot(Date ~ pH, ylim=c(0,2:32:22), data=pH1.1, type = "o", xlab = "Time", ylab = "pH", main = "Replicate 1.1 pH Over Time")
+plot(pH ~ Interval, data=pH1.1, type = "o", xlab = "Time", ylab = "pH", main = "Replicate 1.1 pH Over Time")
+fit1.1 <- glm(pH ~ Interval, data=pH1.1)
+co <- coef(fit1.1)
+abline(fit1.1, lwd=2)
 
-#repeat for 1.2 and 1.3
+#repeat for 1.2
+plot(pH ~ Interval, data=pH1.2, type = "o", xlab = "Time", ylab = "pH", main = "Replicate 1.2 pH Over Time")
+fit1.2 <- glm(pH ~ Interval, data=pH1.2)
+co <- coef(fit1.2)
+abline(fit1.2, lwd=2)
 
+#and 1.3
+plot(pH ~ Interval, data=pH1.3, type = "o", xlab = "Time", ylab = "pH", main = "Replicate 1.3 pH Over Time")
+fit1.3 <- glm(pH ~ Interval, data=pH1.3)
+co <- coef(fit1.3)
+abline(fit1.3, lwd=2)
+
+dev.off()
 
 #6. Taxon half-life comparison to dissolution rate (only for appropriate taxa)
 #work on this later
