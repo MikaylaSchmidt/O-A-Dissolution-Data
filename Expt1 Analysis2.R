@@ -69,7 +69,7 @@ dShell[subRhom,'cSA1'] <- 2 * ((dShell[subRhom,'xDim']*dShell[subRhom,'yDim'])/2
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
-dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'yDim']/2)/3)^2
+dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'zDim']/2)/3)^2
 
 #1.0 a quick check - dissolution (mg) relationship to surface area (mm^2)
 #need to separate these out by taxon!!
@@ -202,6 +202,7 @@ dev.off()
 pData <- dShell
 TAXA <- unique(pData$taxon)
 
+#if this next bit looks good, move on to 4.2
 pdf('./measureCheck(measureVScalc).pdf', width=6, height=8, page='A4')
 par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
 
@@ -241,7 +242,6 @@ subHemi <- which(dShell$shape == 'hemisphere')
 dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHemi,'calcX']/2 + dShell[subHemi,'calcY']/2)/2 * dShell[subHemi,'zDim'] 
 
 #next lines for surface area of domed specimens
-#is this correct? NO
 #calcSA1 = pi *r^2
 subDome <- which(dShell$shape == '2dome')
 dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subDome,'calcY']/2)/2 * dShell[subDome,'zDim']
@@ -256,7 +256,19 @@ dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
-dShell[subSphere,'calcSA'] <- dShell[subSphere,'calcSA1'] + dShell[subSphere,'calcSA2'] + pi * (dShell[subSphere, 'zDim'] * dShell[subSphere,'calcY'])
+dShell[subSphere,'calcSA'] <- 4 * pi * ((dShell[subSphere,'calcX']/2+dShell[subSphere,'calcY']/2 + dShell[subSphere,'zDim']/2)/3)^2
+
+#Or try this
+#calcSA1 = pi * r^2
+dShell[subSphere,'r1'] <- sqrt(dShell[subSphere,'calcSA1']/pi)
+
+#calcSA2 = pi * r^2
+dShell[subSphere,'r2'] <- sqrt(dShell[subSphere,'calcSA2']/pi)
+
+#SA is 4 * pi * r^2
+#with the two different rs 
+dShell[subSphere,'calcSA'] <- 4 * pi * ((dShell[subSphere,'r1']+dShell[subSphere,'r2'] + dShell[subSphere,'zDim']/2)/3)^2
+
 
 #finally! this bit!
 pData <- dShell
@@ -278,7 +290,7 @@ points(cSA1/calcSA ~ taxon, data=pData)
 abline(a=1, b=0)
 mtext('Caliper SA / Calculated SA', side=2, line=3)
 axis(2, las=1)
-axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
+axis(1, at=1:length(taxa), labels=taxaAbrev, font=tFont, cex=0.5, las=2)
 
 pData2 <- pData[!is.na(pData$calcSA),]
 plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy', xlab='log(ImageJSA)', ylab='log(CaliperSA)')
