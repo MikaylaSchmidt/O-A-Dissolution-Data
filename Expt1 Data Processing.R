@@ -1,10 +1,24 @@
+################################  FILE LICENSE  ################################
+#
+#	This file is copyright (C) 2023 Mikayla Schmidt
+#
+#	This program is free software; you can redistribute it and/or modify it 
+#	under the terms of version 3 the GNU General Public License as published 
+#	by the Free Software Foundation.
+#
+#	This program is distributed in the hope that it will be useful, but WITHOUT
+#	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+#	FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for 
+#	more details.
+#
+#	To view a copy of the license go to:
+#	http://www.gnu.org/licenses/licenses.html#GPL
+#	
+################################################################################
+
+
 #Script for processing of raw data into full dataset used in analysis
 #Originally part of script 'Expt1 Analysis2'
-
-
-
-# you need to add a bit that combines the final SA of caliper for all but halimeda + halimeda
-
 
 
 #0.open script, set names and parameters
@@ -146,8 +160,11 @@ dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[s
 #do youo need to take both to 1/3 sqrt?
 dShell$density <- dShell$cMass / dShell$volume
 
+#1.5 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
+dShell$finalSA <- dShell$cSA1 * 1
+dShell[subRhom, 'finalSA'] <- dShell[subRhom, 'calcSA']* 1
 
-#1.5 export this data as a csv
+#1.6 export this data as a csv
 write.csv(dShell, file = '/Users/micke/OneDrive/Desktop/shellsData_Expt1.csv', row.names=TRUE)
 
 
