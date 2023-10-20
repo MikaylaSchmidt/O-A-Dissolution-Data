@@ -1,6 +1,6 @@
 ################################  FILE LICENSE  ################################
 #
-#	This file is copyright (C) 2023 Mikayla
+#	This file is copyright (C) 2023 Mikayla Schmidt
 #
 #	This program is free software; you can redistribute it and/or modify it 
 #	under the terms of version 3 the GNU General Public License as published 
@@ -33,10 +33,18 @@ tFont[which(taxa == 'Aragonite')] <- 1
 taxaAbrev <- substring(taxa,0,5)
 
 #1.2 Plot of caliper SA / ImageJ SA with abline at 1
+
+pdf('./outFigs/filename.pdf', page='A4', width=twocolumn, height= pageheight)
+#copy par into here
+par()
+
+#define onecolumn and twocolumn width
+
+#
 plot(cSA1/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='', xlim=c(0,11))
 points(cSA1/calcSA ~ taxon, data=pData)
 abline(a=1, b=0)
-mtext('Caliper SA / Calculated SA', side=2, line=3)
+mtext('Caliper SA / ImageJ SA', side=2, line=3)
 axis(2, las=1)
 axis(1, at=1:length(taxa), labels=taxaAbrev, font=tFont, cex=0.5, las=2)
 
@@ -50,57 +58,35 @@ levels(pData$taxon)
 plot((cSA1-calcSA)/calcSA~taxon, data=pData2, pch=substring(pData$taxon, 0, 2))
 log2(((pData2$cSA1-pData2$calcSA)/pData2$calcSA)+1)
 
+dev.off()
+
 #1.5 Mann-Whitney U Tests of each taxon (for ImageJ to caliper measures)
 #Subset all 11 taxa for tests
 
-Abra <- subset(dShell, taxon =='Abranda')
-Abra1<-wilcox.test(Abra$cSA1, Abra$calcSA, data=dShell)
-print(Abra1)
+sumTable <- aggregate(dShell$taxon, by=list(dShell$taxon), FUN=length)
+sumTable
+colnames(sumTable) <- c('taxon', 'n')
+sumTable$pValue = 'na'
 
-Arag <- subset(dShell, taxon =='Aragonite')
-Arag1<-wilcox.test(Arag$cSA1, Arag$calcSA, data=dShell)
-print(Arag1)
+myWilcox <- function(dShell, taxon, sumTable){
+  myRows <- which(dShell$taxon == taxon)
+  Abra1<-wilcox.test(dShell[myRows,'cSA1'],dShell[myRows,'calcSA'])
+  print(Abra1)
+  sumTable[(sumTable$taxon==taxon), 'pValue'] <- round(Abra1$p.value, 7)
+  return(sumTable)
+}
+for(taxon in TAXA)
+sumTable <- myWilcox(dShell, taxon=taxon, sumTable)
+sumTable
 
-Eth <- subset(dShell, taxon =='Ethalia')
-Eth1<-wilcox.test(Eth$cSA1, Eth$calcSA, data=dShell)
-print(Eth1)
-
-Hali <- subset(dShell, taxon =='Halimeda')
-Hali1<-wilcox.test(Hali$cSA1, Hali$calcSA, data=dShell)
-print(Hali1)
-
-Liloa <- subset(dShell, taxon =='Liloa')
-Liloa1<-wilcox.test(Liloa$cSA1, Liloa$calcSA, data=dShell)
-print(Liloa1)
-
-Margi <- subset(dShell, taxon =='Marginopora')
-Margi1<-wilcox.test(Margi$cSA1, Margi$calcSA, data=dShell)
-print(Margi1)
-
-Nat <- subset(dShell, taxon =='Natica')
-Nat1<-wilcox.test(Nat$cSA1, Nat$calcSA, data=dShell)
-print(Nat1)
-
-Pingui <- subset(dShell, taxon =='Pinguitellina')
-Pingui1<-wilcox.test(Pingui$cSA1, Pingui$calcSA, data=dShell)
-print(Pingui1)
-
-Scaph <- subset(dShell, taxon =='Scaphopod')
-Scaph1<-wilcox.test(Scaph$cSA1, Scaph$calcSA, data=dShell)
-print(Scaph1)
-
-Tri <- subset(dShell, taxon =='Tridacna')
-Tri1<-wilcox.test(Tri$cSA1, Tri$calcSA, data=dShell)
-print(Tri1)
-
-Turbo <- subset(dShell, taxon =='Turbo')
-Turbo1<-wilcox.test(Turbo$cSA1, Turbo$calcSA, data=dShell)
-print(Turbo1)
+sumTable$pAdjust <- p.adjust(sumTable$pValue, method = 'holm')
+write.csv('./outTable/sumTable-Wilcox-CaliperVImageJ.csv')
 
 
 #2.1 Dissolution (mg) relationship to surface area (mm^2)
 #need to separate taxon out by color rather than letter
 
+#pdf this
 plot(cMass ~ cSA1, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
 fit <- glm(cMass~cSA1, data=dShell)
 co <- coef(fit)
@@ -118,7 +104,16 @@ axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
 
 #2.3 Modeling this all - start with basic linear models
-#Do you need to change pMass (%) to cMass (total in mg) 
+#Do you need to change pMass (%) to cMass (total in mg)? both! 
+
+head(pData)
+
+#data frame with columns to examine
+
+fullModel<-lm(pMass ~.,data=cleanData)
+step(fullModel, direction = 'forward')
+step(fullModel, direction = 'backward')
+
 a <- lm(pMass ~ calcSA, data=pData)
 summary(a)
 b <- lm(pMass ~ calcSA + mass1, data=pData)

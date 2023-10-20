@@ -24,8 +24,8 @@
 #0.open script, set names and parameters
 dShellFull <- read.csv('./shells_Expt1.csv', skip=22)
 
-#remove missing and broken taxon
-dShell<- dShellFull[-c(10,38,39,77,79,91),]
+#remove missing or broken taxon
+dShell <- subset(dShellFull, exclude = 0)
 
 dateFormat <- '%m/%d/%y %H:%M'
 EXPID <- unique(dShell$exptID)
@@ -132,6 +132,8 @@ dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subD
 subRhom <- which(dShell$shape == 'rhombus')
 dShell[subRhom,'calcC'] <- sqrt((dShell[subRhom,'calcX']/2)^2 + (dShell[subRhom,'calcY']/2)^2)
 dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
+#have a look at ImageJ perimeter for the little band
+
 
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
@@ -157,15 +159,15 @@ dShell[subRhom,'volume'] <- (dShell[subRhom, 'calcSA1']+dShell[subRhom, 'calcSA2
 #sphere (nat and eth) = 4/3 pi r3
 dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[subSphere, 'yDim']/2 * dShell[subSphere, 'zDim']/2)
 #(mass^1/3)/volume^1/3 with shell volume substituted for shell size 
-#do youo need to take both to 1/3 sqrt?
-dShell$density <- dShell$cMass / dShell$volume
+#do you need to take both to 1/3 sqrt?
+dShell$densityMV <- dShell$cMass / dShell$volume
 
 #1.5 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
 dShell$finalSA <- dShell$cSA1 * 1
 dShell[subRhom, 'finalSA'] <- dShell[subRhom, 'calcSA']* 1
 
 #1.6 export this data as a csv
-write.csv(dShell, file = '/Users/micke/OneDrive/Desktop/shellsData_Expt1.csv', row.names=TRUE)
+write.csv(dShell, 'shellsData_Expt1.csv', row.names=TRUE)
 
 
 
