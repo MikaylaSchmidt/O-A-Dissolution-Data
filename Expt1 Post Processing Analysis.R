@@ -21,6 +21,7 @@
 #Originally part of script 'Expt1 Analysis2'
 
 dShell <- read.csv('./shellsData_Expt1.csv')
+source('./PDF Prefs General.R')
 
 #1.1 Comparison of the Caliper vs ImageJ measurements
 #Setup for measurement comp  by taxa
@@ -32,15 +33,13 @@ tFont <- rep(3,length(taxa))
 tFont[which(taxa == 'Aragonite')] <- 1
 taxaAbrev <- substring(taxa,0,5)
 
-#1.2 Plot of caliper SA / ImageJ SA with abline at 1
-
-pdf('./outFigs/filename.pdf', page='A4', width=twocolumn, height= pageheight)
-#copy par into here
-par()
+pdf('./outFigs/ImageJvsCaliper.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
+par(mfrow=c(1,3), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1, mgp=c(1.0,0.75,0))
 
 #define onecolumn and twocolumn width
 
-#
+#1.2 Plot of caliper SA / ImageJ SA with abline at 1
+#First plot - anything above can technically all go in prefs script
 plot(cSA1/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='', xlim=c(0,11))
 points(cSA1/calcSA ~ taxon, data=pData)
 abline(a=1, b=0)
@@ -86,37 +85,55 @@ write.csv('./outTable/sumTable-Wilcox-CaliperVImageJ.csv')
 #2.1 Dissolution (mg) relationship to surface area (mm^2)
 #need to separate taxon out by color rather than letter
 
-#pdf this
-plot(cMass ~ cSA1, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
-fit <- glm(cMass~cSA1, data=dShell)
+pdf('./outFigs/SAMeasures.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
+par(mfrow=c(1,3), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1, mgp=c(1.0,0.75,0))
+
+plot(cMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
+fit <- glm(cMass~finalSA, data=dShell)
 co <- coef(fit)
 abline(fit, lwd=2)
 
 
 #2.2 second, plot the mass vs calc by taxon
 
-plot(cMass/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
-points(cMass/calcSA ~ taxon, data=pData)
-mtext('Mass lost / Calculated SA', side=2, line=3)
+plot(cMass/finalSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
+points(cMass/finalSA ~ taxon, data=pData)
+mtext('Mass lost /Surface Area', side=2, line=3)
 axis(2, las=1)
 axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
 
+#2.3 plot density
 
-#2.3 Modeling this all - start with basic linear models
+
+
+dev.off()
+
+
+#2.4 Modeling this all - start with basic linear models
 #Do you need to change pMass (%) to cMass (total in mg)? both! 
 
 head(pData)
 
 #data frame with columns to examine
+modelcols <- c('pMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
 
-fullModel<-lm(pMass ~.,data=cleanData)
+modelcols <- c('pMass','taxon','mass1', 'volume', 'densityMV', 'exptID')
+
+fullModel<-lm(pMass ~.,data=pData[,modelcols])
 step(fullModel, direction = 'forward')
 step(fullModel, direction = 'backward')
 
-a <- lm(pMass ~ calcSA, data=pData)
+a <- lm(pMass ~ sqrt(finalSA), data=pData)
 summary(a)
-b <- lm(pMass ~ calcSA + mass1, data=pData)
+plot(a)
+a <- plot(pMass ~ finalSA, data=pData)
+a <- plot(cMass ~ finalSA, data=pData)
+a<- plot(cMass ~ sqrt(finalSA), data=pData)
+
+pData$rootMass1 <- pData$mass1^(1/3)
+b <- plot(cMass ~ (rootMass1), data=pData)
+
 summary(b)
 c <- lm(pMass ~ calcSA + taxon, data=pData)
 summary(c)
@@ -146,6 +163,9 @@ pH1.3 <- read.csv('./Expt 1.3 Log 1.csv')
 pH1.1$hours <- (pH1.1$Interval * 5)/60 
 pH1.2$hours <- (pH1.2$Interval * 5)/60 
 pH1.3$hours <- (pH1.3$Interval * 5)/60 
+
+pdf('./outFigs/pHReps.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
+par(mfrow=c(1,3), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1, mgp=c(1.0,0.75,0))
 
 #time ~ pH for replicate 1.1
 plot(pH ~ hours, data=pH1.1, type = "o", xlab = "Time (hours)", ylab = "pH", main = "Replicate 1.1 pH Over Time")
