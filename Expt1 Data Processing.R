@@ -23,6 +23,7 @@
 
 #0.open script, set names and parameters
 dShellFull <- read.csv('./shells_Expt1.csv', skip=25)
+setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
 
 #remove missing or broken taxon
 dShell <- subset(dShellFull, exclude == 0)
@@ -52,9 +53,10 @@ dShell[(dShell$taxon == 'Tridacna'),'shape'] <- 'cube'
 #turbo is dome + circle aka hemisphere
 dShell[(dShell$taxon == 'Turbo'), 'shape'] <- 'hemisphere'
 
-#pingui,abra, and scaph technically two domes
+#pingui and abra technically two domes
 dShell[(dShell$taxon == 'Pinguitellina'), 'shape'] <- '2dome'
 dShell[(dShell$taxon == 'Abranda'), 'shape'] <- '2dome'
+#while scaph is two cones
 dShell[(dShell$taxon == 'Scaphopod'), 'shape'] <- '2cone'
 
 #halimeda different shape entirely... diamond/rhombus
@@ -97,11 +99,11 @@ dShell[subCone,'cSA1'] <- 2 * pi * dShell[subCone,'xDim']/2 *((dShell[subCone,'x
 #then, rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
 subRhom <- which(dShell$shape == 'rhombus')
+
+#following calculation needs to be thrown out in favor of the imageJ calc
 dShell[subRhom,'cDim'] <- sqrt((dShell[subRhom,'xDim']/2)^2 + (dShell[subRhom,'yDim']/2)^2)
 dShell[subRhom,'cSA1'] <- 2 * ((dShell[subRhom,'xDim']*dShell[subRhom,'yDim'])/2) + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'cDim']
 
-#rhombus trial with perimeter
-dShell[subRhom,'volume2'] <- dShell[subRhom, 'perimeter'] * dShell[subRhom, 'zDim'] + dShell[subRhom, 'calcSA1'] + dShell[subRhom, 'calcSA2']
 
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
@@ -135,16 +137,37 @@ dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHem
 subDome <- which(dShell$shape == '2dome')
 dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subDome,'calcY']/2)/2 * dShell[subDome,'zDim']
 
+#And for cone...
+#is 2 * pi*r(r+sqrt(h^2 +r^2)) 
+dShell[subCone,'calcSA'] <- 2 * pi * dShell[subCone,'calcX']/2 *((dShell[subCone,'calcX']/2)+sqrt((dShell[subCone,'calcX']/2)^2+dShell[subCone,'zDim']^2))
+
 #then, rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
 subRhom <- which(dShell$shape == 'rhombus')
 dShell[subRhom,'calcC'] <- sqrt((dShell[subRhom,'calcX']/2)^2 + (dShell[subRhom,'calcY']/2)^2)
 dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
 
+#rhombus trial with perimeter
+dShell[subRhom,'calcSAPerim'] <- dShell[subRhom, 'perimeter'] * dShell[subRhom, 'zDim'] + dShell[subRhom, 'calcSA1'] + dShell[subRhom, 'calcSA2']
+
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
 dShell[subSphere,'calcSA'] <- 4 * pi * ((dShell[subSphere,'calcX']/2+dShell[subSphere,'calcY']/2 + dShell[subSphere,'zDim']/2)/3)^2
+
+#quick comparison of default ImageJ SA (calcSA) with perimeter based SA (calcSA2) 
+plot(calcSA~calcSAPerim, data=dShell)
+abline(a= 0, b= 1)
+test <- lm(calcSA~calcSAPerim, data=dShell)
+summary(test)
+#based off of linear model, it is significant to use perimeter calculated SA over approximation
+dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSAPerim']
+
+#1.5 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
+dShell$finalSA <- dShell$cSA1 
+dShell[subRhom, 'finalSA'] <- dShell[subRhom, 'calcSAPerim'] 
+
+
 
 #1.4 Density as given in Kosnik et al 2009
 
@@ -171,9 +194,6 @@ dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[s
 dShell$densityMV <- dShell$cMass / dShell$volume
 
 
-#1.5 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
-dShell$finalSA <- dShell$cSA1 
-dShell[subRhom, 'finalSA'] <- dShell[subRhom, 'calcSA'] 
 
 #1.6 export this data as a csv
 write.csv(dShell, 'shellsData_Expt1.csv', row.names=TRUE)

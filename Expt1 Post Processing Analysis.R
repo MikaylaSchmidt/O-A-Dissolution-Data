@@ -20,6 +20,7 @@
 #Script for analysis of cleaned data after processing
 #Originally part of script 'Expt1 Analysis2'
 
+setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
 dShell <- read.csv('./shellsData_Expt1.csv')
 source('./PDF Prefs General.R')
 
@@ -33,10 +34,9 @@ tFont <- rep(3,length(taxa))
 tFont[which(taxa == 'Aragonite')] <- 1
 taxaAbrev <- substring(taxa,0,5)
 
-pdf('./outFigs/ImageJvsCaliper.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
-par(mfrow=c(1,3), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1, mgp=c(1.0,0.75,0))
+pdf('./outFigs/ImageJvsCaliper.pdf', page='A4', height = 6, width = 8)
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0), cex=1)
 
-#define onecolumn and twocolumn width
 
 #1.2 Plot of caliper SA / ImageJ SA with abline at 1
 #First plot - anything above can technically all go in prefs script
@@ -53,9 +53,11 @@ plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy', xlab
 abline(a=0, b=1)
 levels(pData$taxon)
 
+
 #1.4 Log plot of SAs by taxon
 plot((cSA1-calcSA)/calcSA~taxon, data=pData2, pch=substring(pData$taxon, 0, 2))
 log2(((pData2$cSA1-pData2$calcSA)/pData2$calcSA)+1)
+
 
 dev.off()
 
@@ -79,14 +81,14 @@ sumTable <- myWilcox(dShell, taxon=taxon, sumTable)
 sumTable
 
 sumTable$pAdjust <- p.adjust(sumTable$pValue, method = 'holm')
-write.csv('./outTable/sumTable-Wilcox-CaliperVImageJ.csv')
+write.csv(sumTable, './outTable/sumTable-Wilcox-CaliperVImageJ.csv')
 
 
 #2.1 Dissolution (mg) relationship to surface area (mm^2)
 #need to separate taxon out by color rather than letter
 
 pdf('./outFigs/SAMeasures.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
-par(mfrow=c(1,3), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1, mgp=c(1.0,0.75,0))
+par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
 
 plot(cMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
 fit <- glm(cMass~finalSA, data=dShell)
@@ -105,51 +107,149 @@ axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
 #2.3 plot density
 
+plot(cMass~volume, data=pData, axes=TRUE, ann=TRUE)
+fit <- glm(cMass~volume, data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
 
+plot(sqrt(cMass)~sqrt(volume), data=pData)
+fit <- glm(sqrt(cMass)~sqrt(volume), data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
 
 dev.off()
 
 
 #2.4 Modeling this all - start with basic linear models
-#Do you need to change pMass (%) to cMass (total in mg)? both! 
+#Do you need to change pMass (%) to cMass (total in mg)? do both! 
 
 head(pData)
 
+
+#2.4 First, for pMass
 #data frame with columns to examine
-modelcols <- c('pMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
+modelcolsP <- c('pMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
 
-modelcols <- c('pMass','taxon','mass1', 'volume', 'densityMV', 'exptID')
+fullModelP<-lm(pMass ~.,data=pData[,modelcolsP])
+step(fullModelP, direction = 'forward')
+step(fullModelP, direction = 'backward')
 
-fullModel<-lm(pMass ~.,data=pData[,modelcols])
-step(fullModel, direction = 'forward')
-step(fullModel, direction = 'backward')
 
-a <- lm(pMass ~ sqrt(finalSA), data=pData)
-summary(a)
-plot(a)
-a <- plot(pMass ~ finalSA, data=pData)
-a <- plot(cMass ~ finalSA, data=pData)
-a<- plot(cMass ~ sqrt(finalSA), data=pData)
+
+#pMass with finalSA
+a1 <- plot(pMass ~ finalSA, data=pData)
+a1 <- lm(pMass ~ finalSA, data=pData)
+plot(a1)
+a1
+
+b1 <- plot(pMass ~ sqrt(finalSA), data=pData)
+b1 <- lm(pMass ~ sqrt(finalSA), data=pData)
+summary(b1)
+plot(b1)
+
+c1 <- plot(sqrt(pMass) ~ sqrt(finalSA), data=pData)
+c1 <- lm(sqrt(pMass) ~ sqrt(finalSA), data=pData)
+summary(c1)
+plot(c1)
+
+pData$finalSAcube <- pData$finalSA^(1/3)
+pData$pMasscube <- pData$pMass^(1/3)
+d1 <- plot(pMasscube ~ finalSAcube, data=pData)
+d1 <- lm(pMasscube ~ finalSAcube, data=pData)
+summary(d1)
+plot(d1)
+
+e1 <- plot(log(pMass) ~ log(finalSA), data=pData)
+e1 <- lm(log(pMass) ~ log(finalSA), data=pData)
+summary(e1)
+plot(e1)
+
+
+#pMass with mass1
+a2 <- plot(pMass ~ mass1, data=pData)
+a2 <- lm(pMass ~ mass1, data=pData)
+plot(a2)
+
+b2 <- plot(sqrt(pMass) ~ sqrt(mass1), data=pData)
+b2 <- lm(sqrt(pMass) ~ sqrt(mass1), data=pData)
+summary(b2)
+plot(b2)
 
 pData$rootMass1 <- pData$mass1^(1/3)
-b <- plot(cMass ~ (rootMass1), data=pData)
+c2 <- plot(pMass ~ (rootMass1), data=pData)
+c2 <- lm(pMass ~ (rootMass1), data=pData)
+plot(c2)
 
-summary(b)
-c <- lm(pMass ~ calcSA + taxon, data=pData)
-summary(c)
-d <- lm(pMass ~ calcSA + mass1 + taxon, data=pData)
-summary(d)
-e <- lm(pMass ~ calcSA + density, data=pData)
-summary(e)
-f <- lm(pMass ~ calcSA + mass1 + density, data=pData)
-summary(f)
-g <- lm(pMass ~ calcSA + mass1 + taxon + density, data=pData)
-summary(g)
+d2 <- plot(log(pMass) ~ (rootMass1), data=pData)
+d2 <- lm(log(pMass) ~ (rootMass1), data=pData)
+plot(d2)
 
-a$residuals
 
-#don't forget to add model looking at replicates
+#pMass with volume
+a3 <- plot(pMass ~ volume, data=pData)
+a3 <- lm(pMass ~ volume, data=pData)
+plot(a3)
 
+b3 <- plot(pMass ~ sqrt(volume), data=pData)
+b3 <- lm(pMass~ sqrt(volume), data=pData)
+plot(b3)
+
+
+#pMass with densityMV
+a4 <- plot(pMass ~ densityMV, data=pData)
+a4 <- lm(pMass ~ densityMV, data=pData)
+plot(a4)
+
+b4 <- plot(pMass ~ sqrt(densityMV), data=pData)
+b4 <- lm(pMass~ sqrt(densityMV), data=pData)
+plot(b4)
+
+
+#2.5 Then, the same with cMass
+
+
+#cMass with finalSA
+a5 <- plot(cMass ~ finalSA, data=pData)
+a5 <- lm(cMass ~ finalSA, data=pData)
+plot(a5)
+
+b5 <- plot(cMass ~ sqrt(finalSA), data=pData)
+b5 <- lm(cMass ~ sqrt(finalSA), data=pData)
+plot(b4)
+
+pData$rootMass1 <- pData$mass1^(1/3)
+c1 <- plot(cMass ~ (rootMass1), data=pData)
+c1 <- lm(cMass ~ (rootMass1), data=pData)
+plot(c1)
+
+#cMass with mass1
+a6 <- plot(cMass ~ mass1, data=pData)
+a6 <- lm(cMass ~ mass1, data=pData)
+plot(a6)
+
+b6 <- plot(log(cMass) ~ log(mass1), data=pData)
+b6 <- lm(log(cMass) ~ log(mass1), data=pData)
+plot(b6)
+
+
+#cMass with volume
+a7 <- plot(cMass ~ volume, data=pData)
+a7 <- lm(cMass ~ volume, data=pData)
+plot(a7)
+
+b7 <- plot(log(cMass) ~ log(volume), data=pData)
+b7 <- lm(log(cMass) ~ log(volume), data=pData)
+plot(b7)
+
+
+#cMass with densityMV
+a8 <- plot(cMass ~ densityMV, data=pData)
+a8 <- lm(cMass ~ densityMV, data=pData)
+plot(a8)
+
+b8 <- plot(log(cMass) ~ log(densityMV), data=pData)
+b8 <- lm(log(cMass) ~ log(densityMV), data=pData)
+plot(b8)
 
 
 
