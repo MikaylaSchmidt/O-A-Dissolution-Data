@@ -84,10 +84,11 @@ sumTable$pAdjust <- p.adjust(sumTable$pValue, method = 'holm')
 write.csv(sumTable, './outTable/sumTable-Wilcox-CaliperVImageJ.csv')
 
 
-#2.1 Dissolution (mg) relationship to surface area (mm^2)
+
+#2.1 Dissolution by total mass (mg, cMass) relationship to surface area (mm^2), initial mass, volume, and densityMV
 #need to separate taxon out by color rather than letter
 
-pdf('./outFigs/SAMeasures.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
+pdf('./outFigs/cMassMeasures.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
 par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
 
 plot(cMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
@@ -105,8 +106,14 @@ axis(2, las=1)
 axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
 
 
-#2.3 plot density
+#2.3 plot mass by initial mass
+plot(cMass~mass1, data=pData, axes=TRUE, ann=TRUE)
+fit <- glm(cMass~mass1, data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
 
+
+#2.3 plot volume
 plot(cMass~volume, data=pData, axes=TRUE, ann=TRUE)
 fit <- glm(cMass~volume, data=dShell)
 co <- coef(fit)
@@ -117,17 +124,30 @@ fit <- glm(sqrt(cMass)~sqrt(volume), data=dShell)
 co <- coef(fit)
 abline(fit, lwd=2)
 
+
+#2.4 plot density
+plot(cMass~densityMV, data=pData, axes=TRUE, ann=TRUE)
+fit <- glm(cMass~densityMV, data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
+
 dev.off()
 
 
-#2.4 Modeling this all - start with basic linear models
-#Do you need to change pMass (%) to cMass (total in mg)? do both! 
+#2.5 Modeling this all for cMass - go to script frogTestShell.R after this 
 
-head(pData)
+modelcolsC <- c('cMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
+
+fullModelC<-lm(cMass ~.,data=pData[,modelcolsC])
+step(fullModelC, direction = 'forward')
+step(fullModelC, direction = 'backward')
 
 
-#2.4 First, for pMass
+
+
+#3.1 Second, for pMass
 #data frame with columns to examine
+head(pData)
 modelcolsP <- c('pMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
 
 fullModelP<-lm(pMass ~.,data=pData[,modelcolsP])
@@ -206,6 +226,7 @@ plot(b4)
 
 
 #2.5 Then, the same with cMass
+#COMBINE THIS CMASS SECTION WITH THE FIRST SECTION - MANY OF THE SAME PLOTS ARE HERE THAT YOU DO MORE WITH UP THERE, BASICALLY YOU'VE DONE THE SAME THING TWICE.
 
 
 #cMass with finalSA
@@ -215,7 +236,7 @@ plot(a5)
 
 b5 <- plot(cMass ~ sqrt(finalSA), data=pData)
 b5 <- lm(cMass ~ sqrt(finalSA), data=pData)
-plot(b4)
+plot(b5)
 
 pData$rootMass1 <- pData$mass1^(1/3)
 c1 <- plot(cMass ~ (rootMass1), data=pData)
@@ -250,6 +271,7 @@ plot(a8)
 b8 <- plot(log(cMass) ~ log(densityMV), data=pData)
 b8 <- lm(log(cMass) ~ log(densityMV), data=pData)
 plot(b8)
+
 
 
 
