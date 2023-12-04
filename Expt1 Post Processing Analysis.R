@@ -83,28 +83,31 @@ sumTable
 sumTable$pAdjust <- p.adjust(sumTable$pValue, method = 'holm')
 write.csv(sumTable, './outTable/sumTable-Wilcox-CaliperVImageJ.csv')
 
-
+hist(dShell$cMass)
 
 #2.1 Dissolution by total mass (mg, cMass) relationship to surface area (mm^2), initial mass, volume, and densityMV
 #need to separate taxon out by color rather than letter
 
-pdf('./outFigs/cMassMeasures.pdf', page='A4', height = pageHeight, width = pageWidthTwoColumn)
+pdf('./outFigs/cMassMeasures.pdf', page='A4', height = 6 , width = 8)
 par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
 
-plot(cMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)',pch=substring(dShell$taxon, 0, 2))
-fit <- glm(cMass~finalSA, data=dShell)
+plot(cMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)')
+fit <- lm(cMass~finalSA, data=dShell)
 co <- coef(fit)
 abline(fit, lwd=2)
-
+plot(fit)
+summary(fit)
 
 #2.2 second, plot the mass vs calc by taxon
 
 plot(cMass/finalSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
 points(cMass/finalSA ~ taxon, data=pData)
-mtext('Mass lost /Surface Area', side=2, line=3)
+mtext('Mass Lost (mg) / Surface Area (mm\u00b2)', side=2, line=3)
 axis(2, las=1)
-axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
+axis(1, at=1:length(taxa), labels=taxaAbrev, font=tFont, cex=0.5, las=2)
 
+#try <- glm(cMass/finalSA ~ taxon, data=pData)
+#summary(try)
 
 #2.3 plot mass by initial mass
 plot(cMass~mass1, data=pData, axes=TRUE, ann=TRUE)
@@ -154,7 +157,22 @@ fullModelP<-lm(pMass ~.,data=pData[,modelcolsP])
 step(fullModelP, direction = 'forward')
 step(fullModelP, direction = 'backward')
 
+#pdf setup
+pdf('./outFigs/pMassMeasures.pdf', page='A4', height = 6 , width = 8)
+par(mfrow=c(1,1))
 
+plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='% Mass Lost')
+points(pMass ~ taxon, data=pData)
+mtext('% Mass Lost', side=2, line=3)
+axis(2, las=1)
+axis(1, at=1:length(taxa), labels=taxaAbrev, font=tFont, cex=0.5, las=2)
+
+plot(pMass ~ finalSA, data=dShell, xlab='Surface Area (mm\u00b2)', ylab='Dissolution (mg)')
+fit <- glm(pMass~finalSA, data=dShell)
+co <- coef(fit)
+abline(fit, lwd=2)
+
+dev.off() 
 
 #pMass with finalSA
 a1 <- plot(pMass ~ finalSA, data=pData)

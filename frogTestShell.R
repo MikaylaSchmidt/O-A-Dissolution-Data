@@ -11,7 +11,7 @@ sumTable$pValue = 'na'
 
 #full data model
 fullDataModel <- dShell[c(3,4,9,25,26,36,37,38)]
-
+fullDataModel
 
 #1.1 This is for cMass.
 
@@ -127,3 +127,50 @@ library(xtable)
 print(xtable(selectionTable, caption = "Model selection table on shell mass lost.",
                label = "tab:selection"),
         include.rownames = FALSE, caption.placement = "top")
+
+#2.1 Now..... do it all again for pMass!
+
+#split into dataset with important variables
+pData <- dShell[c(3,4,9,26,36,37,38)]
+head(pData)
+str(pData)
+any(is.na(pData))
+
+#0. Global hypothesis
+#Hypothesis: Mass lost by shells varies with surface area, volume, density, and mass.
+
+#first, need to center initial mass (aka variable mass1)
+pData$InitMass_cent <- cData$mass1 - mean(cData$mass1)
+#then square it
+pData$InitMass2 <- cData$InitMass_cent^2
+
+#then, the global model itself.....
+global <- lm(pMass ~ InitMass_cent + InitMass2 + finalSA + volume + densityMV,
+             data = pData)
+par(mfrow = c(2, 2))
+plot(global)
+
+#try this next - log transform mass lost
+pData$log_pMass <- log(pData$pMass + 1)
+
+#run global model again
+global.log <- lm(log_pMass ~ InitMass_cent + InitMass2 + finalSA + volume + densityMV,
+                 data = pData)
+par(mfrow = c(2, 2))
+plot(global.log)
+
+#ok that's actually still crap on the Q-Q. how about sq root?
+pData$sqrt_pMass <- sqrt(pData$pMass)
+global.sqrt <- lm(sqrt_pMass ~ InitMass_cent + InitMass2 + finalSA + volume + densityMV,
+                 data = pData)
+par(mfrow = c(2, 2))
+plot(global.sqrt)
+
+#how about..... cube root?
+pData$cuberoot_pMass <- (pData$pMass)^(1/3)
+global.cube <- lm(cuberoot_pMass ~ InitMass_cent + InitMass2 + finalSA + volume + densityMV,
+                  data = pData)
+par(mfrow = c(2, 2))
+plot(global.cube)
+
+#that is literally not better at all, so come back to this on monday.
