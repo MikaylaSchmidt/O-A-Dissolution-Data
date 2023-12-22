@@ -18,12 +18,13 @@
 
 
 #Script for processing of raw data into full dataset used in analysis
-#Originally part of script 'Expt1 Analysis2'
+#Originally part of script 'Expt1 Data Processing'
 
 
 #0.open script, set names and parameters
-dShellFull <- read.csv('./shells_Expt1.csv', skip=26)
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
+dShellFull <- read.csv('./shells_Expt4.csv', skip=23)
+
 
 #remove missing or broken taxon
 dShell <- subset(dShellFull, exclude == 0)
@@ -113,47 +114,11 @@ dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphe
 
 
 #1.3 General calculation of surface area for each taxa based on ImageJ calculations
-#SA for cube
-dShell$calcSA <- dShell$calcSA1 + dShell$calcSA2 + 2*(dShell$calcY * dShell$zDim) + 2*(dShell$calcX * dShell$zDim)
-#SA for cube, resolved for Calcite
-dShell$calcSA <- 2*(dShell$calcX * dShell$calcY) + 2*(dShell$calcY * dShell$zDim) + 2*(dShell$calcX * dShell$zDim)
-
-#next lines for surface area of cylindrical specimens
-#equal to 2piR^2 + 2*h*pi*r
-subCyl1 <- which(dShell$shape == 'cylinder1')
-dShell[subCyl1,'calcSA'] <- dShell[subCyl1,'calcSA1'] + dShell[subCyl1,'calcSA2'] + dShell[subCyl1,'zDim'] * pi * (dShell[subCyl1,'calcY'] + dShell[subCyl1,'calcX'])/2
-
-#liloa calc based on imageJ
-subCyl2 <- which(dShell$shape == 'cylinder2')
-dShell[subCyl2,'calcSA'] <- 2 * (pi* dShell[subCyl2,'calcY']/2 * dShell[subCyl2,'calcY']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'calcY']/2 
-
-#next turbo, a hemisphere
-#equal to pi*r^2 + 2*pi*r*h
-subHemi <- which(dShell$shape == 'hemisphere')
-dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHemi,'calcX']/2 + dShell[subHemi,'calcY']/2)/2 * dShell[subHemi,'zDim'] 
-
-#next lines for surface area of domed specimens
-#calcSA1 = pi *r^2
-subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subDome,'calcY']/2)/2 * dShell[subDome,'zDim']
-
-#And for cone...
-#is 2 * pi*r(r+sqrt(h^2 +r^2)) 
-dShell[subCone,'calcSA'] <- 2 * pi * dShell[subCone,'calcX']/2 *((dShell[subCone,'calcX']/2)+sqrt((dShell[subCone,'calcX']/2)^2+dShell[subCone,'zDim']^2))
-
-#then, rough surface area for rhomboid Halimeda
+#Rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
 subRhom <- which(dShell$shape == 'rhombus')
-dShell[subRhom,'calcC'] <- sqrt((dShell[subRhom,'calcX']/2)^2 + (dShell[subRhom,'calcY']/2)^2)
-dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSA1'] + dShell[subRhom,'calcSA2'] + 4 * dShell[subRhom,'zDim'] * dShell[subRhom,'calcC']
-
-#rhombus trial with ImageJ perimeter
 dShell[subRhom,'calcSAPerim'] <- dShell[subRhom, 'perimeter'] * dShell[subRhom, 'zDim'] + dShell[subRhom, 'calcSA1'] + dShell[subRhom, 'calcSA2']
 
-#finally, nat and eth spherical calc
-#is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
-subSphere <- which(dShell$shape == 'sphere')
-dShell[subSphere,'calcSA'] <- 4 * pi * ((dShell[subSphere,'calcX']/2+dShell[subSphere,'calcY']/2 + dShell[subSphere,'zDim']/2)/3)^2
 
 #quick comparison of default ImageJ SA (calcSA) with perimeter based SA (calcSA2) 
 plot(calcSA~calcSAPerim, data=dShell)
@@ -188,7 +153,7 @@ dShell[subCone,'volume'] <- pi * (dShell[subCone,'xDim']/2)^2 * (dShell[subCone,
 dShell[subRhom,'volume'] <- (dShell[subRhom, 'calcSA1']+dShell[subRhom, 'calcSA2'])/2 * dShell[subRhom, 'zDim']
 #sphere (nat and eth) = 4/3 pi r3
 dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[subSphere, 'yDim']/2 * dShell[subSphere, 'zDim']/2)
-  
+
 #(mass^1/3)/volume^1/3 with shell volume substituted for shell size 
 #do you need to take both to 1/3 sqrt?
 dShell$densityMV <- dShell$cMass / dShell$volume
@@ -196,24 +161,4 @@ dShell$densityMV <- dShell$cMass / dShell$volume
 
 
 #1.6 export this data as a csv
-write.csv(dShell, 'shellsData_Expt1.csv', row.names=TRUE)
-
-
-
-#2.1 
-pData <- dShell
-TAXA <- unique(pData$taxon)
-
-pData$taxon <- as.factor(pData$taxon)
-taxa <- sort(unique(pData$taxon))
-tFont <- rep(3,length(taxa))
-tFont[which(taxa == 'Calcite')] <- 1
-taxaAbrev <- substring(taxa,0,5)
-
-#this has to come AFTER THE ABOVE
-rep1.1 <- subset(pData,exptID =='T1.1')
-rep1.2 <- subset(pData,exptID =='T1.2')
-rep1.3 <- subset(pData,exptID =='T1.3')
-
-
-
+write.csv(dShell, 'shellsData_Expt4.csv', row.names=TRUE)

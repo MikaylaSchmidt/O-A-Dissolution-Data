@@ -1,5 +1,5 @@
 #Pilot2.1 T Test
-dShellFull <- read.csv('./shells_Expt2Pilot.csv', skip=19)
+dShellFull <- read.csv('./shellsData_Expt2.csv', skip=19)
 dShell <- subset(dShellFull, exclude == 0)
 
 dShell$cMass <- -1 * (dShell$mass2 - dShell$mass1)
@@ -16,9 +16,9 @@ dShell
 plot(cMass~as.factor(taxon), data = dShell)
 plot(pMass~as.factor(taxon), data = dShell)
 plot(mass1~wax, data=dShell)
-plot(cMass~waxMass, data=dShell)
+plot(cMass~cMassWax, data=dShell)
 abline(a=0, b=1)
-a<- lm(cMass~waxMass, data=dShell)
+a<- lm(cMass~cMassWax, data=dShell)
 summary(a)
 abline(a)
 plot(pMass~pWaxMass, data=dShell)

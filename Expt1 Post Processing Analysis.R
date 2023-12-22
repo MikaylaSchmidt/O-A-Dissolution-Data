@@ -31,7 +31,7 @@ TAXA <- unique(pData$taxon)
 pData$taxon <- as.factor(pData$taxon)
 taxa <- sort(unique(pData$taxon))
 tFont <- rep(3,length(taxa))
-tFont[which(taxa == 'Aragonite')] <- 1
+tFont[which(taxa == 'Calcite')] <- 1
 taxaAbrev <- substring(taxa,0,5)
 
 pdf('./outFigs/ImageJvsCaliper.pdf', page='A4', height = 6, width = 8)

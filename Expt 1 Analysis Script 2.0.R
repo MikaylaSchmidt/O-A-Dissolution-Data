@@ -1,3 +1,22 @@
+################################  FILE LICENSE  ################################
+#
+#	This file is copyright (C) 2023 Mikayla Schmidt
+#
+#	This program is free software; you can redistribute it and/or modify it 
+#	under the terms of version 3 the GNU General Public License as published 
+#	by the Free Software Foundation.
+#
+#	This program is distributed in the hope that it will be useful, but WITHOUT
+#	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+#	FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for 
+#	more details.
+#
+#	To view a copy of the license go to:
+#	http://www.gnu.org/licenses/licenses.html#GPL
+#	
+################################################################################
+
+
 #New Script Data
 library(AICcmodavg)
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
@@ -47,7 +66,7 @@ minilso<-function(y,X) {
 minilso(log(x2$cMass),log(cbind(x2$mass1, x2$thick, x2$finalSA, x2$volume)))
 minilso(log(x2$mass1 - x2$cMass),log(cbind(x2$mass1, x2$thick, x2$finalSA, x2$volume)))
 
-#basically, all of this seems to indicate finalSA, thickness, and volume are significant 
+#basically, all of this seems to indicate starting mass (mass1), finalSA, thickness, and volume are significant 
 #but density (mass/volume) is not significant
 
 
