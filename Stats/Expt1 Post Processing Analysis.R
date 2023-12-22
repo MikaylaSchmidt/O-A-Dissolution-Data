@@ -169,9 +169,9 @@ par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
   abline(fit, lwd=2)
   
   #2.6 Mass lost/density by taxon
-  if (length(which(!is.na(pData$density))) > 0) {
-    plot(cMass/density ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
-    points(cMass/density ~ taxon, data=pData)
+  if (length(which(!is.na(pData$densityMV))) > 0) {
+    plot(cMass/densityMV ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
+    points(cMass/densityMV ~ taxon, data=pData)
     mtext('Mass lost / density', side=2, line=3)
     axis(2, las=1)
     axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
@@ -186,7 +186,7 @@ par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
 
 
 
-#2.5 Modeling this all for cMass - go to script frogTestShell.R and/or Expt 1 Analysis Script 2.0 after this 
+#2.7 Modeling this all for cMass - go to script frogTestShell.R and/or Expt 1 Analysis Script 2.0 after this 
 
 modelcolsC <- c('cMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
 
@@ -195,7 +195,7 @@ step(fullModelC, direction = 'forward')
 step(fullModelC, direction = 'backward')
 
 
-#2.6 Modeling with CMass, continued
+#2.8 Modeling with CMass, continued
 #COMBINE THIS CMASS SECTION WITH THE PREVIOUS SECTION - MANY OF THE SAME PLOTS ARE HERE THAT YOU DO MORE WITH UP THERE, BASICALLY YOU'VE DONE THE SAME THING TWICE.
 
   #1 cMass with finalSA
@@ -324,7 +324,7 @@ dev.off()
     a3 <- lm(pMass ~ volume, data=pData)
     plot(a3)
     
-    b3 <- plot(pMass ~ sqrt(volume), data=pData)
+    b3 <- plot(sqrt(pMass) ~ sqrt(volume), data=pData)
     b3 <- lm(pMass~ sqrt(volume), data=pData)
     plot(b3)
 
@@ -334,8 +334,8 @@ dev.off()
     a4 <- lm(pMass ~ densityMV, data=pData)
     plot(a4)
     
-    b4 <- plot(pMass ~ sqrt(densityMV), data=pData)
-    b4 <- lm(pMass~ sqrt(densityMV), data=pData)
+    b4 <- plot(log(pMass) ~ log(densityMV), data=pData)
+    b4 <- lm(log(pMass)~ log(densityMV), data=pData)
     plot(b4)
 
 
