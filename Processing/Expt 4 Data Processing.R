@@ -23,7 +23,7 @@
 
 #0.open script, set names and parameters
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShellFull <- read.csv('./shells_Expt4.csv', skip=23)
+dShellFull <- read.csv('./shells_Expt4.csv', skip=24)
 
 
 #remove missing or broken taxon
@@ -120,21 +120,18 @@ subRhom <- which(dShell$shape == 'rhombus')
 dShell[subRhom,'calcSAPerim'] <- dShell[subRhom, 'perimeter'] * dShell[subRhom, 'zDim'] + dShell[subRhom, 'calcSA1'] + dShell[subRhom, 'calcSA2']
 
 
-#quick comparison of default ImageJ SA (calcSA) with perimeter based SA (calcSA2) 
-plot(calcSA~calcSAPerim, data=dShell)
-abline(a= 0, b= 1)
-test <- lm(calcSA~calcSAPerim, data=dShell)
-summary(test)
 #based off of linear model, it is significant to use perimeter calculated SA over approximation
-dShell[subRhom,'calcSA'] <- dShell[subRhom,'calcSAPerim']
+dShell[subRhom,'finalSA'] <- dShell[subRhom,'calcSAPerim']
 
-#1.5 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
+#1.4 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
 dShell$finalSA <- dShell$cSA1 
-dShell[subRhom, 'finalSA'] <- dShell[subRhom, 'calcSAPerim'] 
+#based off of linear model, it is significant to use perimeter calculated SA over approximation
+dShell[subRhom,'finalSA'] <- dShell[subRhom,'calcSAPerim']
 
 
 
-#1.4 Density as given in Kosnik et al 2009
+
+#1.5 Density as given in Kosnik et al 2009
 
 #Calculations of volume based on assigned shape
 #cube volume = lwh 
