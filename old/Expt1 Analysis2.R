@@ -1,5 +1,4 @@
 #0.open script, set names and parameters
-#trial update for git
 dShellFull <- read.csv('./shells_Expt1.csv', skip=22)
 
 #remove missing and broken taxon
@@ -94,8 +93,7 @@ for (t in TAXA) {
 	plot(yDim ~ zDim, data=pData[(pData$taxon == t),], main=paste(t,'yDim','zDim'))
 	plot(xDim ~ thick, data=pData[(pData$taxon == t),], main=paste(t,'xDim','thick'))
 	plot(xDim ~ mass1, data=pData[(pData$taxon == t),], main=paste(t,'xDim','mass1'))
-	plot(xDim ~ density, data=pData[(pData$taxon == t),], main=paste(t,'xDim','density'))
-
+	
 
 }
 
@@ -145,6 +143,7 @@ pdf('./deltaMass.pdf', width=8, height=6, page='A4')
 
 
  #1.3 density by taxon
+  #this doesn't matter anymore after stats
   
   plot(density ~ taxon, data=pData[!is.na(pData$density),], ann=FALSE, axes=FALSE)
   points(density ~ taxon, data=pData[!is.na(pData$density),])

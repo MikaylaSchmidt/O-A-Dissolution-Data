@@ -1,25 +1,7 @@
-dShell <- read.csv('C:/Users/micke/OneDrive/Desktop/shells_expt1.csv', skip=22)
-
+setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
+dShell <- read.csv('./shellsData_Expt1.csv')
 dateFormat <- '%m/%d/%y %H:%M'
 EXPID <- unique(dShell$exptID)
-
-dShell$cMass <- -1 * (dShell$mass2 - dShell$mass1)
-dShell$pMass <- (dShell$mass1 - dShell$mass2) / dShell$mass1
-dShell$cSize <- (dShell$xDim * dShell$yDim * dShell$zDim) ^ (1/3)
-dShell$cTime1 <- strptime(dShell$dateM1, format=dateFormat)
-dShell$cTime2 <- strptime(dShell$dateM2, format=dateFormat)
-dShell$cDuration <- dShell$cTime2 - dShell$cTime1
-
-dShell$shape <- 'cylinder'
-dShell[(dShell$taxon == 'Aragonite'),'shape'] <- 'cube'
-
-dShell[(dShell$taxon == 'Giant Clam'),'taxon'] <- 'Tridacna'
-dShell[(dShell$taxon == 'Tridacna'),'shape'] <- 'cube'
-
-dShell$cSA1 <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
-subCyl <- which(dShell$shape == 'cylinder')
-dShell[subCyl,'cSA1'] <- 2 * (pi* dShell[subCyl,'xDim']/2 * dShell[subCyl,'yDim']/2) + dShell[subCyl,'zDim']*pi*(dShell[subCyl,'yDim'] + dShell[subCyl,'xDim'])/2
-
 
 
 pdf('C:/Users/micke/OneDrive/Desktop/deltaMass.pdf', width=6, height=8)
