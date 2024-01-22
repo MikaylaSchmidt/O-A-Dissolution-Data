@@ -115,7 +115,7 @@ a$residuals
 
 #1.2 Total mass lost by taxon separate from variables
 
-pdf('./deltaMass.pdf', width=8, height=6, page='A4')
+pdf('./deltaMassReplicate.pdf', width=8, height=6, page='A4')
 
 #edit exptID to be related to this new set of experiments
 #for (e in EXPID) {
