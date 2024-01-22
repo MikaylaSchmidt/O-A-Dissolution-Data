@@ -23,7 +23,7 @@
 
 #0.open script, set names and parameters
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShellFull <- read.csv('./shells_Expt4.csv', skip=24)
+dShellFull <- read.csv('./shells_Expt4.csv', skip=25)
 
 
 #remove missing or broken taxon
