@@ -24,8 +24,11 @@
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
 dShell <- read.csv('./shellsData_Expt4.csv')
 source('./PDF Prefs General.R')
+
 #0.0 Measurement checks general
+pdf('./measureCheck.pdf', width=6, height=8, page='A4')
 par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
+TAXA <- unique(pData$taxon)
 
 for (t in TAXA) {
   
@@ -40,82 +43,19 @@ for (t in TAXA) {
 
 dev.off()
 
-#1.1 Comparison of the Caliper vs ImageJ measurements
-#Setup for measurement comp  by taxa
-pData <- dShell
-TAXA <- unique(pData$taxon)
-pData$taxon <- as.factor(pData$taxon)
-taxa <- sort(unique(pData$taxon))
-tFont <- rep(3,length(taxa))
-tFont[which(taxa == 'Abranda')] <- 1
-taxaAbrev <- substring(taxa,0,5)
+#1.1 Setup for measurement  by taxa
+  pData <- dShell
+  TAXA <- unique(pData$taxon)
+  pData$taxon <- as.factor(pData$taxon)
+  taxa <- sort(unique(pData$taxon))
+  tFont <- rep(3,length(taxa))
+  tFont[which(taxa == 'Abranda')] <- 1
+  taxaAbrev <- substring(taxa,0,5)
 
-#Quick look at raw measurements - should be 1:1 if they're equally good...  
-pdf('./measureCheck(measureVScalc).pdf', width=6, height=8, page='A4')
-par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
-
-for (t in TAXA) {
-  plot(xDim ~ calcX, data=pData[(pData$taxon == t),], main=paste(t,'xDim','calcX'))
-  plot(yDim ~ calcY, data=pData[(pData$taxon == t),], main=paste(t,'yDim','calcY')) }
-
-dev.off()
-
-#1.2 Plotting Image J and Caliper surface areas for comparison
-pdf('./outFigs/ImageJvsCaliper.pdf', page='A4', height = 6, width = 8)
-par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0), cex=1)
-
-#1. Plot of caliper SA / ImageJ SA with abline at 1
-#First plot - anything above can technically all go in prefs script
-plot(cSA1/calcSA ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='', xlim=c(0,11))
-points(cSA1/calcSA ~ taxon, data=pData)
-abline(a=1, b=0)
-mtext('Caliper SA / ImageJ SA', side=2, line=3)
-axis(2, las=1)
-axis(1, at=1:length(taxa), labels=taxaAbrev, font=tFont, cex=0.5, las=2)
-
-#2 Log plot of SAs
-pData2 <- pData[!is.na(pData$calcSA),]
-plot(cSA1~calcSA, data=pData2, pch=substring(pData2$taxon, 0, 2), log='xy', xlab='log(ImageJSA)', ylab='log(CaliperSA)')
-abline(a=0, b=1)
-levels(pData$taxon)
-
-#3 Log plot of SAs by taxon
-plot((cSA1-calcSA)/calcSA~taxon, data=pData2, pch=substring(pData$taxon, 0, 2))
-log2(((pData2$cSA1-pData2$calcSA)/pData2$calcSA)+1)
-
-dev.off()
-
-#1.5 Mann-Whitney U Tests of each taxon (for ImageJ to caliper measures)
-#Subset all 11 taxa for tests
-sumTable <- aggregate(dShell$taxon, by=list(dShell$taxon), FUN=length)
-sumTable
-colnames(sumTable) <- c('taxon', 'n')
-sumTable$pValue = 'na'
-
-myWilcox <- function(dShell, taxon, sumTable){
-  myRows <- which(dShell$taxon == taxon)
-  Abra1<-wilcox.test(dShell[myRows,'cSA1'],dShell[myRows,'calcSA'])
-  print(Abra1)
-  sumTable[(sumTable$taxon==taxon), 'pValue'] <- round(Abra1$p.value, 7)
-  return(sumTable)
-}
-for(taxon in TAXA)
-  
-  sumTable <- myWilcox(dShell, taxon=taxon, sumTable)
-sumTable
-
-sumTable$pAdjust <- p.adjust(sumTable$pValue, method = 'holm')
-write.csv(sumTable, './outTable/sumTable-Wilcox-CaliperVImageJ.csv')
-
-hist(dShell$cMass)
-
-
-
-#2 Dissolution by total mass (mg, cMass) relationship to 4 variables: surface area (mm^2), initial mass, volume, and densityMV
+#1.2 Dissolution by total mass (mg, cMass) relationship to 4 variables: surface area (mm^2), initial mass, volume, and densityMV
 #need to separate taxon out by color rather than letter
-
 pdf('./outFigs/cMassMeasures.pdf', page='A4', height = 6 , width = 8)
-par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
 #2.0 first, mass lost by taxon 
 plot(cMass ~ taxon, data=pData[!is.na(pData$cMass),], ylim=c(0,max(pData$cMass, na.rm=TRUE)), ann=FALSE, axes=FALSE)
@@ -186,7 +126,7 @@ dev.off()
 
 
 
-#2.7 Modeling this all for cMass - go to script frogTestShell.R and/or Expt 1 Analysis Script 2.0 after this 
+#2.7 Modeling this all for cMass - go to Expt4 Stat Analysis after this 
 
 modelcolsC <- c('cMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exptID')
 
@@ -252,7 +192,7 @@ step(fullModelP, direction = 'backward')
 
 #pdf setup
 pdf('./outFigs/pMassMeasures.pdf', page='A4', height = 6 , width = 8)
-par(mfrow=c(1,1))
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
 plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='% Mass Lost')
 points(pMass ~ taxon, data=pData)
@@ -268,7 +208,8 @@ abline(fit, lwd=2)
 dev.off() 
 
 #3.2 Trialing statistical analysis
-
+#none of this actually matters, just trying a few things to visual the data
+#and see if any of the non linearity issues can be fixed
 #1 pMass with finalSA
 
 a1 <- plot(pMass ~ finalSA, data=pData)

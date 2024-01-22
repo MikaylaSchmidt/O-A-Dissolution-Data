@@ -33,6 +33,7 @@ source('./PDF Prefs General.R')
   taxaAbrev <- substring(taxa,0,5)
 
 #0.0 Measurement checks general
+pdf('./measureCheck.pdf', width=6, height=8, page='A4')
 par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
 
   for (t in TAXA) {
@@ -52,7 +53,7 @@ dev.off()
 #need to separate taxon out by color rather than letter
 
 pdf('./outFigs/cMassMeasures.pdf', page='A4', height = 6 , width = 8)
-par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
   #2.0 first, mass lost by taxon 
   plot(cMass ~ taxon, data=pData[!is.na(pData$cMass),], ylim=c(0,max(pData$cMass, na.rm=TRUE)), ann=FALSE, axes=FALSE)
@@ -153,7 +154,7 @@ dev.off()
 
   #pdf setup
   pdf('./outFigs/pMassMeasures.pdf', page='A4', height = 6 , width = 8)
-  par(mfrow=c(1,1))
+  par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
   
     #1 percent mass lost by taxon
     plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='% Mass Lost')
@@ -190,4 +191,26 @@ dev.off()
   b4 <- plot(log(pMass) ~ log(densityMV), data=pData)
   b4 <- lm(log(pMass)~ log(densityMV), data=pData)
   plot(b4)
+
+#4.1 now time to plot cMass/pMass by taxon by wax
   
+pdf('./outFigs/MassSplitWax.pdf', page='A4', height = 6 , width = 8)
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
+  
+  #1. firstly, some setup to subset
+  library(ggplot2)
+  factor(pData$waxYN)
+  pData$waxYN <- as.factor(pData$waxYN)
+  str(pData)
+
+  #2. cMass by taxon, split by wax presence
+  ggplot(pData, aes(taxon, cMass)) +
+    geom_boxplot(aes(fill = factor(waxYN))) +
+    theme_classic()
+  
+  #3 pMass by taxon, split by wax presence
+  ggplot(pData, aes(taxon, pMass)) +
+    geom_boxplot(aes(fill = factor(waxYN))) +
+    theme_classic()
+
+  dev.off()  

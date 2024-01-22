@@ -25,7 +25,9 @@ dShell <- read.csv('./shellsData_Expt1.csv')
 source('./PDF Prefs General.R')
 
 #0.0 Measurement checks general
+pdf('./measureCheck.pdf', width=6, height=8, page='A4')
 par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
+TAXA <- unique(pData$taxon)
 
   for (t in TAXA) {
     
@@ -37,6 +39,49 @@ par(mfrow=c(3,2), oma=c(1,1,1,1), mar=c(3,3,1,1))
     
     
   }
+
+dev.off()
+
+#0.1 delta Mass/density by taxon - general (taken from 'analysis update' script) 
+pdf('C:/Users/micke/OneDrive/Desktop/deltaMass.pdf', width=6, height=8)
+
+for (e in EXPID) {
+  
+  par(mfrow=c(3,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
+  
+  pData <- dShell[(dShell$exptID == e),]
+  pData$taxon <- as.factor(pData$taxon)
+  taxa <- sort(unique(pData$taxon))
+  tFont <- rep(3,length(taxa))
+  tFont[which(taxa == 'Aragonite')] <- 1
+  taxaAbrev <- substring(taxa,0,5)
+  
+  plot(cMass ~ taxon, data=pData, ylim=c(0,max(pData$cMass)), ann=FALSE, axes=FALSE)
+  points(cMass ~ taxon, data=pData)
+  mtext('Mass lost (mg)', side=2, line=3)
+  axis(2, las=1)
+  axis(1, at=1:length(taxa), labels=taxa, font=3, cex=0.5, las=2)
+  mtext(e)
+  
+  plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE)
+  points(pMass ~ taxon, data=pData)
+  mtext('Mass lost (%)', side=2, line=3)
+  axis(2, las=1)
+  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
+  mtext(e)
+  
+  if (length(which(!is.na(pData$cSA1))) > 0) {
+    plot(cMass/cSA1 ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
+    points(cMass/cSA1 ~ taxon, data=pData)
+    mtext('Mass lost / SA', side=2, line=3)
+    axis(2, las=1)
+    axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
+    mtext(e)
+  } else {
+    plot(1:1, type='n', ann=FALSE, axes=FALSE)
+    mtext('no data', side=1, line=-2)
+  }
+}
 
 dev.off()
 
@@ -115,7 +160,7 @@ hist(dShell$cMass)
 #need to separate taxon out by color rather than letter
 
 pdf('./outFigs/cMassMeasures.pdf', page='A4', height = 6 , width = 8)
-par(mfrow=c(1,1), mar=c(0,0,0,0), oma=c(4,4,1,1), cex=1)
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
   #2.0 first, mass lost by taxon 
   plot(cMass ~ taxon, data=pData[!is.na(pData$cMass),], ylim=c(0,max(pData$cMass, na.rm=TRUE)), ann=FALSE, axes=FALSE)
@@ -197,7 +242,6 @@ step(fullModelC, direction = 'backward')
 
 #2.8 Modeling with CMass, continued
 #COMBINE THIS CMASS SECTION WITH THE PREVIOUS SECTION - MANY OF THE SAME PLOTS ARE HERE THAT YOU DO MORE WITH UP THERE, BASICALLY YOU'VE DONE THE SAME THING TWICE.
-
   #1 cMass with finalSA
     a5 <- plot(cMass ~ finalSA, data=pData)
     a5 <- lm(cMass ~ finalSA, data=pData)
@@ -252,7 +296,7 @@ modelcolsP <- c('pMass','taxon', 'finalSA', 'mass1', 'volume', 'densityMV', 'exp
 
 #pdf setup
 pdf('./outFigs/pMassMeasures.pdf', page='A4', height = 6 , width = 8)
-par(mfrow=c(1,1))
+par(mfrow=c(1,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
 
   plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='% Mass Lost')
   points(pMass ~ taxon, data=pData)
