@@ -83,14 +83,15 @@ subCyl2 <- which(dShell$shape == 'cylinder2')
 dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'yDim']/2 * dShell[subCyl2,'yDim']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'yDim']/2 
 
 #next turbo, a hemisphere
-#is pi*r^2 + 2*pi*r*h + 
+#is pi*r^2 + pi(r^2+h^2) 
 subHemi <- which(dShell$shape == 'hemisphere')
-dShell[subHemi,'cSA1'] <-  pi * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2) + 2 * pi * (dShell[subHemi,'xDim']/2 + dShell[subHemi,'yDim']/2)/2 * dShell[subHemi,'zDim'] 
+dShell[subHemi,'cSA1'] <-  pi * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2) + pi * ((dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2) + dShell[subHemi,'zDim']^2) 
 
 #next lines for surface area of domed specimens
-# is 2 * (2*pi*r*h)
+# is 2 * pi(r^2+h^2)
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'cSA1'] <- 2 * pi * 2 *(dShell[subDome,'xDim']/2 + dShell[subDome,'yDim']/2)/2 * dShell[subDome,'zDim']
+dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2) + dShell[subDome,'zDim']^2) 
+
 
 #cone for scaph
 # is 2 * pi*r(r+sqrt(h^2 +r^2)) 
@@ -129,14 +130,14 @@ subCyl2 <- which(dShell$shape == 'cylinder2')
 dShell[subCyl2,'calcSA'] <- 2 * (pi* dShell[subCyl2,'calcY']/2 * dShell[subCyl2,'calcY']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'calcY']/2 
 
 #next turbo, a hemisphere
-#equal to pi*r^2 + 2*pi*r*h
+#is pi*r^2 + pi(r^2+h^2) 
 subHemi <- which(dShell$shape == 'hemisphere')
-dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + 2 * pi * (dShell[subHemi,'calcX']/2 + dShell[subHemi,'calcY']/2)/2 * dShell[subHemi,'zDim'] 
+dShell[subHemi,'calcSA'] <-  dShell[subHemi,'calcSA1'] + pi * ((dShell[subHemi,'calcX']/2 * dShell[subHemi,'calcY']/2) + dShell[subHemi,'zDim']^2) 
 
 #next lines for surface area of domed specimens
-#calcSA1 = pi *r^2
+#equals 2 * pi(r^2+h^2)
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'calcSA'] <- 2 * pi * 2 *(dShell[subDome,'calcX']/2 + dShell[subDome,'calcY']/2)/2 * dShell[subDome,'zDim']
+dShell[subDome,'calcSA'] <- 2 * pi * ((dShell[subDome,'calcX']/2 * dShell[subDome,'calcY']/2) + dShell[subDome,'zDim']^2) 
 
 #And for cone...
 #is 2 * pi*r(r+sqrt(h^2 +r^2)) 
@@ -179,10 +180,10 @@ dShell$volume <- dShell$xDim * dShell$yDim * dShell$zDim
 dShell[subCyl1,'volume'] <- pi * (dShell[subCyl1, 'xDim']/2 * dShell[subCyl1, 'yDim']/2) * dShell[subCyl1, 'zDim']
 #cylinder2 (liloa) = pi r2 h
 dShell[subCyl2,'volume'] <- pi * (dShell[subCyl2, 'yDim']/2)^2 * dShell[subCyl2, 'zDim']
-#dome (turbo) = 1/3 pi h^2 (3* r-h)
-dShell[subHemi,'volume'] <- 1/3 * pi * dShell[subHemi,'zDim']^2 * (3 * (dShell[subHemi,'xDim']/2 + dShell[subHemi,'yDim']/2)/2 - dShell[subHemi,'zDim']) 
-#2dome = dome1 full volume = 1/3 pi h^2 (3* r-h) 
-dShell[subDome,'volume'] <- 1/3 * pi * dShell[subDome,'zDim']^2 * (3 * (dShell[subDome,'xDim']/2 + dShell[subDome,'yDim']/2)/2 - dShell[subDome,'zDim'])
+#dome (turbo) = 1/6 pi h * (3r^2-h^2)
+dShell[subHemi,'volume'] <- 1/6 * pi * dShell[subHemi,'zDim'] * ((3 * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2)) + dShell[subHemi,'zDim']^2) 
+#2dome = dome1 full volume = 1/6 pi h * (3r^2-h^2) 
+dShell[subDome,'volume'] <- 1/6 * pi * dShell[subDome,'zDim'] * ((3 * (dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2)) + dShell[subDome,'zDim']^2) 
 #2cone = cone, volume = pi*r^2*(h/3)
 dShell[subCone,'volume'] <- pi * (dShell[subCone,'xDim']/2)^2 * (dShell[subCone,'zDim']/3)
 #rhombus(halimeda) = l w h with length * width being = the image J calculated surface area

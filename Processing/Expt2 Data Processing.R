@@ -62,10 +62,10 @@ dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
 #is 2xy + 2yz + 2xz
 dShell$cSA1 <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
 
-#next lines for surface area of domed specimens
-# is 2 * (2*pi*r*h)
+#next lines for surface area of domed specimens - abranda and pingui
+# is 2 * pi(r^2+h^2)
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'cSA1'] <- 2 * pi * 2 *(dShell[subDome,'xDim']/2 + dShell[subDome,'yDim']/2)/2 * dShell[subDome,'zDim']
+dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2) + dShell[subDome,'zDim']^2) 
 
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
@@ -89,8 +89,8 @@ dShell$finalSA <- dShell$cSA1
 #Calculations of volume based on assigned shape
 #cube volume = lwh 
 dShell$volume <- dShell$xDim * dShell$yDim * dShell$zDim
-#2dome = dome1 full volume = 1/3 pi h^2 (3* r-h) 
-dShell[subDome,'volume'] <- 1/3 * pi * dShell[subDome,'zDim']^2 * (3 * (dShell[subDome,'xDim']/2 + dShell[subDome,'yDim']/2)/2 - dShell[subDome,'zDim'])
+#2dome = dome1 full volume = 1/6 pi h * (3r^2-h^2) 
+dShell[subDome,'volume'] <- 1/6 * pi * dShell[subDome,'zDim'] * ((3 * (dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2)) + dShell[subDome,'zDim']^2) 
 #sphere (nat and eth) = 4/3 pi r3
 dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[subSphere, 'yDim']/2 * dShell[subSphere, 'zDim']/2)
 
