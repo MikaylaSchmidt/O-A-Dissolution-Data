@@ -72,7 +72,8 @@ plot(pMassFinal~as.factor(taxon), data = dShell)
 
 #2.0 Onto statistical analysis of the actual experiment
 library(AICcmodavg)
-x <- dShell[c(9,28,29,30,31,32)]
+#variables: mass1, cMass, pMass, finalSA, volume, and densityMV
+x <- dShell[c(9,31,32,33,34,35)]
 
 #uh oh! indicated co-linearity
 cor(log(x[,c(1,4,5)]))
@@ -100,7 +101,7 @@ summary(lm(log(x$mass1-x$cMassFinal)~log(x$mass1/x$volume)))
 summary(lm(log(x$cMassFinal)~log(x$mass1/x$volume)))
 
 #do it again, only this time including thickness as a variable
-x2 <- dShell[c(9,17,28,29,30,31,32)]
+x2 <- dShell[c(9,17,31,32,33,34,35)]
 
 #again, thickness does matter for final mass (mass2) but not for mass lost 
 summary(lm(log(x2$mass1-x2$cMassFinal)~log(x2$mass1)+log(x2$finalSA)+log(x2$volume)+log(x2$thick)))
@@ -124,7 +125,7 @@ minilso(log(x2$mass1 - x2$cMassFinal),log(cbind(x2$mass1, x2$thick, x2$finalSA, 
 #but density (mass/volume) is not significant
 
 #same thing but scaled
-x3 <- data.frame(scale(log(dShell[c(9,17,28,29,30,31,32)])))
+x3 <- data.frame(scale(log(dShell[c(9,17,31,32,33,34,35)])))
 summary(lm((x3$cMassFinal)~(x3$mass1)+(x3$finalSA)+(x3$volume)+(x3$thick)))
 
 

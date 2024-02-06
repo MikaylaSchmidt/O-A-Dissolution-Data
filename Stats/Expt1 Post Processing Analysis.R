@@ -42,48 +42,6 @@ TAXA <- unique(pData$taxon)
 
 dev.off()
 
-#0.1 delta Mass/density by taxon - general (taken from 'analysis update' script) 
-pdf('C:/Users/micke/OneDrive/Desktop/deltaMass.pdf', width=6, height=8)
-
-for (e in EXPID) {
-  
-  par(mfrow=c(3,1), oma=c(1,1,1,1), mar=c(8,4,1,0))
-  
-  pData <- dShell[(dShell$exptID == e),]
-  pData$taxon <- as.factor(pData$taxon)
-  taxa <- sort(unique(pData$taxon))
-  tFont <- rep(3,length(taxa))
-  tFont[which(taxa == 'Aragonite')] <- 1
-  taxaAbrev <- substring(taxa,0,5)
-  
-  plot(cMass ~ taxon, data=pData, ylim=c(0,max(pData$cMass)), ann=FALSE, axes=FALSE)
-  points(cMass ~ taxon, data=pData)
-  mtext('Mass lost (mg)', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=3, cex=0.5, las=2)
-  mtext(e)
-  
-  plot(pMass ~ taxon, data=pData, ann=FALSE, axes=FALSE)
-  points(pMass ~ taxon, data=pData)
-  mtext('Mass lost (%)', side=2, line=3)
-  axis(2, las=1)
-  axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-  mtext(e)
-  
-  if (length(which(!is.na(pData$cSA1))) > 0) {
-    plot(cMass/cSA1 ~ taxon, data=pData, ann=FALSE, axes=FALSE, ylab='')
-    points(cMass/cSA1 ~ taxon, data=pData)
-    mtext('Mass lost / SA', side=2, line=3)
-    axis(2, las=1)
-    axis(1, at=1:length(taxa), labels=taxa, font=tFont, cex=0.5, las=2)
-    mtext(e)
-  } else {
-    plot(1:1, type='n', ann=FALSE, axes=FALSE)
-    mtext('no data', side=1, line=-2)
-  }
-}
-
-dev.off()
 
 #1.1 Comparison of the Caliper vs ImageJ measurements
 #Setup for measurement comp  by taxa

@@ -27,7 +27,7 @@ dShell
 
 #separate necessary data out from full dataset
 #this is for P or C Mass
-x <- dShell[c(9,23,24,32,33,34)]
+x <- dShell[c(9,24,25,33,34,35)]
 
 #correlation calculation indicates collinearity
 cor(log(x[,c(1,4,5)]))
@@ -51,7 +51,7 @@ summary(lm(log(x$mass1-x$cMass)~log(x$mass1/x$volume)))
 summary(lm(log(x$cMass)~log(x$mass1/x$volume)))
 
 #do it again, only this time including thickness as a variable
-x2 <- dShell[c(9,15,23,24,32,33,34)]
+x2 <- dShell[c(9,15,24,25,33,34,35)]
 summary(lm(log(x2$mass1-x2$cMass)~log(x2$mass1)+log(x2$finalSA)+log(x2$volume)+log(x2$thick)))
 summary(lm(log(x2$cMass)~log(x2$mass1)+log(x2$finalSA)+log(x2$volume)+log(x2$thick)))
 
@@ -73,7 +73,7 @@ minilso(log(x2$mass1 - x2$cMass),log(cbind(x2$mass1, x2$thick, x2$finalSA, x2$vo
 
 #Third data frame with categorical variables for a ....
 #Mixed model!
-x3 <- data.frame(scale(log(dShell[c(9,15,23,24,32,33,34)])))
+x3 <- data.frame(scale(log(dShell[c(9,15,24,25,33,34,35)])))
 summary(lm((x3$cMass)~(x3$mass1)+(x3$finalSA)+(x3$volume)+(x3$thick)))
 x3
 
