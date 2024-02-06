@@ -63,9 +63,9 @@ shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,waxMass1,waxMass2,s
 2.1.8.3,T2.1,Natica,E21,5,10/16/2023 14:00,10/18/2023 14:00,54.87,51.66,65.95,62.37,sphere,5.7,4.66,5.11,0.22,Wax,Aragonite,,0,Natica 2
 2.1.8.4,T2.1,Natica,E22,5,10/16/2023 14:00,10/18/2023 14:00,75.25,71.41,100.02,93.97,sphere,6.46,5.33,5.76,0.18,Wax,Aragonite,,0,Natica 2
 2.1.8.5,T2.1,Natica,E22,4,10/16/2023 14:00,10/18/2023 14:00,92.77,87.95,112.92,112.26,sphere,7.09,5.75,5.83,0.2,Wax,Aragonite,,0,Natica 2
-2.1.9.1,T2.1,Calcite,NA,5,10/16/2023 14:00,10/18/2023 14:00,542.32,536.75,NA,NA,cube,7.14,8.02,3.53,3.53,No Wax,Calcite,,0,Calcite
-2.1.9.2,T2.1,Calcite,NA,6,10/16/2023 14:00,10/18/2023 14:00,579.6,570.02,NA,NA,cube,7.46,7.06,4.25,4.25,No Wax,Calcite,,0,Calcite
-2.1.9.3,T2.1,Calcite,NA,2,10/16/2023 14:00,10/18/2023 14:00,339.74,335.11,NA,NA,cube,9.33,4.35,3.24,3.24,No Wax,Calcite,,0,Calcite
+2.1.9.1,T2.1,Calcite,NA,5,10/16/2023 14:00,10/18/2023 14:00,542.32,536.75,NA,NA,cube,7.14,7.38,3.53,3.53,No Wax,Calcite,,0,Calcite
+2.1.9.2,T2.1,Calcite,NA,6,10/16/2023 14:00,10/18/2023 14:00,579.6,570.02,NA,NA,cube,7.29,6.7,4.25,4.25,No Wax,Calcite,,0,Calcite
+2.1.9.3,T2.1,Calcite,NA,2,10/16/2023 14:00,10/18/2023 14:00,339.74,335.11,NA,NA,cube,9.33,4.04,3.24,3.24,No Wax,Calcite,,0,Calcite
 2.1.9.4,T2.1,Calcite,NA,4,10/16/2023 14:00,10/18/2023 14:00,405.22,399.81,NA,NA,cube,7.2,6.65,3.31,3.31,No Wax,Calcite,,0,Calcite
 2.1.9.5,T2.1,Calcite,NA,2,10/16/2023 14:00,10/18/2023 14:00,293.89,287.78,NA,NA,cube,9.53,9.39,1.32,1.32,No Wax,Calcite,,0,Calcite
 2.2.1.1,T2.2,Abranda,E21,4,10/31/2023 16:00,11/2/2023 16:00,97.41,86.87,NA,NA,domeX2,18.51,11.97,2.25,0.19,No Wax,Aragonite,,0,Abranda 1
@@ -109,10 +109,10 @@ shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,waxMass1,waxMass2,s
 2.2.8.4,T2.2,Natica,E24,7,10/31/2023 16:00,11/2/2023 16:00,80.99,76.15,113.59,108.2,sphere,6.96,5.2,4.96,0.24,Wax,Aragonite,,0,Natica 2
 2.2.8.5,T2.2,Natica,E24,4,10/31/2023 16:00,11/2/2023 16:00,69.82,67.18,91.49,87.43,sphere,6.39,5.01,4.86,0.24,Wax,Aragonite,,0,Natica 2
 2.2.9.1,T2.2,Calcite,NA,1,10/31/2023 16:00,11/2/2023 16:00,361.47,352.25,NA,NA,cube,8.49,6.69,2.82,2.82,No Wax,Calcite,,0,Calcite
-2.2.9.2,T2.2,Calcite,NA,5,10/31/2023 16:00,11/2/2023 16:00,940.98,928.23,NA,NA,cube,9.65,7.95,4.92,4.92,No Wax,Calcite,,0,Calcite
+2.2.9.2,T2.2,Calcite,NA,5,10/31/2023 16:00,11/2/2023 16:00,940.98,928.23,NA,NA,cube,9.65,7.45,4.92,4.92,No Wax,Calcite,,0,Calcite
 2.2.9.3,T2.2,Calcite,NA,1,10/31/2023 16:00,11/2/2023 16:00,390.78,382.6,NA,NA,cube,9.48,6.59,2.5,2.5,No Wax,Calcite,,0,Calcite
 2.2.9.4,T2.2,Calcite,NA,2,10/31/2023 16:00,11/2/2023 16:00,626.69,614.89,NA,NA,cube,12.91,4.53,4.35,4.35,No Wax,Calcite,,0,Calcite
-2.2.9.5,T2.2,Calcite,NA,7,10/31/2023 16:00,11/2/2023 16:00,264.6,257.46,NA,NA,cube,8.51,4.09,3.05,3.05,No Wax,Calcite,,0,Calcite
+2.2.9.5,T2.2,Calcite,NA,7,10/31/2023 16:00,11/2/2023 16:00,264.6,257.46,NA,NA,cube,8.51,3.64,3.05,3.05,No Wax,Calcite,,0,Calcite
 2.3.1.1,T2.3,Abranda,E22,1,11/14/2023 16:00,11/16/2023 16:00,51.98,39.03,NA,NA,domeX2,14.72,9.01,1.81,0.17,No Wax,Aragonite,,0,Abranda 1
 2.3.1.2,T2.3,Abranda,E22,5,11/14/2023 16:00,11/16/2023 16:00,132.05,107.3,NA,NA,domeX2,18.65,12.46,2.4,0.26,No Wax,Aragonite,,0,Abranda 1
 2.3.1.3,T2.3,Abranda,E22,3,11/14/2023 16:00,11/16/2023 16:00,149.6,124.91,NA,NA,domeX2,21.17,13.1,2.63,0.24,No Wax,Aragonite,,0,Abranda 1
@@ -155,6 +155,6 @@ shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,waxMass1,waxMass2,s
 2.3.8.5,T2.3,Natica,124.7,5,11/14/2023 16:00,11/16/2023 16:00,107.14,101.58,141.12,136.06,sphere,6.65,4.54,5.09,0.19,Wax,Aragonite,,0,Natica 2
 2.3.9.1,T2.3,Calcite,NA,6,11/14/2023 16:00,11/16/2023 16:00,185.53,180.3,NA,NA,cube,7.2,4.84,2.02,2.02,No Wax,Calcite,,0,Calcite
 2.3.9.2,T2.3,Calcite,NA,6,11/14/2023 16:00,11/16/2023 16:00,428.82,420.47,NA,NA,cube,6.55,4.98,4.99,4.99,No Wax,Calcite,,0,Calcite
-2.3.9.3,T2.3,Calcite,NA,5,11/14/2023 16:00,11/16/2023 16:00,367.58,360.36,NA,NA,cube,9.04,5.15,3.16,3.16,No Wax,Calcite,,0,Calcite
-2.3.9.4,T2.3,Calcite,NA,5,11/14/2023 16:00,11/16/2023 16:00,353.11,339.37,NA,NA,cube,5.96,5.42,4.66,4.66,No Wax,Calcite,,0,Calcite
-2.3.9.5,T2.3,Calcite,NA,9,11/14/2023 16:00,11/16/2023 16:00,265.98,257.17,NA,NA,cube,5.43,4.8,4.09,4.09,No Wax,Calcite,,0,Calcite
+2.3.9.3,T2.3,Calcite,NA,5,11/14/2023 16:00,11/16/2023 16:00,367.58,360.36,NA,NA,cube,9.04,4.78,3.16,3.16,No Wax,Calcite,,0,Calcite
+2.3.9.4,T2.3,Calcite,NA,5,11/14/2023 16:00,11/16/2023 16:00,353.11,339.37,NA,NA,cube,5.96,5.08,4.66,4.66,No Wax,Calcite,,0,Calcite
+2.3.9.5,T2.3,Calcite,NA,9,11/14/2023 16:00,11/16/2023 16:00,265.98,257.17,NA,NA,cube,5.43,4.94,4.09,4.09,No Wax,Calcite,,0,Calcite
