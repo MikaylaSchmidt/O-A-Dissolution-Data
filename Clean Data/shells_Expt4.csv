@@ -1,0 +1,191 @@
+﻿Name: Mikayla Schmidt    Email: mikaylakschmidt@gmail.com,,,,,,,,,,,,,,,,,,,,,
+Column Name,Units,Description,,,,,,,,,,,,,,,,,,,
+shellID,NA,"Unique identifier for each individual shell. The first number (1-5) refers to the experiment number, the second (1-3) to the replicate number, the third (1-11) refers to the taxon, and the fourth (1-5) to the set of samples it is grouped with.",,,,,,,,,,,,,,,,,,,
+exptID,NA,Unique identifier for each experiment. The first letter refers to the type of study (P = pilot) while the number refers to the individual experiment.,,,,,,,,,,,,,,,,,,,
+taxon,NA,Scientific name of taxon of individual shell.,,,,,,,,,,,,,,,,,,,
+source,NA,The bag from which each individual shell was sourced.,,,,,,,,,,,,,,,,,,,
+pocket,NA,The pocket in which each shell was randomly placed. Varies from 1-11 to 1-5 based on the number of shells sampled.,,,,,,,,,,,,,,,,,,,
+dateM1,yy/mm/dd then hour/minute,The date and time at which the experiment was started. Rounded to the nearest minute.,,,,,,,,,,,,,,,,,,,
+dateM2,yy/mm/dd then hour/minute,The date and time at which the experiment was finished. Rounded to the nearest minute.,,,,,,,,,,,,,,,,,,,
+mass1,milligrams,The mass of each individual measured before experimental treatment.,,,,,,,,,,,,,,,,,,,
+mass2,milligrams,The mass of each individual measured after experimental treatment.,,,,,,,,,,,,,,,,,,,
+shape,NA,Rough three-dimensional shape of the shell.,,,,,,,,,,,,,,,,,,,
+xDim,millimeters,x axis dimension in mm,,,,,,,,,,,,,,,,,,,
+yDim,millimeters,y axis dimension in mm,,,,,,,,,,,,,,,,,,,
+zDim,millimeters,z axis dimension in mm,,,,,,,,,,,,,,,,,,,
+thick,millimeters,"thickness of shell in mm, if thickness differs from z axis",,,,,,,,,,,,,,,,,,,
+calcX,millimeters,x axis dimension in mm (measured in ImageJ),,,,,,,,,,,,,,,,,,,
+calcY,millimeters,y axis dimension in mm (measured in ImageJ),,,,,,,,,,,,,,,,,,,
+calcSA1,millimeters squared,surface area as calculated in imageJ from image 1 of specimen,,,,,,,,,,,,,,,,,,,
+calcSA2,millimeters squared,surface area as calculated in imageJ from image 2 of specimen,,,,,,,,,,,,,,,,,,,
+perimeter,millimeters,calculated perimeter from imageJ,,,,,,,,,,,,,,,,,,,
+polymorph,NA,type of calcium carbonate (Calcite or Aragonite),,,,,,,,,,,,,,,,,,,
+notes,NA,notes on damaged/lost shells for exclusion,,,,,,,,,,,,,,,,,,,
+exclude,NA,"column to indicate exclusion of shells for reasons denoted in 'notes' column. 0 = include, 1=exclude. ",,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,
+shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,shape,xDim,yDim,zDim,thick,calcX,calcY,calcSA1,calcSA2,perimeter,polymorph,note,exclude
+4.1.1.1,T4.1,Marginopora,E21,5,11/6/2023 12:30,11/13/2023 12:30,42.93,40.34,cylinder,8.47,8.26,0.59,0.59,NA,NA,NA,NA,NA,Calcite,,0
+4.1.1.2,T4.1,Marginopora,E21,10,11/6/2023 12:30,11/13/2023 12:30,125.39,119.04,cylinder,11.73,12.14,1.01,1.01,NA,NA,NA,NA,NA,Calcite,,0
+4.1.1.3,T4.1,Marginopora,E21,2,11/6/2023 12:30,11/13/2023 12:30,62.08,0,cylinder,8.27,7.74,1.03,1.03,NA,NA,NA,NA,NA,Calcite,lost,1
+4.1.1.4,T4.1,Marginopora,E21,3,11/6/2023 12:30,11/13/2023 12:30,66.08,62.5,cylinder,7.84,8.07,1.07,1.07,NA,NA,NA,NA,NA,Calcite,,0
+4.1.1.5,T4.1,Marginopora,E21,10,11/6/2023 12:30,11/13/2023 12:30,119.79,113.11,cylinder,10.6,10.97,1.09,1.09,NA,NA,NA,NA,NA,Calcite,,0
+4.1.2.1,T4.1,Turbo,E07,11,11/6/2023 12:30,11/13/2023 12:30,172.59,170.55,hemisphere,7.51,6.93,2.78,2.78,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.2.2,T4.1,Turbo,E07,3,11/6/2023 12:30,11/13/2023 12:30,106.75,104.96,hemisphere,6.33,5.6,2.34,2.34,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.2.3,T4.1,Turbo,E07,5,11/6/2023 12:30,11/13/2023 12:30,203.28,199.67,hemisphere,7.63,6.93,3.13,3.13,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.2.4,T4.1,Turbo,E07,8,11/6/2023 12:30,11/13/2023 12:30,131.03,127.52,hemisphere,6.91,6.21,2.67,2.67,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.2.5,T4.1,Turbo,E08,6,11/6/2023 12:30,11/13/2023 12:30,650.54,643.93,hemisphere,11.35,10.23,4.4,4.4,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.3.1,T4.1,Halimeda,E21,6,11/6/2023 12:30,11/13/2023 12:30,55.4,51.87,rhombus,10,7.49,1,1,9.714,7.429,49.549,49.752,43.619,Aragonite,,0
+4.1.3.2,T4.1,Halimeda,E21,4,11/6/2023 12:30,11/13/2023 12:30,49.7,45.16,rhombus,10.76,8.12,0.84,0.84,10.863,8.001,62.488,59.66,46.05,Aragonite,,0
+4.1.3.3,T4.1,Halimeda,E21,4,11/6/2023 12:30,11/13/2023 12:30,63.3,57.14,rhombus,11.72,8.72,0.86,0.86,11.518,9.041,64.1,64.504,42.281,Aragonite,,0
+4.1.3.4,T4.1,Halimeda,E21,4,11/6/2023 12:30,11/13/2023 12:30,46.37,42.5,rhombus,8.64,7.62,0.8,0.8,8.715,7.573,42.744,42.561,37.111,Aragonite,,0
+4.1.3.5,T4.1,Halimeda,E21,7,11/6/2023 12:30,11/13/2023 12:30,131.7,126.24,rhombus,12.48,9.11,0.6,0.6,12.572,8.858,90.274,90.632,54.632,Aragonite,,0
+4.1.4.1,T4.1,Pinguitellina,E21,2,11/6/2023 12:30,11/13/2023 12:30,80.57,74.98,2dome,10.92,8.8,2.37,0.4,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.4.2,T4.1,Pinguitellina,E21,5,11/6/2023 12:30,11/13/2023 12:30,63.81,58.09,2dome,10.6,8.76,2.27,0.26,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.4.3,T4.1,Pinguitellina,E21,1,11/6/2023 12:30,11/13/2023 12:30,76.11,68.92,2dome,9.74,8.35,2.26,0.37,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.4.4,T4.1,Pinguitellina,E21,11,11/6/2023 12:30,11/13/2023 12:30,73.58,68.67,2dome,10.6,8.44,2.16,0.35,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.4.5,T4.1,Pinguitellina,E21,11,11/6/2023 12:30,11/13/2023 12:30,164.47,155.4,2dome,13.34,11.16,3.52,0.39,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.5.1,T4.1,Abranda,E21,7,11/6/2023 12:30,11/13/2023 12:30,18.4,12.93,2dome,10.42,6.84,1.22,0.09,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.5.2,T4.1,Abranda,E21,8,11/6/2023 12:30,11/13/2023 12:30,38.4,32.07,2dome,13.45,8.33,1.57,0.13,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.5.3,T4.1,Abranda,E21,7,11/6/2023 12:30,11/13/2023 12:30,24.46,18.31,2dome,12.44,7.26,1.38,0.1,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.5.4,T4.1,Abranda,E21,10,11/6/2023 12:30,11/13/2023 12:30,69.8,59.39,2dome,15.49,9.96,1.83,0.19,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.5.5,T4.1,Abranda,E21,9,11/6/2023 12:30,11/13/2023 12:30,44.89,37.36,2dome,12.93,7.64,1.57,0.12,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.6.1,T4.1,Calcite,NA,9,11/6/2023 12:30,11/13/2023 12:30,391.63,390.77,cube,6.75,5.55,3.89,3.89,NA,NA,NA,NA,NA,Calcite,,0
+4.1.6.2,T4.1,Calcite,NA,11,11/6/2023 12:30,11/13/2023 12:30,322.94,322.02,cube,7.38,4.38,3.75,3.75,NA,NA,NA,NA,NA,Calcite,,0
+4.1.6.3,T4.1,Calcite,NA,8,11/6/2023 12:30,11/13/2023 12:30,234.52,233.76,cube,5.45,4.87,3.19,3.19,NA,NA,NA,NA,NA,Calcite,,0
+4.1.6.4,T4.1,Calcite,NA,1,11/6/2023 12:30,11/13/2023 12:30,475.64,474.47,cube,10.65,5.97,3.08,3.08,NA,NA,NA,NA,NA,Calcite,,0
+4.1.6.5,T4.1,Calcite,NA,3,11/6/2023 12:30,11/13/2023 12:30,306.5,304.98,cube,6.75,4.37,3.92,3.92,NA,NA,NA,NA,NA,Calcite,,0
+4.1.7.1,T4.1,Tridacna,NA,8,11/6/2023 12:30,11/13/2023 12:30,997.22,983.36,cube,9.6,7.95,5.28,5.28,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.7.2,T4.1,Tridacna,NA,7,11/6/2023 12:30,11/13/2023 12:30,452.46,446.42,cube,8.74,7.17,2.89,2.89,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.7.3,T4.1,Tridacna,NA,3,11/6/2023 12:30,11/13/2023 12:30,797.19,783.26,cube,9.86,9.57,3.52,3.52,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.7.4,T4.1,Tridacna,NA,2,11/6/2023 12:30,11/13/2023 12:30,1063.57,1051.7,cube,10.79,7.64,5.5,5.5,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.7.5,T4.1,Tridacna,NA,1,11/6/2023 12:30,11/13/2023 12:30,508.06,502.85,cube,9.7,6.93,3.27,3.27,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.8.1,T4.1,Liloa,E21,3,11/6/2023 12:30,11/13/2023 12:30,27.71,25.12,cylinder,8.78,4.12,3.65,0.09,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.8.2,T4.1,Liloa,E21,2,11/6/2023 12:30,11/13/2023 12:30,45.68,41.43,cylinder,10.95,4.43,3.9,0.15,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.8.3,T4.1,Liloa,E21,6,11/6/2023 12:30,11/13/2023 12:30,53.93,48.06,cylinder,9.6,4.77,4.1,0.15,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.8.4,T4.1,Liloa,E21,9,11/6/2023 12:30,11/13/2023 12:30,32.18,25,cylinder,8.55,3.97,2.97,0.11,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.8.5,T4.1,Liloa,E21,2,11/6/2023 12:30,11/13/2023 12:30,40.33,35.14,cylinder,9.17,4.42,3.95,0.17,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.9.1,T4.1,Ethalia,E24,4,11/6/2023 12:30,11/13/2023 12:30,632.47,620.13,sphere,14.1,12.58,9.23,0.38,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.9.2,T4.1,Ethalia,E24,1,11/6/2023 12:30,11/13/2023 12:30,50.31,44.77,sphere,6.65,5.74,5.11,0.19,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.9.3,T4.1,Ethalia,124.7,10,11/6/2023 12:30,11/13/2023 12:30,218.06,209.83,sphere,10.14,8.66,7.92,0.24,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.9.4,T4.1,Ethalia,124.7,7,11/6/2023 12:30,11/13/2023 12:30,861.76,843.7,sphere,15.52,13.67,11.58,0.41,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.9.5,T4.1,Ethalia,124.7,5,11/6/2023 12:30,11/13/2023 12:30,133.36,125.07,sphere,8.85,7.58,6.26,0.31,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.10.1,T4.1,Natica,E22,10,11/6/2023 12:30,11/13/2023 12:30,46.87,43.48,sphere,5.53,4.43,4.55,0.14,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.10.2,T4.1,Natica,E24,6,11/6/2023 12:30,11/13/2023 12:30,80.51,76.08,sphere,7.19,3.58,5.44,0.14,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.10.3,T4.1,Natica,E24,9,11/6/2023 12:30,11/13/2023 12:30,99.13,94.35,sphere,6.79,5.22,5.34,0.29,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.10.4,T4.1,Natica,E24,5,11/6/2023 12:30,11/13/2023 12:30,115.61,110.18,sphere,7.52,5.2,5.34,0.33,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.10.5,T4.1,Natica,E24,4,11/6/2023 12:30,11/13/2023 12:30,63.23,58.73,sphere,6.24,4.34,4.58,0.22,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.11.1,T4.1,Scaphopod,E22,1,11/6/2023 12:30,11/13/2023 12:30,104.08,88.32,2cone,2.54,1.71,20.42,0.28,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.11.2,T4.1,Scaphopod,E22,9,11/6/2023 12:30,11/13/2023 12:30,79.25,70.81,2cone,2.8,1.06,26.44,0.15,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.11.3,T4.1,Scaphopod,E22,11,11/6/2023 12:30,11/13/2023 12:30,76.29,70.7,2cone,2.58,1.72,20.31,0.16,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.11.4,T4.1,Scaphopod,E22,6,11/6/2023 12:30,11/13/2023 12:30,68.39,59.67,2cone,3.06,2.27,15.37,0.25,NA,NA,NA,NA,NA,Aragonite,,0
+4.1.11.5,T4.1,Scaphopod,E22,8,11/6/2023 12:30,11/13/2023 12:30,58.86,50.03,2cone,2.5,1.02,24.25,0.17,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.1.1,T4.2,Marginopora,E22,7,11/17/2023 11:30,11/24/2023 11:30,51.95,46.09,cylinder,9.45,9.19,0.66,0.66,NA,NA,NA,NA,NA,Calcite,,0
+4.2.1.2,T4.2,Marginopora,E22,8,11/17/2023 11:30,11/24/2023 11:30,44.08,38.78,cylinder,8.33,8.07,0.71,0.71,NA,NA,NA,NA,NA,Calcite,,0
+4.2.1.3,T4.2,Marginopora,E22,3,11/17/2023 11:30,11/24/2023 11:30,71.53,68.28,cylinder,7.35,7.41,3.26,3.26,NA,NA,NA,NA,NA,Calcite,,0
+4.2.1.4,T4.2,Marginopora,E22,9,11/17/2023 11:30,11/24/2023 11:30,91.32,86.25,cylinder,11.02,11.34,0.77,0.77,NA,NA,NA,NA,NA,Calcite,,0
+4.2.1.5,T4.2,Marginopora,E22,7,11/17/2023 11:30,11/24/2023 11:30,56,52.33,cylinder,7.91,7.63,1.02,1.02,NA,NA,NA,NA,NA,Calcite,,0
+4.2.2.1,T4.2,Turbo,E08,4,11/17/2023 11:30,11/24/2023 11:30,403.81,398.35,hemisphere,9.6,8.59,4,4,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.2.2,T4.2,Turbo,E08,11,11/17/2023 11:30,11/24/2023 11:30,248.7,244.06,hemisphere,8.17,7.26,3.45,3.45,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.2.3,T4.2,Turbo,E08,7,11/17/2023 11:30,11/24/2023 11:30,241.34,238.85,hemisphere,7.84,7.41,3.26,3.26,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.2.4,T4.2,Turbo,E08,8,11/17/2023 11:30,11/24/2023 11:30,559.36,554.57,hemisphere,10.62,9.66,4.44,1.23,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.2.5,T4.2,Turbo,E08,4,11/17/2023 11:30,11/24/2023 11:30,81.91,79.29,hemisphere,5.9,5.27,2.07,0.83,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.3.1,T4.2,Halimeda,E22,3,11/17/2023 11:30,11/24/2023 11:30,120.98,110.48,rhombus,13.19,10.82,1.23,1,13.155,10.715,95.82,98.732,54.148,Aragonite,broke in half,0
+4.2.3.2,T4.2,Halimeda,E22,3,11/17/2023 11:30,11/24/2023 11:30,40.11,34.26,rhombus,9.84,9.05,0.83,0.94,10.25,8.857,67.658,66.433,43.278,Aragonite,,0
+4.2.3.3,T4.2,Halimeda,E22,4,11/17/2023 11:30,11/24/2023 11:30,95.07,87.63,rhombus,12.36,8.53,1,1.41,12.144,8.576,87.906,86.874,49.247,Aragonite,,0
+4.2.3.4,T4.2,Halimeda,E22,6,11/17/2023 11:30,11/24/2023 11:30,46.19,41.55,rhombus,11.22,8.74,0.94,0.94,11.318,8.148,66.056,65.759,41.99,Aragonite,,0
+4.2.3.5,T4.2,Halimeda,E22,5,11/17/2023 11:30,11/24/2023 11:30,77.81,72.03,rhombus,11.46,8.68,1.41,1.41,11.287,9,64.607,64.393,50.925,Aragonite,,0
+4.2.4.1,T4.2,Pinguitellina,E22,9,11/17/2023 11:30,11/24/2023 11:30,91.96,79.57,2dome,11.14,9.21,2.74,0.38,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.4.2,T4.2,Pinguitellina,E22,4,11/17/2023 11:30,11/24/2023 11:30,54.05,48.27,2dome,9.77,7.71,1.94,0.35,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.4.3,T4.2,Pinguitellina,E22,10,11/17/2023 11:30,11/24/2023 11:30,48.05,43.12,2dome,9.65,8.05,1.97,0.32,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.4.4,T4.2,Pinguitellina,E22,7,11/17/2023 11:30,11/24/2023 11:30,52.44,47.65,2dome,10.3,8.29,1.84,0.32,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.4.5,T4.2,Pinguitellina,E22,8,11/17/2023 11:30,11/24/2023 11:30,118.15,112.19,2dome,12.23,9.94,2.39,0.45,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.5.1,T4.2,Abranda,E22,10,11/17/2023 11:30,11/24/2023 11:30,87.23,67.92,2dome,16.86,11.04,2.05,0.24,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.5.2,T4.2,Abranda,E22,1,11/17/2023 11:30,11/24/2023 11:30,152.11,135.93,2dome,18.56,12.34,2.35,0.25,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.5.3,T4.2,Abranda,E22,1,11/17/2023 11:30,11/24/2023 11:30,76.15,67.2,2dome,15.02,9.7,1.8,0.2,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.5.4,T4.2,Abranda,E22,5,11/17/2023 11:30,11/24/2023 11:30,293.07,279.72,2dome,24.16,15.38,3.28,0.34,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.5.5,T4.2,Abranda,E22,6,11/17/2023 11:30,11/24/2023 11:30,59.18,50.09,2dome,13.92,9.21,1.88,0.24,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.6.1,T4.2,Calcite,NA,2,11/17/2023 11:30,11/24/2023 11:30,341.18,339.32,cube,9.44,6.55,2.21,2.21,NA,NA,NA,NA,NA,Calcite,,0
+4.2.6.2,T4.2,Calcite,NA,5,11/17/2023 11:30,11/24/2023 11:30,359.94,358.99,cube,6.44,5.42,3.84,3.84,NA,NA,NA,NA,NA,Calcite,,0
+4.2.6.3,T4.2,Calcite,NA,2,11/17/2023 11:30,11/24/2023 11:30,212.33,211.83,cube,5.56,4.09,3.53,3.53,NA,NA,NA,NA,NA,Calcite,,0
+4.2.6.4,T4.2,Calcite,NA,1,11/17/2023 11:30,11/24/2023 11:30,243.2,242.54,cube,6.81,4.81,2.99,2.99,NA,NA,NA,NA,NA,Calcite,,0
+4.2.6.5,T4.2,Calcite,NA,11,11/17/2023 11:30,11/24/2023 11:30,277.98,277.1,cube,8.6,8.71,8.23,1.61,NA,NA,NA,NA,NA,Calcite,,0
+4.2.7.1,T4.2,Tridacna,NA,1,11/17/2023 11:30,11/24/2023 11:30,323.72,305.91,cube,6.55,4.45,4.75,4.75,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.7.2,T4.2,Tridacna,NA,10,11/17/2023 11:30,11/24/2023 11:30,295.91,286.38,cube,8.77,4.46,3.18,3.18,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.7.3,T4.2,Tridacna,NA,8,11/17/2023 11:30,11/24/2023 11:30,437.89,431.67,cube,6.71,5.46,4.66,4.66,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.7.4,T4.2,Tridacna,NA,10,11/17/2023 11:30,11/24/2023 11:30,322.21,315.12,cube,7.79,6.44,2.6,2.6,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.7.5,T4.2,Tridacna,NA,9,11/17/2023 11:30,11/24/2023 11:30,238.11,231.69,cube,7.67,4.1,3.37,3.37,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.8.1,T4.2,Liloa,E22,11,11/17/2023 11:30,11/24/2023 11:30,35.04,24.92,cylinder,10.59,4.38,4.24,0.06,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.8.2,T4.2,Liloa,E22,6,11/17/2023 11:30,11/24/2023 11:30,52.88,44.48,cylinder,10.62,4.53,3.78,0.22,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.8.3,T4.2,Liloa,E22,5,11/17/2023 11:30,11/24/2023 11:30,35.85,25.65,cylinder,8.84,4.3,3.76,0.08,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.8.4,T4.2,Liloa,E22,3,11/17/2023 11:30,11/24/2023 11:30,34.25,24.77,cylinder,10.01,4.61,3.73,0.07,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.8.5,T4.2,Liloa,E22,1,11/17/2023 11:30,11/24/2023 11:30,30.37,24.91,cylinder,9.75,4.21,4.47,0.12,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.9.1,T4.2,Ethalia,124.7,6,11/17/2023 11:30,11/24/2023 11:30,237.39,222.96,sphere,10.18,9.09,7.33,0.31,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.9.2,T4.2,Ethalia,124.7,7,11/17/2023 11:30,11/24/2023 11:30,302.27,291.57,sphere,11.2,9.94,8.72,0.35,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.9.3,T4.2,Ethalia,124.7,6,11/17/2023 11:30,11/24/2023 11:30,157.63,149.08,sphere,9.89,8.44,7.25,0.31,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.9.4,T4.2,Ethalia,124.7,2,11/17/2023 11:30,11/24/2023 11:30,232.84,222.7,sphere,10.46,8.93,7.78,0.27,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.9.5,T4.2,Ethalia,124.7,10,11/17/2023 11:30,11/24/2023 11:30,756.54,738.66,sphere,14.59,13.43,10.63,0.43,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.10.1,T4.2,Natica,124.7,8,11/17/2023 11:30,11/24/2023 11:30,42.65,38.01,sphere,5.66,3.37,4.25,0.16,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.10.2,T4.2,Natica,124.7,2,11/17/2023 11:30,11/24/2023 11:30,129,123.55,sphere,7.86,4.51,5.96,0.25,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.10.3,T4.2,Natica,124.7,9,11/17/2023 11:30,11/24/2023 11:30,66.26,62.02,sphere,6.5,3.71,4.58,0.2,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.10.4,T4.2,Natica,124.7,11,11/17/2023 11:30,11/24/2023 11:30,207.68,201.22,sphere,9.39,5.6,7.61,0.23,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.10.5,T4.2,Natica,124.7,2,11/17/2023 11:30,11/24/2023 11:30,99.79,95.1,sphere,7.02,4.18,5.21,0.2,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.11.1,T4.2,Scaphopod,E23,5,11/17/2023 11:30,11/24/2023 11:30,117.86,98.2,2cone,3.15,1.16,28.63,0.24,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.11.2,T4.2,Scaphopod,E23,9,11/17/2023 11:30,11/24/2023 11:30,125.39,104.82,2cone,3.49,2.4,22.94,0.19,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.11.3,T4.2,Scaphopod,E23,11,11/17/2023 11:30,11/24/2023 11:30,91.17,79.55,2cone,2.95,1.05,30.37,0.13,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.11.4,T4.2,Scaphopod,124.7,4,11/17/2023 11:30,11/24/2023 11:30,292.27,271.32,2cone,3.64,1.37,46.66,0.18,NA,NA,NA,NA,NA,Aragonite,,0
+4.2.11.5,T4.2,Scaphopod,124.7,3,11/17/2023 11:30,11/24/2023 11:30,201.23,185.9,2cone,3.33,1.19,37.75,0.22,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.1.1,T4.3,Marginopora,E24,7,12/1/2023 13:00,12/8/2023 13:00,156.17,149.68,cylinder,11.95,12.05,0.93,0.93,NA,NA,NA,NA,NA,Calcite,,0
+4.3.1.2,T4.3,Marginopora,E24,8,12/1/2023 13:00,12/8/2023 13:00,42.77,39.66,cylinder,6.87,6.66,0.96,0.96,NA,NA,NA,NA,NA,Calcite,,0
+4.3.1.3,T4.3,Marginopora,E24,3,12/1/2023 13:00,12/8/2023 13:00,64.82,60.92,cylinder,8.25,8.3,0.94,0.94,NA,NA,NA,NA,NA,Calcite,,0
+4.3.1.4,T4.3,Marginopora,E24,9,12/1/2023 13:00,12/8/2023 13:00,38.68,35.91,cylinder,7.57,7.42,0.73,0.73,NA,NA,NA,NA,NA,Calcite,,0
+4.3.1.5,T4.3,Marginopora,E24,7,12/1/2023 13:00,12/8/2023 13:00,63.82,59.4,cylinder,9.07,9.33,1.06,1.06,NA,NA,NA,NA,NA,Calcite,,0
+4.3.2.1,T4.3,Turbo,E08,8,12/1/2023 13:00,12/8/2023 13:00,142.95,139.8,hemisphere,5.86,6.2,2.68,2.68,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.2.2,T4.3,Turbo,E09,6,12/1/2023 13:00,12/8/2023 13:00,428.75,424.31,hemisphere,9.81,8.98,4.03,4.03,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.2.3,T4.3,Turbo,E09,5,12/1/2023 13:00,12/8/2023 13:00,184.33,181.14,hemisphere,7.48,6.81,2.85,2.85,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.2.4,T4.3,Turbo,E09,8,12/1/2023 13:00,12/8/2023 13:00,243.69,239.98,hemisphere,8.41,7.38,3.3,3.3,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.2.5,T4.3,Turbo,E09,1,12/1/2023 13:00,12/8/2023 13:00,241.9,237.94,hemisphere,8.05,7.19,3.4,3.4,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.3.1,T4.3,Halimeda,E24,5,12/1/2023 13:00,12/8/2023 13:00,42.81,37.25,rhombus,10.34,7.03,0.97,0.97,10.289,7.023,50.688,51.301,38.13,Aragonite,,0
+4.3.3.2,T4.3,Halimeda,E24,9,12/1/2023 13:00,12/8/2023 13:00,84.6,79.59,rhombus,11.6,8.02,1.33,1.33,11.358,7.869,72.729,72.826,46.96,Aragonite,,0
+4.3.3.3,T4.3,Halimeda,E24,10,12/1/2023 13:00,12/8/2023 13:00,49.98,33.65,rhombus,11.13,8.09,1.26,1.26,11.285,8.29,60.243,59.834,41.932,Aragonite,exploded,0
+4.3.3.4,T4.3,Halimeda,E24,6,12/1/2023 13:00,12/8/2023 13:00,73.06,66.78,rhombus,11.03,8.4,1.29,1.29,11.143,8.144,63.64,63.019,46.087,Aragonite,,0
+4.3.3.5,T4.3,Halimeda,E24,11,12/1/2023 13:00,12/8/2023 13:00,44.02,39.71,rhombus,11.46,8.55,0.88,0.88,11.436,8.576,68.623,69.587,43.489,Aragonite,,0
+4.3.4.1,T4.3,Pinguitellina,E24,2,12/1/2023 13:00,12/8/2023 13:00,115.74,107.26,2dome,12.39,10,3.04,0.44,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.4.2,T4.3,Pinguitellina,E24,1,12/1/2023 13:00,12/8/2023 13:00,80.04,66.33,2dome,11.54,8.89,2.18,0.4,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.4.3,T4.3,Pinguitellina,E24,3,12/1/2023 13:00,12/8/2023 13:00,108.86,98.11,2dome,11.94,9.68,2.05,0.45,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.4.4,T4.3,Pinguitellina,E24,1,12/1/2023 13:00,12/8/2023 13:00,139.97,131.68,2dome,12.95,10.43,2.8,0.47,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.4.5,T4.3,Pinguitellina,E24,4,12/1/2023 13:00,12/8/2023 13:00,109.86,103.55,2dome,11.22,9.32,2.75,0.42,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.5.1,T4.3,Abranda,E24,7,12/1/2023 13:00,12/8/2023 13:00,80.35,68.58,2dome,16.3,10.55,2.06,0.26,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.5.2,T4.3,Abranda,E24,11,12/1/2023 13:00,12/8/2023 13:00,114.44,103.37,2dome,16.52,10.83,2.13,0.27,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.5.3,T4.3,Abranda,E24,8,12/1/2023 13:00,12/8/2023 13:00,263.84,248.28,2dome,20.88,13.94,2.79,0.34,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.5.4,T4.3,Abranda,E24,3,12/1/2023 13:00,12/8/2023 13:00,108.22,93.75,2dome,18.94,11.99,2.2,0.23,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.5.5,T4.3,Abranda,E24,8,12/1/2023 13:00,12/8/2023 13:00,170.78,155.43,2dome,20.33,13.82,2.4,0.3,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.6.1,T4.3,Calcite,NA,3,12/1/2023 13:00,12/8/2023 13:00,317.16,316.09,cube,5.19,5.05,4.91,4.91,NA,NA,NA,NA,NA,Calcite,,0
+4.3.6.2,T4.3,Calcite,NA,7,12/1/2023 13:00,12/8/2023 13:00,139.63,138.68,cube,4.95,4.53,2.82,2.82,NA,NA,NA,NA,NA,Calcite,,0
+4.3.6.3,T4.3,Calcite,NA,9,12/1/2023 13:00,12/8/2023 13:00,182.86,181.95,cube,6.53,4.7,2.36,2.36,NA,NA,NA,NA,NA,Calcite,,0
+4.3.6.4,T4.3,Calcite,NA,9,12/1/2023 13:00,12/8/2023 13:00,106.67,106.06,cube,5.23,4.46,1.79,1.79,NA,NA,NA,NA,NA,Calcite,chipped on scale,0
+4.3.6.5,T4.3,Calcite,NA,7,12/1/2023 13:00,12/8/2023 13:00,359.51,358.4,cube,6.21,5.24,4.78,4.78,NA,NA,NA,NA,NA,Calcite,,0
+4.3.7.1,T4.3,Tridacna,NA,6,12/1/2023 13:00,12/8/2023 13:00,380.7,371.64,cube,7.93,7.74,2.72,2.72,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.7.2,T4.3,Tridacna,NA,2,12/1/2023 13:00,12/8/2023 13:00,94.99,88.63,cube,6.82,5.61,1.44,1.44,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.7.3,T4.3,Tridacna,NA,2,12/1/2023 13:00,12/8/2023 13:00,232.29,219.87,cube,10.04,9.48,1.34,1.34,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.7.4,T4.3,Tridacna,NA,9,12/1/2023 13:00,12/8/2023 13:00,168.66,164.62,cube,7.17,4.29,2.67,2.67,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.7.5,T4.3,Tridacna,NA,5,12/1/2023 13:00,12/8/2023 13:00,115.74,111.24,cube,7.73,5.08,1.63,1.63,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.8.1,T4.3,Liloa,124.7,1,12/1/2023 13:00,12/8/2023 13:00,33.68,25.75,cylinder,10.35,4.2,3.63,0.12,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.8.2,T4.3,Liloa,124.7,4,12/1/2023 13:00,12/8/2023 13:00,41.29,33.78,cylinder,9.44,4.28,3.93,0.15,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.8.3,T4.3,Liloa,124.7,4,12/1/2023 13:00,12/8/2023 13:00,64.06,49.78,cylinder,11.66,5.19,4.68,0.19,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.8.4,T4.3,Liloa,124.7,4,12/1/2023 13:00,12/8/2023 13:00,35.75,28.22,cylinder,9.87,4.07,3.68,0.21,NA,NA,NA,NA,NA,Aragonite,chipped on scale badly,0
+4.3.8.5,T4.3,Liloa,124.7,9,12/1/2023 13:00,12/8/2023 13:00,73.74,63.89,cylinder,13.77,5.47,4.65,0.11,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.9.1,T4.3,Ethalia,124.7,11,12/1/2023 13:00,12/8/2023 13:00,184.95,174.21,sphere,10.01,9.04,7.55,0.27,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.9.2,T4.3,Ethalia,124.7,10,12/1/2023 13:00,12/8/2023 13:00,593.7,581.51,sphere,14.04,12.16,9.94,0.37,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.9.3,T4.3,Ethalia,124.7,6,12/1/2023 13:00,12/8/2023 13:00,150.57,142.88,sphere,9.58,8.18,7.08,0.25,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.9.4,T4.3,Ethalia,124.7,2,12/1/2023 13:00,12/8/2023 13:00,115.81,108.32,sphere,8.52,7.48,6.52,0.28,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.9.5,T4.3,Ethalia,124.7,2,12/1/2023 13:00,12/8/2023 13:00,394.64,383.52,sphere,12.1,11.01,8.91,0.37,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.10.1,T4.3,Natica,124.7,9,12/1/2023 13:00,12/8/2023 13:00,177.12,166,sphere,9.49,5.55,7.62,0.22,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.10.2,T4.3,Natica,124.7,8,12/1/2023 13:00,12/8/2023 13:00,142.04,135.98,sphere,8.25,4.66,6.34,0.25,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.10.3,T4.3,Natica,124.7,8,12/1/2023 13:00,12/8/2023 13:00,256.09,239.54,sphere,9.59,5.54,8.75,0.33,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.10.4,T4.3,Natica,124.7,3,12/1/2023 13:00,12/8/2023 13:00,53.84,50.78,sphere,6.2,3.78,5.22,0.22,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.10.5,T4.3,Natica,124.7,8,12/1/2023 13:00,12/8/2023 13:00,132.59,127.06,sphere,8.24,4.64,6.02,0.26,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.11.1,T4.3,Scaphopod,124.7,4,12/1/2023 13:00,12/8/2023 13:00,113.96,97.57,2cone,3.31,0.99,32.92,0.14,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.11.2,T4.3,Scaphopod,124.7,3,12/1/2023 13:00,12/8/2023 13:00,78.06,70.17,2cone,2.49,0.91,27.09,0.26,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.11.3,T4.3,Scaphopod,124.7,1,12/1/2023 13:00,12/8/2023 13:00,105.12,90.78,2cone,2.85,0.98,30.8,0.21,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.11.4,T4.3,Scaphopod,124.7,7,12/1/2023 13:00,12/8/2023 13:00,39.67,37.23,2cone,2.12,1,13.75,0.3,NA,NA,NA,NA,NA,Aragonite,,0
+4.3.11.5,T4.3,Scaphopod,124.7,3,12/1/2023 13:00,12/8/2023 13:00,67.87,55.44,2cone,2.82,1.91,19.28,0.21,NA,NA,NA,NA,NA,Aragonite,,0
