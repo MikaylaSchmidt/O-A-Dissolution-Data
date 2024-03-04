@@ -1,3 +1,20 @@
+################################  FILE LICENSE  ################################
+#
+#	This file is copyright (C) 2023 Mikayla Schmidt
+#
+#	This program is free software; you can redistribute it and/or modify it 
+#	under the terms of version 3 the GNU General Public License as published 
+#	by the Free Software Foundation.
+#
+#	This program is distributed in the hope that it will be useful, but WITHOUT
+#	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+#	FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for 
+#	more details.
+#
+#	To view a copy of the license go to:
+#	http://www.gnu.org/licenses/licenses.html#GPL
+#	
+################################################################################
 #Fig gen trial
 
 #1.1 seems to actually work to linearize the data for mass1 to pMass relationship
