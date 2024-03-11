@@ -39,7 +39,7 @@ pdf('./Expt1pMass.pdf', width=8, height=6)
 par(mfrow=c(1,1), oma=c(1,1,1,1))
 
 #combined from script 'Expt1 Post Processing Analysis'
-  #weirdly exponential 
+  #not so weirdly exponential 
   plot(mass1~pMass, data=pData, col= pData$tColor, pch=substring(pData$taxon, 0, 2), ylab='Starting Mass (mg)', xlab='% Mass Lost')
   pVal <- vector()
   p = 0
@@ -105,6 +105,7 @@ par(mfrow=c(1,1), oma=c(1,1,1,1))
   #plot with all of them included EXCEPT volume...
   par(mfrow=c(1,1), oma=c(1,1,1,1))
   total <- pData$mass1 + pData$finalSA + pData$densityMV + pData$thick + pData$volume
+
   plot(total~pMass, data=pData, pch=substring(pData$taxon, 0, 2), ylab='Variables', xlab='% Mass Lost')
   
 dev.off()

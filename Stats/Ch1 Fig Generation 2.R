@@ -32,8 +32,12 @@ tAbrev <- substring(taxa,0,5)
 TAXA2 <- data.frame(taxon=taxa, tFont = tFont, tPoint=substring(taxa,0,1), tAbrev = tAbrev, tColor=rainbow(length(taxa)), tLine = 1:length(taxa))
 pData<-merge(pData,TAXA2,by='taxon')
 
-#figure generation for shell cSize to mass1 ratio
+#additional variables transformed
 pData$rootMass <- (pData$mass1)^ (1/3)
+pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
+
+
+#figure generation for shell cSize to mass1 ratio
 plot(rootMass~cSize, data=pData, col= pData$tColor, pch=substring(pData$taxon, 0, 2), ylab='Cube Root Mass', xlab='Shell Size', ylim=c(0,12), xlim=c(0,12))
 arag <- data.frame(cSize=0:12,rootMass=(0:12)*2.83)
 arag$rootMass = ((arag$cSize^3)*2.83)^(1/3)
@@ -43,37 +47,32 @@ calcite <- data.frame(cSize=0:12,rootMass=(0:12)*2.711)
 calcite$rootMass = ((calcite$cSize^3)*2.711)^(1/3)
 lines(calcite$cSize, calcite$rootMass)
 lm(rootMass ~ cSize, data=calcite)
-r2 <- vector()
-slope <- vector()
+summaryData <- data.frame(taxon=TAXA2, n=NA,  p=NA, r2=NA, b.est=NA, b.err=NA, slope=NA, slope.err=NA)
+summary(summaryData)
 p = 0
 for(T in TAXA2$taxon){
   temp <- pData[(pData$taxon == T),]
   pref <- TAXA2[(TAXA2$taxon==T),]
   lm.temp <- lm(rootMass~cSize, data=temp)
   p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  slope[p] <- round(coefficients(lm.temp)[2],3)
+  summaryData[p,'r2'] <- round(summary(lm.temp)$adj.r.squared,3)
+  summaryData[p, 'p'] <- round(summary(lm.temp)$coefficients[2,4],7)
+  summaryData[p,'slope'] <- round(summary(lm.temp)$coefficients[2,1],3)
+  summaryData[p,'slope.err'] <- round(summary(lm.temp)$coefficients[2,2],3)
+  summaryData[p,'b.est'] <- round(summary(lm.temp)$coefficients[1,1],3)
+  summaryData[p,'b.err'] <- round(summary(lm.temp)$coefficients[1,2], 3)
+  summaryData[p,'n'] <- nrow(temp)
   abline(lm.temp, col=pref$tColor, lty=pref$tLine)
 }
 
-#getting p values
-#work on this later
-pVal <- vector()
-for(T in TAXA2$taxon){
-  temp <- pData[(pData$taxon == T),]
-  pref <- TAXA2[(TAXA2$taxon==T),]
-  lm.temp <- lm(rootMass~cSize, data=temp)
-  p <- p + 1
-  pVal[p] <- round(summary(lm.temp)$p.value,3)
-
-}
+#update code to pull r2/slope from above 
 summary(lm.temp)
-legend('topright', legend= paste(TAXA2$taxon,' r\u00b2=',pVal), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+print(summaryData)
 
 #comment legend below is original r^2 legend, while beyond that is for slope
-legend('topright', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+legend('topright', legend= paste(TAXA2$taxon,'r\u00b2=', summaryData$r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
 
-relSlope <- round(slope/1.41,3)
+relSlope <- round(summaryData$slope/1.41,3)
 relSlope
 cbind(TAXA2,relSlope)
 legend('topleft', legend= paste(TAXA2$taxon,' slope=',relSlope), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
@@ -83,42 +82,58 @@ legend('topleft', legend= paste(TAXA2$taxon,' slope=',relSlope), col=TAXA2$tColo
 selectTemp <- which(pData$taxon %in% c('Tridacna','Calcite') == FALSE)
 tempNo <- pData[(selectTemp),]
 plot(thick~cSize, data=tempNo, col= tempNo$tColor, pch=substring(tempNo$taxon, 0, 2), ylab='Thickness', xlab='Shell Size', ylim=c(0,12), xlim=c(0,12))
-r2 <- vector()
-slope <- vector()
+summaryData <- data.frame(taxon=TAXA2, n=NA,  p=NA, r2=NA, b.est=NA, b.err=NA, slope=NA, slope.err=NA)
+summary(summaryData)
 p = 0
 for(T in TAXA2$taxon){
   temp <- pData[(pData$taxon == T),]
   pref <- TAXA2[(TAXA2$taxon==T),]
   lm.temp <- lm(thick~cSize, data=temp)
   p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  slope[p] <- round(coefficients(lm.temp)[2],3)
+  summaryData[p,'r2'] <- round(summary(lm.temp)$adj.r.squared,3)
+  summaryData[p, 'p'] <- round(summary(lm.temp)$coefficients[2,4],7)
+  summaryData[p,'slope'] <- round(summary(lm.temp)$coefficients[2,1],3)
+  summaryData[p,'slope.err'] <- round(summary(lm.temp)$coefficients[2,2],3)
+  summaryData[p,'b.est'] <- round(summary(lm.temp)$coefficients[1,1],3)
+  summaryData[p,'b.err'] <- round(summary(lm.temp)$coefficients[1,2], 3)
+  summaryData[p,'n'] <- nrow(temp)
   if ((T %in% c('Tridacna','Calcite')) == FALSE)
   abline(lm.temp, col=pref$tColor, lty=pref$tLine)
 }
-legend('topleft', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+print(summaryData)
+
+TAXA3 <- TAXA2[3:11,]
+summaryData2 <- summaryData[3:11,]
+
+legend('topleft', legend= paste(TAXA3$taxon,' r\u00b2=',summaryData2$r2), col=TAXA3$tColor, lty=TAXA3$tLine, text.font = TAXA3$tFont, pch= TAXA3$tPoint, text.col= TAXA3$tColor)
+legend('topleft', legend= paste(TAXA3$taxon,' slope =',summaryData2$slope), col=TAXA3$tColor, lty=TAXA3$tLine, text.font = TAXA3$tFont, pch= TAXA3$tPoint, text.col= TAXA3$tColor)
 #remove calcite and tridacna from this because their thickness is arbitrary
 
 #third one, for deviation from the 'normal' sphere
-pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
 plot(deviation~cSize, data=pData, col= pData$tColor, pch=substring(pData$taxon, 0, 2), ylab='Deviation', xlab='Shell Size', xlim=c(0,12))
-r2 <- vector()
-slope <- vector()
+summaryData <- data.frame(taxon=TAXA2, n=NA,  p=NA, r2=NA, b.est=NA, b.err=NA, slope=NA, slope.err=NA)
+summary(summaryData)
 p = 0
 for(T in TAXA2$taxon){
   temp <- pData[(pData$taxon == T),]
   pref <- TAXA2[(TAXA2$taxon==T),]
   lm.temp <- lm(deviation~cSize, data=temp)
   p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  slope[p] <- round(coefficients(lm.temp)[2],3)
+  summaryData[p,'r2'] <- round(summary(lm.temp)$adj.r.squared,3)
+  summaryData[p, 'p'] <- round(summary(lm.temp)$coefficients[2,4],7)
+  summaryData[p,'slope'] <- round(summary(lm.temp)$coefficients[2,1],3)
+  summaryData[p,'slope.err'] <- round(summary(lm.temp)$coefficients[2,2],3)
+  summaryData[p,'b.est'] <- round(summary(lm.temp)$coefficients[1,1],3)
+  summaryData[p,'b.err'] <- round(summary(lm.temp)$coefficients[1,2], 3)
+  summaryData[p,'n'] <- nrow(temp)
   abline(lm.temp, col=pref$tColor, lty=pref$tLine)
 }
-abline(h=1)
-abline(a=0, b=1)
+abline(a=0, b=1, lty=2, lwd=1.55)
+abline(a=0, b=0, lty=2, lwd=1.55)
 legend('topleft', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
-legend('topleft', legend= paste(TAXA2$taxon,' r\u00b2=',1-slope), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+legend('topleft', legend= paste(TAXA2$taxon,' slope =',1-slope), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
 
+print(summaryData)
 
 #final one - for csize by taxon
 #not sure if needed or how to flip
@@ -144,6 +159,8 @@ tAbrev <- substring(taxa,0,5)
 TAXA2 <- data.frame(taxon=taxa, tFont = tFont, tPoint=substring(taxa,0,1), tAbrev = tAbrev, tColor=rainbow(length(taxa)), tLine = 1:length(taxa))
 pData<-merge(pData,TAXA2,by='taxon')
 
+pData$rootMass <- (pData$mass1)^ (1/3)
+pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
 
 #3.1 Combining Expt 1 and Expt 3 without Expt 2, and then subsetting by experiment
 
@@ -187,6 +204,11 @@ ggplot(Expt1_3, aes(taxon, avg)) +
   geom_boxplot(aes(fill = factor(exptNo))) +
   theme_classic() + xlab('Taxon') + ylab('% Dissolution per Hour') +
   scale_fill_discrete(name = "Starting pH", labels = c("pH 5.1", "pH 7.1"))
+        
+            #Work on this
+            stat_boxplot()
+            table <- A$stats
+            
 
 #just the two controls
 #you could redo these looking at individual experiments rather than the average
@@ -198,35 +220,6 @@ ggplot(subControl, aes(taxon, avg)) +
 
 
 dev.off()
-
-
-
-#3.2.2 shell mean dissolution by taxon
-Expt1_3$meanDiss <- ((Expt1_3$cMass)^(2/3))/48 
-sub3 <- which(Expt1_3$exptNo == 'Expt3')
-Expt1_3[sub3,'meanDiss'] <- Expt1_3[sub3,'cMass']^(2/3)/168
-
-plot(meanDiss ~ taxon, data=Expt1_3, ann=FALSE, axes=FALSE)
-points(meanDiss ~ taxon, data=Expt1_3)
-mtext('Mean Dissolution per Hour', side=2, line=3)
-axis(2, las=1)
-axis(1, at=1:length(taxa), labels=taxa, font=3, cex=0.5, las=2)
-
-plot(meanDiss~mass1, data=Expt1_3, col= Expt1_3$tColor , pch=substring(Expt1_3$taxon, 0, 2))
-r2 <- vector()
-slope <- vector()
-p = 0
-for(T in TAXA){
-  temp <- Expt1_3[(Expt1_3$taxon == T),]
-  pref <- TAXA2[(TAXA2$taxon==T),]
-  lm.temp <- lm(meanDiss~mass1, data=temp)
-  p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  abline(lm.temp, col=pref$tColor, lty=pref$tLine)
-}
-legend('topright', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
-
-
 
 
 #3.3 comparison plots but standardized for pH
@@ -256,6 +249,7 @@ Expt1_3$cTotalMol <- (Expt1_3$cTotal)/(100.0869*1000)
 #plot predicted carbonate over actual carbonate in mols
 plot(predictCarb~cTotalMol, data= Expt1_3)
 
+
 #3.4 for plotting
 #% calcium carbonate dissolved over total
 Expt1_3$percentTotal <- (Expt1_3$cMass)/(Expt1_3$cTotal) *100
@@ -266,7 +260,10 @@ colnames(SATotal)<-c('exptID','SATotal')
 Expt1_3 <- merge(Expt1_3, SATotal, by = 'exptID')
 Expt1_3$percentSATotal <- (Expt1_3$finalSA)/(Expt1_3$SATotal) * 100
 
+#summary and residuals plotting, first OLS then SMA
 summary(lm(percentTotal~percentSATotal, data = Expt1_3))
+plot(lm(percentTotal~percentSATotal, data = Expt1_3))
+
 
 #plot this
 #but in pdf form
@@ -275,50 +272,74 @@ par(mfrow=c(1,1), oma=c(1,1,1,1))
 plot(percentTotal~percentSATotal, data = Expt1_3, col= Expt1_3$tColor, pch=substring(Expt1_3$taxon, 0, 2), xlab = '% of Total Surface Area', ylab = "% of Total Mass Lost")
 line <-lm(percentTotal~percentSATotal, data = Expt1_3)
 abline(lm(percentTotal~percentSATotal, data = Expt1_3))
-abline(a=0, b=1)
+legend('topleft', legend= paste(TAXA2$taxon), col=TAXA2$tColor, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
 
-r2 <- vector()
-slope <- vector()
-p = 0
-for(T in TAXA2$taxon){
-  temp <- Expt1_3[(Expt1_3$taxon == T),]
-  pref <- TAXA2[(TAXA2$taxon==T),]
-  lm.temp <- lm(percentTotal~percentSATotal, data=temp)
-  p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  slope[p] <- round(coefficients(lm.temp)[2],3)
-  abline(lm.temp, col=pref$tColor, lty=pref$tLine)
-}
-legend('topleft', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
 
-#again but for volume instead of SA 
-volumeTotal <- aggregate(Expt1_3$volume, by = list(Expt1_3$exptID),FUN=sum)
-colnames(volumeTotal)<-c('exptID','volumeTotal')
-Expt1_3 <- merge(Expt1_3, volumeTotal, by = 'exptID')
-Expt1_3$percentVolumeTotal <- (Expt1_3$volume)/(Expt1_3$volumeTotal) * 100
+#abline(a=0, b=1)
+#summaryData <- data.frame(taxon=TAXA2, n=NA,  p=NA, r2=NA, b.est=NA, b.err=NA, slope=NA, slope.err=NA)
+#summary(summaryData)
+#p = 0
+#for(T in TAXA2$taxon){
+  #temp <- Expt1_3[(Expt1_3$taxon == T),]
+  #pref <- TAXA2[(TAXA2$taxon==T),]
+  #lm.temp <- lm(percentTotal~percentSATotal, data=temp)
+  #p <- p + 1
+  #summaryData[p,'r2'] <- round(summary(lm.temp)$adj.r.squared,3)
+  #summaryData[p, 'p'] <- round(summary(lm.temp)$coefficients[2,4],7)
+  #summaryData[p,'slope'] <- round(summary(lm.temp)$coefficients[2,1],3)
+  #summaryData[p,'slope.err'] <- round(summary(lm.temp)$coefficients[2,2],3)
+  #summaryData[p,'b.est'] <- round(summary(lm.temp)$coefficients[1,1],3)
+  #summaryData[p,'b.err'] <- round(summary(lm.temp)$coefficients[1,2], 3)
+  #summaryData[p,'n'] <- nrow(temp)
+  #abline(lm.temp, col=pref$tColor, lty=pref$tLine)
+#}
 
-plot(percentTotal~percentVolumeTotal, data = Expt1_3, col= Expt1_3$tColor, pch=substring(Expt1_3$taxon, 0, 2), xlab = '% of Total Volume', ylab = "% of Total Mass Lost")
-line <-lm(percentTotal~percentVolumeTotal, data = Expt1_3)
-abline(lm(percentTotal~percentVolumeTotal, data = Expt1_3))
-abline(a=0, b=1)
 
-r2 <- vector()
-slope <- vector()
-p = 0
-for(T in TAXA2$taxon){
-  temp <- Expt1_3[(Expt1_3$taxon == T),]
-  pref <- TAXA2[(TAXA2$taxon==T),]
-  lm.temp <- lm(percentTotal~percentVolumeTotal, data=temp)
-  p <- p + 1
-  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
-  slope[p] <- round(coefficients(lm.temp)[2],3)
-  abline(lm.temp, col=pref$tColor, lty=pref$tLine)
-}
-legend('topright', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+#3.5 plot of total predictors
+#plot with all of them included EXCEPT volume...
+par(mfrow=c(1,1))
+model0 <- lm(percentTotal ~ percentSATotal, data = Expt1_3)
+summary(model0)
 
-dev.off()
+#issue with next is that densityMV and deviation are from same (?)
+model1<- lm(percentTotal ~ thick + percentSATotal + densityMV + deviation + rootMass + mass1 + exptNo + exptID, data=Expt1_3)
+summary(model1)
 
-#SA seems to be 1:1 while volume is closer to 1:2
-Expt1_3$newRatio <- (Expt1_3$percentTotal)/(Expt1_3$percentVolumeTotal)
-plot(newRatio~taxon, data=Expt1_3, ylab='% Mass Lost/% Volume')
-abline (a=1, b=0)
+model2 <- lm(percentTotal ~ thick + percentSATotal + densityMV + deviation + polymorph + rootMass, data=Expt1_3)
+summary(model2)
+
+model3 <- lm(percentTotal~ percentSATotal + densityMV + deviation + polymorph, data=Expt1_3)
+summary(model3)
+
+model4<- lm(percentTotal~percentSATotal + densityMV + deviation + polymorph, data=Expt1_3)
+summary(model4)
+plot(model4)
+
+model5<- lm(percentTotal~ percentSATotal + thick  + densityMV + deviation  + polymorph + taxon, data=Expt1_3)
+summary(model5)
+plot(model5)
+
+
+
+#3.6 then do SMA analysis with these same plots to see if the results end up being better
+library(smatr)
+smaModel1 <- sma(percentTotal ~ mass1 + thick + finalSA + volume + densityMV, data=Expt1_3)
+smaModel1
+
+#issue with this specific one with dropped levels of grouping
+smaModel2 <- sma(percentTotal ~ densityMV + finalSA, data=Expt1_3)
+smaModel2 
+
+smaModel3 <- sma(percentTotal ~ finalSA + densityMV + polymorph, data=Expt1_3)
+smaModel3
+smaModel4 <- sma(percentTotal~finalSA + densityMV + polymorph + taxon, data=Expt1_3)
+smaModel4
+
+lmodel2(percentTotal~percentSATotal, data = Expt1_3)
+plot(lmodel2(percentTotal~percentSATotal, data = Expt1_3))
+perTrial <- lmodel2(percentTotal~percentSATotal, data = Expt1_3) 
+summary(perTrial)
+
+perTrial2<-sma(percentTotal~percentSATotal, data = Expt1_3, col= Expt1_3$tColor, pch=substring(Expt1_3$taxon, 0, 2))
+plot(perTrial2, type = 'l', col= 'black', xlab = '% of Total Surface Area', ylab = "% of Total Mass Lost")
+points(percentTotal~percentSATotal, data = Expt1_3, col= Expt1_3$tColor, pch=substring(Expt1_3$taxon, 0, 2))
