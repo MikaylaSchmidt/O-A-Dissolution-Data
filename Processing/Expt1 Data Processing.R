@@ -192,10 +192,11 @@ dShell[subRhom,'volume'] <- (dShell[subRhom, 'calcSA1']+dShell[subRhom, 'calcSA2
 dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[subSphere, 'yDim']/2 * dShell[subSphere, 'zDim']/2)
   
 #(mass^1/3)/volume^1/3 with shell volume substituted for shell size 
-#do you need to take both to 1/3 sqrt?
-dShell$densityMV <- dShell$cMass / dShell$volume
+dShell$densityMV <- dShell$mass1 / dShell$volume
 
-
+#deviation from spherical and rootMass for an added bonus
+pData$rootMass <- (pData$mass1)^ (1/3)
+pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
 
 #1.6 export this data as a csv
 write.csv(dShell, 'shellsData_Expt1.csv', row.names=TRUE)

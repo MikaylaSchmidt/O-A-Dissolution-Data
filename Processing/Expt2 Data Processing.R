@@ -44,7 +44,7 @@ dShell$wax <- dShell$waxMass1 - dShell$mass1
 
 #1.1 Surface area calculations for all of the taxa using caliper measurements
 #by default, all are classified as cylinder
-dShell$shape <- 'cylinder1'
+dShell$shape <- 'cylinder'
 dShell[(dShell$taxon == 'Calcite'),'shape'] <- 'cube'
 
 #pingui and abra technically two domes
@@ -60,28 +60,26 @@ dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
 #1.2 surface area caliper calculations
 #basic rectangular cube surface area. does not work for halimeda based off how measurements were taken.
 #is 2xy + 2yz + 2xz
-dShell$cSA1 <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
+dShell$finalSA <- 2*(dShell$xDim * dShell$yDim) + 2*(dShell$yDim * dShell$zDim) + 2*(dShell$xDim * dShell$zDim)
 
 #next lines for surface area of domed specimens - abranda and pingui
 # is 2 * pi(r^2+h^2)
 subDome <- which(dShell$shape == '2dome')
-dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2) + dShell[subDome,'zDim']^2) 
+dShell[subDome,'finalSA'] <- 2 * pi * ((dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2) + dShell[subDome,'zDim']^2) 
 
 #finally, nat and eth spherical calc
 #is 4 * pi * [(x/2 + y/2 + z/2)/3]^2
 subSphere <- which(dShell$shape == 'sphere')
-dShell[subSphere,'cSA1'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'zDim']/2)/3)^2
+dShell[subSphere,'finalSA'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subSphere,'yDim']/2 + dShell[subSphere,'zDim']/2)/3)^2
+
+
+#divide SA by 2 but only for 2domed specimens
+dShell[subDome,'finalSA'] <- (dShell[subDome,'finalSA']/2)
 
 #Additionally, combined pMass and cMass stitched together
-dShell$cMassFinal <- dShell$cMass
-subWax <- which(!is.na(dShell$waxMass))
-dShell[subWax, 'cMassFinal'] <- dShell[subWax, 'cMassWax'] 
+dShell[subWax, 'cMass'] <- dShell[subWax, 'cMassWax'] 
+dShell[subWax, 'pMass'] <- dShell[subWax, 'pMassWax'] 
 
-dShell$pMassFinal <- dShell$pMass 
-dShell[subWax, 'pMassFinal'] <- dShell[subWax, 'pMassWax'] 
-
-#1.3 Final dataset for surface area using alternate for halimeda. could also just use calcSA.
-dShell$finalSA <- dShell$cSA1 
 
 
 #1.4 Density as given in Kosnik et al 2009
@@ -96,8 +94,12 @@ dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[s
 
 #(mass^1/3)/volume^1/3 with shell volume substituted for shell size 
 #do you need to take both to 1/3 sqrt?
-dShell$densityMV <- dShell$cMass / dShell$volume
-
+dShell$densityMV <- dShell$mass1 / dShell$volume
+#dShell[subWax,'volume'] <- NA
+#dShell[subWax,'densityMV'] <- NA
+#deviation from spherical and rootMass for an added bonus
+pData$rootMass <- (pData$mass1)^ (1/3)
+pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
 
 
 #1.6 export this data as a csv
