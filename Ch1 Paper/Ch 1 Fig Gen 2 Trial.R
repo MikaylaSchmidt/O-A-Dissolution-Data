@@ -59,3 +59,30 @@ dev.off()
 Expt1_3$newRatio <- (Expt1_3$percentTotal)/(Expt1_3$percentVolumeTotal)
 plot(newRatio~taxon, data=Expt1_3, ylab='% Mass Lost/% Volume')
 abline (a=1, b=0)
+
+#same thing but dissolution percent
+densityTotal <- aggregate(Expt1_3$densityMV, by = list(Expt1_3$exptID),FUN=sum)
+colnames(densityTotal)<-c('exptID','densityTotal')
+Expt1_3 <- merge(Expt1_3, densityTotal, by = 'exptID')
+Expt1_3$percentDensityTotal <- (Expt1_3$densityMV)/(Expt1_3$densityTotal) * 100
+
+plot(percentTotal~percentDensityTotal, data = Expt1_3, col= Expt1_3$tColor, pch=substring(Expt1_3$taxon, 0, 2), xlab = '% of Total Mass Lost', ylab = "% of Total Density Lost")
+line <-lm(percentTotal~percentDensityTotal, data = Expt1_3)
+abline(lm(percentTotal~percentDensityTotal, data = Expt1_3))
+abline(a=0, b=1)
+
+r2 <- vector()
+slope <- vector()
+p = 0
+for(T in TAXA2$taxon){
+  temp <- Expt1_3[(Expt1_3$taxon == T),]
+  pref <- TAXA2[(TAXA2$taxon==T),]
+  lm.temp <- lm(percentTotal~percentVolumeTotal, data=temp)
+  p <- p + 1
+  r2[p] <- round(summary(lm.temp)$adj.r.squared,3)
+  slope[p] <- round(coefficients(lm.temp)[2],3)
+  abline(lm.temp, col=pref$tColor, lty=pref$tLine)
+}
+legend('topright', legend= paste(TAXA2$taxon,' r\u00b2=',r2), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
+
+dev.off()
