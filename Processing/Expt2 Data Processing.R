@@ -74,7 +74,8 @@ dShell[subSphere,'finalSA'] <- 4 * pi * ((dShell[subSphere,'xDim']/2+dShell[subS
 
 
 #divide SA by 2 but only for 2domed specimens
-dShell[subDome,'finalSA'] <- (dShell[subDome,'finalSA']/2)
+subWax <- which(dShell$waxYN == 'Wax' & dShell$shape == '2dome')
+dShell[subWax,'finalSA'] <- (dShell[subWax,'finalSA']/2)
 
 #Additionally, combined pMass and cMass stitched together
 dShell[subWax, 'cMass'] <- dShell[subWax, 'cMassWax'] 

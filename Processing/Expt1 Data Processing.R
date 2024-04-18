@@ -80,7 +80,7 @@ subCyl1 <- which(dShell$shape == 'cylinder1')
 dShell[subCyl1,'cSA1'] <- 2 * (pi* dShell[subCyl1,'xDim']/2 * dShell[subCyl1,'yDim']/2) + dShell[subCyl1,'zDim']*pi*(dShell[subCyl1,'yDim'] + dShell[subCyl1,'xDim'])/2
 #for liloa cylinder, 2piR^2 + 2*h*pi*r
 subCyl2 <- which(dShell$shape == 'cylinder2')
-dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'yDim']/2 * dShell[subCyl2,'yDim']/2) + 2* dShell[subCyl2,'zDim']*pi*dShell[subCyl2,'yDim']/2 
+dShell[subCyl2,'cSA1'] <- 2 * (pi* dShell[subCyl2,'yDim']/2 * dShell[subCyl2,'yDim']/2) + 2* dShell[subCyl2,'xDim']*pi*dShell[subCyl2,'yDim']/2 
 
 #next turbo, a hemisphere
 #is pi*r^2 + pi(r^2+h^2) 
@@ -179,7 +179,7 @@ dShell$volume <- dShell$xDim * dShell$yDim * dShell$zDim
 #cylinder1 (margi) = pi r2 h  
 dShell[subCyl1,'volume'] <- pi * (dShell[subCyl1, 'xDim']/2 * dShell[subCyl1, 'yDim']/2) * dShell[subCyl1, 'zDim']
 #cylinder2 (liloa) = pi r2 h
-dShell[subCyl2,'volume'] <- pi * (dShell[subCyl2, 'yDim']/2)^2 * dShell[subCyl2, 'zDim']
+dShell[subCyl2,'volume'] <- pi * (dShell[subCyl2, 'yDim']/2)^2 * dShell[subCyl2, 'xDim']
 #dome (turbo) = 1/6 pi h * (3r^2-h^2)
 dShell[subHemi,'volume'] <- 1/6 * pi * dShell[subHemi,'zDim'] * ((3 * (dShell[subHemi,'xDim']/2 * dShell[subHemi,'yDim']/2)) + dShell[subHemi,'zDim']^2) 
 #2dome = dome1 full volume = 1/6 pi h * (3r^2-h^2) 
@@ -200,7 +200,7 @@ pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize
 
 #1.6 export this data as a csv
 write.csv(dShell, 'shellsData_Expt1.csv', row.names=TRUE)
-
+dev.off()
 
 
 #2.1 
