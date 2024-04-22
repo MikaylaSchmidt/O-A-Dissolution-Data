@@ -49,22 +49,22 @@ dShell$cSize <- (dShell$xDim * dShell$yDim * dShell$zDim) ^ (1/3)
 dShell$shape <- 'cylinder1'
 dShell[(dShell$taxon == 'Liloa'),'shape'] <-'cylinder2'
 dShell[(dShell$taxon == 'Calcite'),'shape'] <- 'cube'
-dShell[(dShell$taxon == 'Tridacna'),'shape'] <- 'cube'
+dShell[(dShell$taxon == 'Aragonite'),'shape'] <- 'cube'
 
 #turbo is dome + circle aka hemisphere
 dShell[(dShell$taxon == 'Turbo'), 'shape'] <- 'hemisphere'
 
 #pingui and abra technically two domes
 dShell[(dShell$taxon == 'Pinguitellina'), 'shape'] <- '2dome'
-dShell[(dShell$taxon == 'Abranda'), 'shape'] <- '2dome'
+dShell[(dShell$taxon == 'Alaona'), 'shape'] <- '2dome'
 #while scaph is two cones
-dShell[(dShell$taxon == 'Scaphopod'), 'shape'] <- '2cone'
+dShell[(dShell$taxon == 'Fustiaria'), 'shape'] <- '2cone'
 
 #halimeda different shape entirely... diamond/rhombus
 dShell[(dShell$taxon =='Halimeda'), 'shape'] <- 'rhombus'
 
 #finally, nat and eth are spherical
-dShell[(dShell$taxon == 'Natica'), 'shape'] <-'sphere'
+dShell[(dShell$taxon == 'Notocochlis'), 'shape'] <-'sphere'
 dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
 
 

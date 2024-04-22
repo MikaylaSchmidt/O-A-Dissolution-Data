@@ -49,10 +49,10 @@ dShell[(dShell$taxon == 'Calcite'),'shape'] <- 'cube'
 
 #pingui and abra technically two domes
 dShell[(dShell$taxon == 'Pinguitellina'), 'shape'] <- '2dome'
-dShell[(dShell$taxon == 'Abranda'), 'shape'] <- '2dome'
+dShell[(dShell$taxon == 'Alaona'), 'shape'] <- '2dome'
 
 #finally, nat and eth are spherical
-dShell[(dShell$taxon == 'Natica'), 'shape'] <-'sphere'
+dShell[(dShell$taxon == 'Notocochlis'), 'shape'] <-'sphere'
 dShell[(dShell$taxon == 'Ethalia'), 'shape'] <-'sphere'
 
 
@@ -105,4 +105,5 @@ pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize
 
 #1.6 export this data as a csv
 write.csv(dShell, 'shellsData_Expt2.csv', row.names=TRUE)
+dev.off()
 
