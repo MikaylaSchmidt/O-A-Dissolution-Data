@@ -30,7 +30,7 @@ shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,waxMass1,waxMass2,s
 2.1.1.5,T2.1,Abranda,E20,5,10/16/2023 14:00,10/18/2023 14:00,116.58,95.74,NA,NA,domeX2,18.81,12.06,2.01,0.22,No Wax,Aragonite,,0,Abranda 1
 2.1.2.1,T2.1,Abranda,E20,1,10/16/2023 14:00,10/18/2023 14:00,68.86,62.44,204.29,196.91,domeX2,16.13,10.79,2.44,0.15,Wax,Aragonite,,0,Abranda 2
 2.1.2.2,T2.1,Abranda,E20,8,10/16/2023 14:00,10/18/2023 14:00,86.45,82.82,268.06,263.16,domeX2,16.84,11.04,2.11,0.22,Wax,Aragonite,,0,Abranda 2
-2.1.2.3,T2.1,Abranda,E20,7,10/16/2023 14:00,10/18/2023 14:00,36.26,17.29,110.65,91.22,domeX2,12.52,7.88,1.51,0.15,Wax,Aragonite,*,0,Abranda 2
+2.1.2.3,T2.1,Abranda,E20,7,10/16/2023 14:00,10/18/2023 14:00,36.26,17.29,110.65,91.22,domeX2,12.52,7.88,1.51,0.15,Wax,Aragonite,*,1,Abranda 2
 2.1.2.4,T2.1,Abranda,E20,3,10/16/2023 14:00,10/18/2023 14:00,34.7,31.89,139.27,135.44,domeX2,13.63,8.44,1.56,0.09,Wax,Aragonite,,0,Abranda 2
 2.1.2.5,T2.1,Abranda,E20,9,10/16/2023 14:00,10/18/2023 14:00,200.26,191.96,591.18,580.97,domeX2,20.24,13.37,2.7,0.26,Wax,Aragonite,,0,Abranda 2
 2.1.3.1,T2.1,Pinguitellina,E20,9,10/16/2023 14:00,10/18/2023 14:00,167.92,155.28,NA,NA,domeX2,13.48,10.83,3.42,0.51,No Wax,Aragonite,,0,Pinguitellina 1
@@ -39,7 +39,7 @@ shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,waxMass1,waxMass2,s
 2.1.3.4,T2.1,Pinguitellina,E20,9,10/16/2023 14:00,10/18/2023 14:00,79.27,70.47,NA,NA,domeX2,10.41,8.54,2.14,0.27,No Wax,Aragonite,,0,Pinguitellina 1
 2.1.3.5,T2.1,Pinguitellina,E20,8,10/16/2023 14:00,10/18/2023 14:00,55.75,45.49,NA,NA,domeX2,10.24,8.23,2.06,0.26,No Wax,Aragonite,,0,Pinguitellina 1
 2.1.4.1,T2.1,Pinguitellina,E20,6,10/16/2023 14:00,10/18/2023 14:00,58.14,53.5,105.17,100.13,domeX2,9.75,8.06,2.11,0.31,Wax,Aragonite,,0,Pinguitellina 2
-2.1.4.2,T2.1,Pinguitellina,E20,5,10/16/2023 14:00,10/18/2023 14:00,65.01,35.25,139.92,109.78,domeX2,10.2,8.32,2.36,0.33,Wax,Aragonite,*,0,Pinguitellina 2
+2.1.4.2,T2.1,Pinguitellina,E20,5,10/16/2023 14:00,10/18/2023 14:00,65.01,35.25,139.92,109.78,domeX2,10.2,8.32,2.36,0.33,Wax,Aragonite,*,1,Pinguitellina 2
 2.1.4.3,T2.1,Pinguitellina,E20,4,10/16/2023 14:00,10/18/2023 14:00,107.41,102.75,214.85,209.51,domeX2,12.39,10.16,2.49,0.37,Wax,Aragonite,,0,Pinguitellina 2
 2.1.4.4,T2.1,Pinguitellina,E20,8,10/16/2023 14:00,10/18/2023 14:00,82,76.88,162.51,156.83,domeX2,10.47,8.59,2.27,0.36,Wax,Aragonite,,0,Pinguitellina 2
 2.1.4.5,T2.1,Pinguitellina,E20,7,10/16/2023 14:00,10/18/2023 14:00,69.36,66.24,120.61,116.77,domeX2,9.57,7.87,2.23,0.35,Wax,Aragonite,,0,Pinguitellina 2
