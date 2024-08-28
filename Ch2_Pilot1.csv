@@ -1,0 +1,41 @@
+﻿Name: Mikayla Schmidt    Email: mikaylakschmidt@gmail.com,,,,,,,,,,,,
+Column Name,Units,Description,,,,,,,,,,
+shellID,NA,"Unique identifier for each individual shell. The first number (1-5) refers to the experiment number, the second (1-3) to the replicate number, the third (1-11) refers to the taxon, and the fourth (1-5) to the set of samples it is grouped with.",,,,,,,,,,
+exptID,NA,Unique identifier for each experiment. The first letter refers to the type of study (P = pilot) while the number refers to the individual experiment.,,,,,,,,,,
+taxon,NA,Scientific name of taxon of individual shell.,,,,,,,,,,
+dateM1,yy/mm/dd then hour/minute,The date and time at which the experiment was started. Rounded to the nearest minute.,,,,,,,,,,
+dateM2,yy/mm/dd then hour/minute,The date and time at which the experiment was finished. Rounded to the nearest minute.,,,,,,,,,,
+mass1,milligrams,The mass of each individual measured before experimental treatment.,,,,,,,,,,
+mass2,milligrams,The mass of each individual measured after experimental treatment.,,,,,,,,,,
+shape,NA,Rough three-dimensional shape of the shell.,,,,,,,,,,
+xDim,millimeters,x axis dimension in mm,,,,,,,,,,
+yDim,millimeters,y axis dimension in mm,,,,,,,,,,
+zDim,millimeters,z axis dimension in mm,,,,,,,,,,
+thick,millimeters,"thickness of shell in mm, if thickness differs from z axis",,,,,,,,,,
+,,,,,,,,,,,,
+shellID,exptID,taxon,dateM1,dateM2,mass1,mass2,shape,xDim,yDim,zDim,thick,exclude
+,P1,Aragonite,,,3051.26,3025.5,,14.34,10.36,7.61,,0
+,P1,Aragonite,,,2926.24,2893.78,,12.06,8.35,10.47,,0
+,P1,Aragonite,,,2402.24,2381.17,,12.38,11.14,6.07,,0
+,P1,Aragonite,,,3678.78,3645.56,,13.26,11.78,8.69,,0
+,P1,Aragonite,,,3566.69,3539.63,,13.92,9.77,11.41,,0
+,P1,Calcite,,,334.04,325.39,,11.86,3.61,3.4,,0
+,P1,Calcite,,,239.94,235.71,,6.92,4.41,3.57,,0
+,P1,Calcite,,,192.07,189.36,,6.58,3.44,3.28,,0
+,P1,Calcite,,,649.76,633.63,,10.33,7.37,3.26,,0
+,P1,Calcite,,,562.21,553.37,,14.57,5.55,2.79,,0
+,P1,Scallop,,,868.72,814.26,,19.74,16.34,1.29,,0
+,P1,Scallop,,,770.32,748.98,,18.46,14.37,1.37,,0
+,P1,Scallop,,,1263.34,1227.31,,28.46,17.01,1.05,,0
+,P1,Scallop,,,772.61,652.03,,18.3,16.38,1.19,,1
+,P1,Scallop,,,577.46,553.47,,20.8,12.67,0.96,,0
+,P1,Oyster,,,1730.74,1654.7,,23.79,17.71,2.12,,0
+,P1,Oyster,,,2172.16,2150.58,,22.97,13.89,4.35,,0
+,P1,Oyster,,,2226.5,2194.61,,22.6,14.18,3.68,,0
+,P1,Oyster,,,2499.11,2455.09,,21.54,20.64,2.62,,0
+,P1,Oyster,,,1856.99,1829.77,,21.68,16.33,2.31,,0
+,P1,Anadara,,,400.86,379.6,,12.16,7.19,2.29,,0
+,P1,Anadara,,,357.87,346.73,,9.94,8.04,2.39,,0
+,P1,Anadara,,,473.1,461.25,,9.78,9.4,2.37,,0
+,P1,Anadara,,,470.53,454.82,,11.31,8.04,2.61,,0
+,P1,Anadara,,,609.21,592.55,,10.75,8.95,2.7,,0
