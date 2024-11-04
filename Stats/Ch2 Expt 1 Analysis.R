@@ -144,5 +144,63 @@ pData<-merge(pData,TAXA2,by='taxon')
   plot(fit)
   summary(fit)
  
-#6.0 Comparing stuff using t tests and all that
+#6.0 changing it into %/% standard
+  cTotal <- aggregate(pData$cMass, by = list(pData$exptID),FUN=sum)
+  colnames(cTotal)<-c('exptID','cTotal')
+  pData <- merge(pData, cTotal, by = 'exptID')
+  pData$percentTotal <- (pData$cMass)/(pData$cTotal) *100
+  
+  #now for surface area
+  SATotal <- aggregate(pData$finalSA, by = list(pData$exptID),FUN=sum)
+  colnames(SATotal)<-c('exptID','SATotal')
+  pData <- merge(pData, SATotal, by = 'exptID')
+  pData$percentSATotal <- (pData$finalSA)/(pData$SATotal) * 100
+  
+  #now standardized %/%
+  pData$perMassSA <- pData$percentTotal/pData$percentSATotal
+  plot(perMassSA~taxon, data= pData)
+  points(perMassSA~taxon, data = pData)  
+  
+  #plots: how much is actually good
+  plot(percentTotal~percentSATotal, data=pData, col= pData$tColor, pch=substring(pData$taxon, 0, 2))
+  try<-lm(percentTotal~percentSATotal, data=pData)
+  summary(try)
+  try2<-lm(cMass ~ finalSA, data=pData)
+  summary(try2)
+  
+  
+  
+#7.0 Comparing stuff - what if you look at just calcite specs? Does that improve things???????
+  #first, calcite subset
+  onlyCalc <- subset(pData, pData$polymorph == 'Calcite')
+  droplevels(as.factor(onlyCalc$polymorph))
+  droplevels(as.factor(onlyCalc$taxon))
+  onlyCalc$taxon <- factor(onlyCalc$taxon, levels = c('Calcite',  'Centrostephanus', 'Pecten', 'Saccostrea'))
+  
+  
+  #plot of massSA
+  boxplot(massSA ~ taxon, data = onlyCalc)
+  points(massSA~taxon, data=onlyCalc)
+  
+  #is mass/SA plot better fit by only calcite?
+  plot(cMass ~ finalSA, data=onlyCalc)
+  only1 <- lm(cMass ~ finalSA, data=onlyCalc)
+  summary(only1)
+  only2 <- lm(cMass ~ finalSA * mag, data=onlyCalc)
+  summary(only2)
+  
+  #plot of perMassSA
+  boxplot(perMassSA ~taxon, data = onlyCalc)
+  points(perMassSA~taxon, data=onlyCalc)
+       
+  #perMassSA plot fit with just calcite 
+  plot(percentTotal ~ percentSATotal, data=onlyCalc)
+  only3 <- lm(percentTotal ~ percentSATotal, data=onlyCalc)
+  summary(only3)
+  only4 <- lm(percentTotal ~ percentSATotal * mag, data=onlyCalc)
+  summary(only4)
+  
+#8.0 Comparing stuff using t tests
+#asking the question: are these populations significantly different than each other?
+  
   

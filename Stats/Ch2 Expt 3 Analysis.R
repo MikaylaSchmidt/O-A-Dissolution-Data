@@ -79,7 +79,7 @@ abline(fit, lwd=2)
 plot(fit)
 summary(fit)
 
-#BELOW NEEDS EDITING TO MAKE WORK
+#BELOW NEEDS EDITING TO MAKE WORK - give names
 #4.0 Power analysis to look at how many more specimens needed of each to tell difference
 #matrix of t tests
 TAXA3 <- data.frame(taxon=taxa)
@@ -123,3 +123,28 @@ dataTrial <- data.frame(comparison=tax, n=round(res))
 dataTrial <- dataTrial[(dataTrial$n > 0),]
 dataTrial
 
+##8.0 changing it into %/% standard
+cTotal <- aggregate(pData$cMass, by = list(pData$exptID),FUN=sum)
+colnames(cTotal)<-c('exptID','cTotal')
+pData <- merge(pData, cTotal, by = 'exptID')
+pData$percentTotal <- (pData$cMass)/(pData$cTotal) *100
+
+#now for surface area
+SATotal <- aggregate(pData$finalSA, by = list(pData$exptID),FUN=sum)
+colnames(SATotal)<-c('exptID','SATotal')
+pData <- merge(pData, SATotal, by = 'exptID')
+pData$percentSATotal <- (pData$finalSA)/(pData$SATotal) * 100
+
+#now standardized %/%
+pData$perMassSA <- pData$percentTotal/pData$percentSATotal
+plot(perMassSA~taxon, data= pData)
+points(perMassSA~taxon, data = pData)  
+
+#plot standard %/%
+plot(percentTotal~percentSATotal, data=pData, col= tColor, pch=tPoint)
+
+#quick lm testing
+try1 <- lm(cMass~finalSA, data=pData)
+summary(try1)
+try2 <- lm(percentTotal~percentSATotal, data=pData)
+summary(try2)

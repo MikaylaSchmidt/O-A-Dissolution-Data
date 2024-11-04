@@ -68,8 +68,7 @@ noDef <- subset(noDef, noDef$taxon != 'Calcite')
 noDef <- subset(noDef, noDef$taxon != 'Centrostephanus')
 droplevels(noDef$taxon)
 boxplot(pMass ~ seal + droplevels(noDef$taxon), data=noDef)
-########neeed to figure out issue with points
-points(pMass ~ seal + droplevels(noDef$taxon), data=noDef)
+stripchart(pMass ~ seal + droplevels(noDef$taxon), data = noDef, vertical=TRUE, add=TRUE, pch=1)
 
 
 #Dissolution by total mass (mg, cMass) relationship to surface area (mm^2)
@@ -95,15 +94,17 @@ noDef <- subset(pData, pData$taxon != 'Aragonite')
 noDef <- subset(noDef, noDef$taxon != 'Calcite')
 noDef <- subset(noDef, noDef$taxon != 'Centrostephanus')
 droplevels(noDef$taxon)
-boxplot(massSA ~ seal + droplevels(noDef$taxon), data=noDef)
+boxplot(massSA ~ seal + droplevels(noDef$taxon), data=noDef, ylab = 'Mass/Surface Area', xlab = 'Taxon and Sealer')
+stripchart(massSA ~ seal + droplevels(noDef$taxon), data = noDef, vertical=TRUE, add=TRUE, pch=1)
+
 
 #6.0 Now run loop that does t test of paired seal/unsealed for each taxon
 #both t test and power analysis in one loop to see if it is significant and if so, how much
 ttestResult <- data.frame(taxon = c('Anadara','Pecten','Saccostrea') , p.value = NA, a.p.value = NA, mean.diff=NA, conf.int1 = NA, conf.int2 = NA , n = NA, sd = NA, power = NA)
-#note: 18 ana no, 12 ana yes, 18 pect no, 10 pect yes, 16 sacc no, 14 sacc yes
-ttestResult$n <- 12
-ttestResult[2, 'n'] <- 10
-ttestResult[3, 'n'] <- 14
+#note: 18 ana no, 11 ana yes, 18 pect no, 9 pect yes, 12 sacc no, 12 sacc yes
+ttestResult$n <- 11
+ttestResult[2, 'n'] <- 9
+ttestResult[3, 'n'] <- 12
 
 p = 0
 for (T in ttestResult$taxon) {
@@ -124,7 +125,7 @@ for (T in ttestResult$taxon) {
   ttestResult[p, 'sd'] <-  round(expSDBig[2], digits=4)
 }
 ttestResult$a.p.value <- round(p.adjust(ttestResult$p.value), digits=4)
-
+print(ttestResult)
 
 #7.0 Second loop that looks at the power of each of those t tests
 #and how many samples would be needed to get power of > 0.8
@@ -143,10 +144,77 @@ for (T in ttestResult2$taxon) {
   ttestResult2[p, 'power'] <-  round(power.temp$power, digits=2)
   ttestResult2[p, 'n'] <-  power.temp$n
 }
+ttestResult2
 
 
+#8.0 changing it into %/% standard
+cTotal <- aggregate(pData$cMass, by = list(pData$exptID),FUN=sum)
+colnames(cTotal)<-c('exptID','cTotal')
+pData <- merge(pData, cTotal, by = 'exptID')
+pData$percentTotal <- (pData$cMass)/(pData$cTotal) *100
 
-#8.0 Do you want to then convert this into the %/% standardized version to do the same test?
+#now for surface area
+SATotal <- aggregate(pData$finalSA, by = list(pData$exptID),FUN=sum)
+colnames(SATotal)<-c('exptID','SATotal')
+pData <- merge(pData, SATotal, by = 'exptID')
+pData$percentSATotal <- (pData$finalSA)/(pData$SATotal) * 100
+
+#now standardized %/%
+pData$perMassSA <- pData$percentTotal/pData$percentSATotal
+plot(perMassSA~taxon, data= pData)
+points(perMassSA~taxon, data = pData)  
+
+#now just the sealer, % standardized 
+pData$seal <- factor(pData$seal)
+noDef <- subset(pData, pData$taxon != 'Aragonite')
+noDef <- subset(noDef, noDef$taxon != 'Calcite')
+noDef <- subset(noDef, noDef$taxon != 'Centrostephanus')
+droplevels(noDef$taxon)
+boxplot(perMassSA ~ seal + droplevels(noDef$taxon), data=noDef, ylab = 'Mass/Surface Area (Standardized)', xlab = 'Taxon')
+stripchart(perMassSA ~ seal + droplevels(noDef$taxon), data = noDef, vertical=TRUE, add=TRUE, pch=1)
 
 
+#t-test stuff with % standardized
+ttestResult <- data.frame(taxon = c('Anadara','Pecten','Saccostrea') , p.value = NA, a.p.value = NA, mean.diff=NA, conf.int1 = NA, conf.int2 = NA , n = NA, sd = NA, power = NA)
+ttestResult$n <- 11
+ttestResult[2, 'n'] <- 9
+ttestResult[3, 'n'] <- 12
+
+p = 0
+for (T in ttestResult$taxon) {
+  temp <- noDef[(noDef$taxon == T),]
+  ttest.temp <- t.test(perMassSA ~ seal, data=temp)
+  expMeanTemp <- aggregate(temp$perMassSA, by=list(temp$seal),FUN=mean, na.action=na.omit)
+  expSDTemp <- aggregate(temp$perMassSA, by=list(temp$seal),FUN=sd)
+  expSDBig <- pmax.int(expSDTemp$x)
+  p <- p + 1
+  power.temp <- power.t.test(n=ttestResult[p, 'n'] ,delta=(expMeanTemp[1,'x']-expMeanTemp[2,'x']),sd=expSDBig[2], sig.level=0.05,power=NULL, type = c('two.sample'))
+  mean.diff <- abs(expMeanTemp[1,'x']-expMeanTemp[2,'x'])
+  ttestResult[p, 'mean.diff'] <- round(mean.diff, digits=3)
+  ttestResult[p, 'conf.int1'] <- round(ttest.temp$conf.int[1], digits=3)
+  ttestResult[p, 'conf.int2'] <- round(ttest.temp$conf.int[2], digits=3)
+  ttestResult[p, 'p.value'] <- round(ttest.temp$p.value, digits=3)
+  ttestResult[p, 'a.p.value'] <- round(p.adjust(ttest.temp$p.value), digits=3)
+  ttestResult[p, 'power'] <-  round(power.temp$power, digits=2)
+  ttestResult[p, 'sd'] <-  round(expSDBig[2], digits=4)
+}
+ttestResult$a.p.value <- round(p.adjust(ttestResult$p.value), digits=4)
+ttestResult
+
+#now how many with % standardized
+ttestResult2 <- data.frame(taxon = c('Anadara','Pecten','Saccostrea') , p.value = NA, n = NA, power = 0.8)
+p = 0
+for (T in ttestResult2$taxon) {
+  temp <- noDef[(noDef$taxon == T),]
+  expMeanTemp <- aggregate(temp$perMassSA, by=list(temp$seal),FUN=mean, na.action=na.omit)
+  expSDTemp <- aggregate(temp$perMassSA, by=list(temp$seal),FUN=sd)
+  expSDBig <- pmax.int(expSDTemp$x)
+  p <- p + 1
+  power.temp <- power.t.test(n=NULL ,delta=(expMeanTemp[1,'x']-expMeanTemp[2,'x']),sd=expSDBig[2], sig.level=0.05,power=0.8, type = c('two.sample'))
+  mean.diff <- abs(expMeanTemp[1,'x']-expMeanTemp[2,'x'])
+  ttestResult2[p, 'p.value'] <- 0.05
+  ttestResult2[p, 'power'] <-  round(power.temp$power, digits=2)
+  ttestResult2[p, 'n'] <-  power.temp$n
+}
+ttestResult2
 
