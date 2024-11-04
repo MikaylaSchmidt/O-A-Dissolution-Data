@@ -77,9 +77,22 @@ waxData <- subset(Expt123, exptNo=='Expt2')
 #newSub4 <- subset(Expt123, exptNo=='Expt1' & taxon=='Notocochlis')
 #waxData <- rbind(waxData, newSub4)
 
-waxData$waxYN <- factor(waxData$waxYN)
+waxData$waxYN <- factor(waxData$waxYN, levels = c('Wax','No Wax','Calcite'))
 waxData$taxon <- c(droplevels(waxData$taxon))
+waxData$taxon <- factor(waxData$taxon, levels = c('Ethalia','Notocochlis', 'Alaona', 'Pinguitellina', 'Calcite'))
+
+waxData$massSA <- waxData$cMass/waxData$finalSA
 str(waxData)
+#ggplot for this has to go here before breaking things into subsets 
+library(ggplot2)
+library(ggthemes)
+ggplot(waxData, aes(taxon, massSA),) +
+  geom_boxplot(aes(fill = factor(waxYN))) +
+  theme_clean() + labs(x = 'Taxon') + 
+  labs(y = 'Mass Lost/Surface Area')
+
+
+#then the levels for t test by hand 
 levels(waxData$taxon) <- c(levels(waxData$taxon), 'Abranda2', 'Pingui2', 'Eth2', 'Nat2')
 subAb <-  which(waxData$taxon == 'Alaona' & waxData$waxYN == 'Wax')
 waxData[subAb,'taxon'] <- 'Abranda2'
@@ -89,26 +102,27 @@ subEth <-  which(waxData$taxon == 'Ethalia' & waxData$waxYN == 'Wax')
 waxData[subEth,'taxon'] <- 'Eth2'
 subNat <-  which(waxData$taxon == 'Notocochlis' & waxData$waxYN == 'Wax')
 waxData[subNat,'taxon'] <- 'Nat2'
+subCal <- which(waxData$taxon =='Calcite')
+waxData[subCal,'waxYN'] <- 'Calcite'
 
 waxData$taxon <- factor(waxData$taxon, levels=c('Ethalia', 'Eth2', 'Notocochlis', 'Nat2', 'Alaona', 'Abranda2', 'Pinguitellina', 'Pingui2', 'Calcite'))
 plot(pMass~taxon, data=waxData)
 plot(percentTotal~taxon, data=waxData)
-waxData$massSA <- waxData$cMass/waxData$finalSA
 plot(massSA~taxon, data=waxData, ylab='Mass Lost/Surface Area (mg/mm\u00b2)' , xlab ='', xaxt ='n')
+points(massSA~taxon, data=waxData)
 axis(side=1, at= c(waxData$taxon), labels = waxData$waxYN, tick = TRUE)
-mtext('Ethalia', side=1, line=2.5, at=1.5)
-mtext('Notocochlis', side=1, line=2.5, at=3.5)
-mtext('Alaona', side=1, line=2.5, at=5.5)
-mtext('Pinguitellina', side=1, line=2.5, at = 7.5)
-mtext('Calcite', side=1, line=2.5, at =9)
+mtext(~italic('Ethalia'), side=1, line=2.5, at=1.5)
+mtext(~italic('Notocochlis'), side=1, line=2.5, at=3.5)
+mtext(~italic('Alaona'), side=1, line=2.5, at=5.5)
+mtext(~italic('Pingui'), side=1, line=2.7, at = 7.5)
 mtext('Taxon', side =1, line =4.0, at =5)
-points(massSA ~ taxon, data=waxData[!is.na(waxData$massSA),])
 #abline(h=mean(waxData$massSA))
 #kruskal.test(massSA~taxon, data=waxData)
 #median(waxData$massSA)
 
 subAb2 <- subset(waxData, waxData$taxon== 'Alaona'| waxData$taxon == 'Abranda2')
 subAb2$taxon <- c(droplevels(subAb2$taxon))
+shapiro.test(subAb2$massSA)
 expSDTemp <- aggregate(subAb2$massSA, by=list(subAb2$waxYN),FUN=sd)
 #str(subAb2)
 #t.test(pMass ~ taxon, data=subAb2)
@@ -117,20 +131,33 @@ abTTest <- t.test(massSA ~ taxon, data=subAb2)
 
 subPin2 <- subset(waxData, waxData$taxon== 'Pinguitellina'| waxData$taxon == 'Pingui2')
 subPin2$taxon <- c(droplevels(subPin2$taxon))
+shapiro.test(subPin2$massSA)
+subPinY <- subset(waxData, waxData$taxon == 'Pingui2')
+shapiro.test(subPinY$massSA)
+subPinN <- subset(waxData,waxData$taxon== 'Pinguitellina')
+shapiro.test(subPinN$massSA)
+expSDTemp <- aggregate(subPin2$massSA, by=list(subPin2$waxYN),FUN=sd)
 #t.test(percentTotal ~ taxon, data=subPin2)
 #wilcox.test(percentTotal ~ taxon, data=subPin2, conf.int=TRUE)
 pinTTest <- t.test(massSA ~ taxon, data=subPin2)
 
 subEth2 <- subset(waxData, waxData$taxon== 'Ethalia'| waxData$taxon == 'Eth2')
 subEth2$taxon <- c(droplevels(subEth2$taxon))
+shapiro.test(subEth2$massSA)
 #t.test(percentTotal~taxon, data=subEth2)
 #wilcox.test(percentTotal ~ taxon, data=subEth2, conf.int=TRUE)
 ethTTest <- t.test(massSA ~ taxon, data=subEth2)
 
 subNat2 <- subset(waxData, waxData$taxon== 'Notocochlis'| waxData$taxon == 'Nat2')
 subNat2$taxon <- c(droplevels(subNat2$taxon))
+shapiro.test(subNat2$massSA)
+subNatY <- subset(waxData, waxData$taxon == 'Nat2')
+shapiro.test(subNatY$massSA)
+subNatN <- subset(waxData,waxData$taxon== 'Notocochlis')
+shapiro.test(subNatN$massSA)
+#& waxData$massSA < 0.10
 #t.test(pMass~taxon, data=subNat2)
-#wilcox.test(massSA ~ taxon, data=subNat2, conf.int=TRUE)
+wilcox.test(massSA ~ taxon, data=subNat2, conf.int=TRUE)
 natTTest <- t.test(massSA ~ taxon, data=subNat2)
 
 
@@ -152,6 +179,7 @@ expMedianAb <- aggregate(subAb2$massSA, by=list(subAb2$taxon),FUN=median, na.act
 expSDAb <- aggregate(subAb2$massSA, by=list(subAb2$taxon),FUN=sd)
 power.t.test(n=14,delta=(expMeanAb[1,'x']-expMeanAb[2,'x']),sd=expSDAb[2,'x'], sig.level=0.05,power=NULL, type = c('two.sample'))
 power.t.test(n=14,delta=(expMeanAb[1,'x']-expMeanAb[2,'x']),sd=expSDAb[2,'x'], sig.level=0.154,power=NULL, type = c('two.sample'))
+power.t.test(n=NULL,delta=(expMeanAb[1,'x']-expMeanAb[2,'x']),sd=expSDAb[2,'x'], sig.level=0.05,power=0.80, type = c('two.sample'))
 
 #and pingui
 expMeanPin <- aggregate(subPin2$massSA, by=list(subPin2$taxon),FUN=mean, na.action=na.omit)
@@ -159,6 +187,7 @@ expMedianPin <- aggregate(subPin2$massSA, by=list(subPin2$taxon),FUN=median, na.
 expSDPin <- aggregate(subPin2$massSA, by=list(subPin2$taxon),FUN=sd)
 power.t.test(n=14,delta=(expMeanPin[1,'x']-expMeanPin[2,'x']),sd=expSDPin[2,'x'], sig.level=0.05,power=NULL, type = c('two.sample'))
 power.t.test(n=14,delta=(expMeanPin[1,'x']-expMeanPin[2,'x']),sd=expSDPin[2,'x'], sig.level=1.0,power=NULL, type = c('two.sample'))
+power.t.test(n=NULL,delta=(expMeanPin[1,'x']-expMeanPin[2,'x']),sd=expSDPin[2,'x'], sig.level=0.05,power=0.80, type = c('two.sample'))
 
 
 #then ethalia
@@ -167,11 +196,19 @@ expMedianEth <- aggregate(subEth2$massSA, by=list(subEth2$taxon),FUN=median, na.
 expSDEth <- aggregate(subEth2$massSA, by=list(subEth2$taxon),FUN=sd)
 power.t.test(n=15,delta=(expMeanEth[1,'x']-expMeanEth[2,'x']),sd=expSDEth[2,'x'], sig.level=0.05,power=NULL, type = c('two.sample'))
 power.t.test(n=15,delta=(expMeanEth[1,'x']-expMeanEth[2,'x']),sd=expSDEth[2,'x'], sig.level=1.00,power=NULL, type = c('two.sample'))
+power.t.test(n=NULL,delta=(expMeanEth[1,'x']-expMeanEth[2,'x']),sd=expSDEth[2,'x'], sig.level=0.05,power=0.80, type = c('two.sample'))
+
 
 #finally Natica
 expMeanNat <- aggregate(subNat2$massSA, by=list(subNat2$taxon),FUN=mean, na.action=na.omit)
 expMedianNat <- aggregate(subNat2$massSA, by=list(subNat2$taxon),FUN=median, na.action=na.omit)
 expSDNat <- aggregate(subNat2$massSA, by=list(subNat2$taxon),FUN=sd)
 power.t.test(n=15,delta=(expMeanNat[1,'x']-expMeanNat[2,'x']),sd=expSDNat[2,'x'], sig.level=0.05,power=NULL, type = c('two.sample'))
+power.t.test(n=NULL,delta=(expMeanNat[1,'x']-expMeanNat[2,'x']),sd=expSDNat[2,'x'], sig.level=0.05,power=0.80, type = c('two.sample'))
 expMeanNat[1,'x']/expMeanNat[2,'x']
+expMedianNat[1,'x']/expMedianNat[2,'x']
 
+subNatNo <- subset(waxData, waxData$taxon== 'Notocochlis'| waxData$taxon == 'Nat2')
+subNatNo$taxon <- c(droplevels(subNatNo$taxon))
+subNatNo  <- subset(subNatNo, subNatNo$massSA < 0.10)
+t.test(massSA ~ taxon, data=subNatNo)

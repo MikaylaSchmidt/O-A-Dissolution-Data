@@ -28,7 +28,7 @@ taxa <- sort(unique(pData$taxon))
 tFont <- rep(3,length(taxa))
 tFont[which(taxa == 'Abranda')] <- 1
 tAbrev <- substring(taxa,0,5)
-TAXA2 <- data.frame(taxon=taxa, tFont = tFont, tPoint=substring(taxa,0,1), tAbrev = taxaAbrev, tColor=rainbow(length(taxa)), tLine = 1:length(taxa))
+TAXA2 <- data.frame(taxon=taxa, tFont = tFont, tPoint=substring(taxa,0,1), taxaAbrev = tAbrev, tColor=rainbow(length(taxa)), tLine = 1:length(taxa))
 pData<-merge(pData,TAXA2,by='taxon')
 
 
@@ -102,7 +102,7 @@ for (T in TAXA3$taxon) {
   ttestResult[p, 'p.value'] <- round(ttest.temp$p.value, digits=3)
   ttestResult[p, 'a.p.value'] <- round(p.adjust(ttest.temp$p.value), digits=3)
   ttestResult[p, 'power'] <-  round(power.temp$power, digits=2)
-  ttestResult[p, 'sd'] <-  round(expSDBig[2], digits=2)
+  ttestResult[p, 'sd'] <-  round(expSDBig[2], digits=4)
 }
 
 ttestResult$a.p.value <- round(p.adjust(ttestResult$p.value), digits=4)
