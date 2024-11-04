@@ -1,68 +1,164 @@
-﻿Name: Mikayla Schmidt    Email: mikaylakschmidt@gmail.com,,,,,,,,,,,,,,,,,,,
-Column Name,Units,Description,,,,,,,,,,,,,,,,,
-shellID,NA,"Unique identifier for each individual shell. The first number (1-5) refers to the experiment number, the second (1-3) to the replicate number, the third (1-11) refers to the taxon, and the fourth (1-6) to the set of samples it is grouped with.",,,,,,,,,,,,,,,,,
-exptID,NA,Unique identifier for each experiment. The first letter refers to the type of study while the number refers to the individual experiment.,,,,,,,,,,,,,,,,,
-taxon,NA,Scientific name of taxon of individual shell.,,,,,,,,,,,,,,,,,
-source,NA,The bag from which each individual shell was sourced.,,,,,,,,,,,,,,,,,
-pocket,NA,The pocket in which each shell was randomly placed. Varies from 1-11 to 1-5 based on the number of shells sampled.,,,,,,,,,,,,,,,,,
-dateM1,yy/mm/dd then hour/minute,The date and time at which the experiment was started. Rounded to the nearest minute.,,,,,,,,,,,,,,,,,
-dateM2,yy/mm/dd then hour/minute,The date and time at which the experiment was finished. Rounded to the nearest minute.,,,,,,,,,,,,,,,,,
-mass1,milligrams,The mass of each individual measured before experimental treatment.,,,,,,,,,,,,,,,,,
-mass2,milligrams,The mass of each individual measured after experimental treatment.,,,,,,,,,,,,,,,,,
-shape,NA,Rough three-dimensional shape of the shell.,,,,,,,,,,,,,,,,,
-xDim,millimeters,x axis dimension in mm,,,,,,,,,,,,,,,,,
-yDim,millimeters,y axis dimension in mm,,,,,,,,,,,,,,,,,
-zDim,millimeters,z axis dimension in mm,,,,,,,,,,,,,,,,,
-calcSA1,millimeters squared,surface area as calculated in imageJ from image 1 of specimen,,,,,,,,,,,,,,,,,
-calcSA2,millimeters squared,surface area as calculated in imageJ from image 2 of specimen,,,,,,,,,,,,,,,,,
-polymorph,NA,type of calcium carbonate (Calcite or Aragonite),,,,,,,,,,,,,,,,,
-mag,%,magnesium content percentage based on XRD findings,,,,,,,,,,,,,,,,,
-notes,NA,notes on damaged/lost shells for exclusion,,,,,,,,,,,,,,,,,
-exclude,NA,"column to indicate exclusion of shells for reasons denoted in 'notes' column. 0 = include, 1=exclude. ",,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,
-shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,shape,xDim,yDim,zDim,calcSA1,calcSA2,polymorph,mag,notes ,exclude,
-3.1.1.1,3.1,Aragonite,,,,,1921.08,1905.18,,12.42,7.89,7.58,,,,,,0,
-3.1.1.2,3.1,Aragonite,,,,,1156.67,1142.48,,10.6,6.41,6.4,,,,,,0,
-3.1.1.3,3.1,Aragonite,,,,,2027.77,2010.06,,14.84,9.32,6.29,,,,,,0,
-3.1.1.4,3.1,Aragonite,,,,,1925.35,1908.96,,11.67,5.33,11.4,,,,,,0,
-3.1.1.5,3.1,Aragonite,,,,,1010.59,1002.46,,7.92,6.64,5.97,,,,,,0,
-3.1.1.6,3.1,Aragonite,,,,,2001.54,1981.28,,7.34,6.49,13.51,,,,,,0,
-3.1.2.1,3.1,Calcite,,,,,209.76,205.13,,5.85,4.33,3.18,,,,,,0,
-3.1.2.2,3.1,Calcite,,,,,385.67,380.4,,9.27,6.81,2.46,,,,,,0,
-3.1.2.3,3.1,Calcite,,,,,1385.84,1376.64,,9.89,8.64,7.15,,,,,,0,
-3.1.2.4,3.1,Calcite,,,,,487.77,482.15,,8.97,8.77,2.19,,,,,,0,
-3.1.2.5,3.1,Calcite,,,,,1646.28,1635.55,,9.35,8.29,7.95,,,,,,0,
-3.1.2.6,3.1,Calcite,,,,,186.6,180.95,,5.94,5.7,2.33,,,,,,0,
-3.1.3.1,3.1,Pecten,,,,,619.57,591.47,,18.93,11.94,1.42,,,,,,0,
-3.1.3.2,3.1,Pecten,,,,,568.63,542.33,,16.02,12.72,1.18,,,,,,0,
-3.1.3.3,3.1,Pecten,,,,,1136.11,1112.28,,20.55,19.88,1.15,,,,,,0,
-3.1.3.4,3.1,Pecten,,,,,1147.33,1122.85,,21.04,20.52,1.24,,,,,,0,
-3.1.3.5,3.1,Pecten,,,,,992.92,972.3,,21.11,19.51,1.31,,,,,,0,
-3.1.3.6,3.1,Pecten,,,,,1138.7,1111.5,,20.53,10.92,2.23,,,,,,0,
-3.1.4.1,3.1,Saccostrea,,,,,698,680.3,,14.26,12.08,2.53,,,,,,0,
-3.1.4.2,3.1,Saccostrea,,,,,639.31,625.92,,22.18,10.91,1.65,,,,,,0,
-3.1.4.3,3.1,Saccostrea,,,,,1064.5,1047.32,,18.29,12.03,2.2,,,,,,0,
-3.1.4.4,3.1,Saccostrea,,,,,562.23,551.9,,14.22,11.09,2.12,,,,,,0,
-3.1.4.5,3.1,Saccostrea,,,,,489.79,487,,12.85,11.92,1.9,,,,,need to check,1,*
-3.1.4.6,3.1,Saccostrea,,,,,921.38,892.43,,16.61,10.55,2.39,,,,,broken??,1,
-3.1.5.1,3.1,Anadara,,,,,668.28,661.3,,12.08,10.15,2.19,,,,,,0,
-3.1.5.2,3.1,Anadara,,,,,704.29,692.37,,12.27,8.71,3.08,,,,,,0,
-3.1.5.3,3.1,Anadara,,,,,530.91,520.3,,14.3,10.17,1.39,,,,,,0,
-3.1.5.4,3.1,Anadara,,,,,602.92,591.89,,13.98,9.43,2.17,,,,,,0,
-3.1.5.5,3.1,Anadara,,,,,532.21,525.39,,11.38,10.16,2.19,,,,,,0,
-3.1.5.6,3.1,Anadara,,,,,1193.69,1181.86,,12.6,12.77,2.73,,,,,,0,
-3.1.6.1,3.1,Centrostephanus,,,,,167.09,148.55,,63.95,2.21,2.27,,,,,,0,
-3.1.6.2,3.1,Centrostephanus,,,,,215.69,201.69,,45.24,2.96,3,,,,,,0,
-3.1.6.3,3.1,Centrostephanus,,,,,235.79,221.97,,46.44,3.1,2.74,,,,,,0,
-3.1.6.4,3.1,Centrostephanus,,,,,239.85,0,,74.53,3.06,3.01,,,,,broken,1,
-3.1.6.5,3.1,Centrostephanus,,,,,213.99,0,,48.59,2.83,2.93,,,,,broken,1,
-3.1.6.6,3.1,Centrostephanus,,,,,240.07,227.4,,68.05,2.53,2.46,,,,,,0,
-3.1.7.1,3.1,Marginopora,,,,,216.58,202.99,,13.08,13.51,1.22,,,,,,0,
-3.1.7.2,3.1,Marginopora,,,,,84.62,78.04,,9.8,10.31,0.93,,,,,,0,
-3.1.7.3,3.1,Marginopora,,,,,132.08,126.63,,10.16,9.93,1.16,,,,,,0,
-3.1.7.4,3.1,Marginopora,,,,,49,44.93,,8.47,8.37,0.77,,,,,,0,
-3.1.7.5,3.1,Marginopora,,,,,91.71,84.23,,10.04,10.49,0.95,,,,,,0,
-3.1.7.6,3.1,Marginopora,,,,,61.62,53.92,,9.17,9.4,0.72,,,,,check weight,1,*
-3.1.8.1,3.1,Coral,,,,,104.08,99.06,,6.31,3.3,3.44,,,,,,0,
-3.1.8.2,3.1,Coral,,,,,96.18,92.25,,7.28,2.94,3.03,,,,,,0,
-3.1.8.3,3.1,Coral,,,,,83.46,80.65,,6.89,3.22,3.09,,,,,,0,
+﻿Name: Mikayla Schmidt    Email: mikaylakschmidt@gmail.com,,,,,,,,,,,,,,,,,,
+Column Name,Units,Description,,,,,,,,,,,,,,,,
+shellID,NA,"Unique identifier for each individual shell. The first number (1-5) refers to the experiment number, the second (1-3) to the replicate number, the third (1-11) refers to the taxon, and the fourth (1-6) to the set of samples it is grouped with.",,,,,,,,,,,,,,,,
+exptID,NA,Unique identifier for each experiment. The first letter refers to the type of study while the number refers to the individual experiment.,,,,,,,,,,,,,,,,
+taxon,NA,Scientific name of taxon of individual shell.,,,,,,,,,,,,,,,,
+source,NA,The bag from which each individual shell was sourced.,,,,,,,,,,,,,,,,
+pocket,NA,The pocket in which each shell was randomly placed. Varies from 1-11 to 1-5 based on the number of shells sampled.,,,,,,,,,,,,,,,,
+dateM1,yy/mm/dd then hour/minute,The date and time at which the experiment was started. Rounded to the nearest minute.,,,,,,,,,,,,,,,,
+dateM2,yy/mm/dd then hour/minute,The date and time at which the experiment was finished. Rounded to the nearest minute.,,,,,,,,,,,,,,,,
+mass1,milligrams,The mass of each individual measured before experimental treatment.,,,,,,,,,,,,,,,,
+mass2,milligrams,The mass of each individual measured after experimental treatment.,,,,,,,,,,,,,,,,
+shape,NA,Rough three-dimensional shape of the shell.,,,,,,,,,,,,,,,,
+xDim,millimeters,x axis dimension in mm,,,,,,,,,,,,,,,,
+yDim,millimeters,y axis dimension in mm,,,,,,,,,,,,,,,,
+zDim,millimeters,z axis dimension in mm,,,,,,,,,,,,,,,,
+calcSA1,millimeters squared,surface area as calculated in imageJ from image 1 of specimen,,,,,,,,,,,,,,,,
+calcSA2,millimeters squared,surface area as calculated in imageJ from image 2 of specimen,,,,,,,,,,,,,,,,
+polymorph,NA,type of calcium carbonate (Calcite or Aragonite),,,,,,,,,,,,,,,,
+mag,%,magnesium content percentage based on XRD findings,,,,,,,,,,,,,,,,
+notes,NA,notes on damaged/lost shells for exclusion,,,,,,,,,,,,,,,,
+exclude,NA,"column to indicate exclusion of shells for reasons denoted in 'notes' column. 0 = include, 1=exclude. ",,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+shellID,exptID,taxon,source,pocket,dateM1,dateM2,mass1,mass2,shape,xDim,yDim,zDim,calcX1,calcX2,polymorph,mag,notes ,exclude
+3.1.1.1,3.1,Aragonite,,,,,1921.08,1905.18,,12.42,7.89,7.58,NA,NA,Aragonite,NA,,0
+3.1.1.2,3.1,Aragonite,,,,,1156.67,1142.48,,10.6,6.41,6.4,NA,NA,Aragonite,NA,,0
+3.1.1.3,3.1,Aragonite,,,,,2027.77,2010.06,,14.84,9.32,6.29,NA,NA,Aragonite,NA,,0
+3.1.1.4,3.1,Aragonite,,,,,1925.35,1908.96,,11.67,5.33,11.4,NA,NA,Aragonite,NA,,0
+3.1.1.5,3.1,Aragonite,,,,,1010.59,1002.46,,7.92,6.64,5.97,NA,NA,Aragonite,NA,,0
+3.1.1.6,3.1,Aragonite,,,,,2001.54,1981.28,,7.34,6.49,13.51,NA,NA,Aragonite,NA,,0
+3.1.2.1,3.1,Calcite,,,,,209.76,205.13,,5.85,4.17,3.18,NA,NA,Calcite,0.01,,0
+3.1.2.2,3.1,Calcite,,,,,385.67,380.4,,9.27,6.81,2.46,NA,NA,Calcite,0.01,,0
+3.1.2.3,3.1,Calcite,,,,,1385.84,1376.64,,9.89,8.64,7.15,NA,NA,Calcite,0.01,,0
+3.1.2.4,3.1,Calcite,,,,,487.77,482.15,,8.97,8.77,2.19,NA,NA,Calcite,0.01,,0
+3.1.2.5,3.1,Calcite,,,,,1646.28,1635.55,,9.35,8.29,7.95,NA,NA,Calcite,0.01,,0
+3.1.2.6,3.1,Calcite,,,,,186.6,180.74,,5.63,5.78,2.33,NA,NA,Calcite,0.01,"remeasured, broken",1
+3.1.3.1,3.1,Pecten,,,,,619.57,591.47,,18.93,11.94,1.42,21.041,22.01,Calcite,0.01,,0
+3.1.3.2,3.1,Pecten,,,,,568.63,542.33,,16.02,12.72,1.18,16.672,18.589,Calcite,0.01,actively flaking,1
+3.1.3.3,3.1,Pecten,,,,,1136.11,1112.28,,20.55,19.88,1.15,23.133,24.542,Calcite,0.01,,0
+3.1.3.4,3.1,Pecten,,,,,1147.33,1122.85,,21.04,20.52,1.24,25.033,26.161,Calcite,0.01,,0
+3.1.3.5,3.1,Pecten,,,,,992.92,972.3,,21.11,19.51,1.31,24.579,23.784,Calcite,0.01,,0
+3.1.3.6,3.1,Pecten,,,,,1138.7,1111.5,,20.53,10.92,2.23,24.157,24.08,Calcite,0.01,,0
+3.1.4.1,3.1,Saccostrea,,,,,698,680.3,,14.26,12.08,2.53,NA,NA,Calcite,0,,0
+3.1.4.2,3.1,Saccostrea,,,,,639.31,625.92,,22.18,10.91,1.65,NA,NA,Calcite,0,,0
+3.1.4.3,3.1,Saccostrea,,,,,1064.5,1047.32,,18.29,12.03,2.2,NA,NA,Calcite,0,,0
+3.1.4.4,3.1,Saccostrea,,,,,562.23,551.9,,14.22,11.09,2.12,NA,NA,Calcite,0,,0
+3.1.4.5,3.1,Saccostrea,,,,,489.79,487,,12.85,11.92,1.9,NA,NA,Calcite,0,need to check *,1
+3.1.4.6,3.1,Saccostrea,,,,,921.38,892.43,,16.61,10.55,2.39,NA,NA,Calcite,0,*,1
+3.1.5.1,3.1,Anadara,,,,,668.28,661.3,,12.08,10.15,2.19,13.496,12.645,Mixed,NA,calcx is x,0
+3.1.5.2,3.1,Anadara,,,,,704.29,692.37,,12.27,8.71,3.08,12.536,15.549,Mixed,NA,calcx is x,0
+3.1.5.3,3.1,Anadara,,,,,530.91,520.3,,14.3,10.17,1.39,17.481,17.418,Mixed,NA,calcx is x,0
+3.1.5.4,3.1,Anadara,,,,,602.92,591.89,,9.43,13.98,2.17,11.962,12.485,Mixed,NA,"calcx is y, swapped",0
+3.1.5.5,3.1,Anadara,,,,,532.21,525.39,,11.38,10.16,2.19,12.47,11.918,Mixed,NA,calcx is x,0
+3.1.5.6,3.1,Anadara,,,,,1193.69,1181.86,,12.6,12.77,2.73,17.577,14.202,Mixed,NA,calcx is x,0
+3.1.6.1,3.1,Centrostephanus,,,,,167.09,148.55,,63.95,2.21,2.27,NA,NA,Calcite,0.08,broken,1
+3.1.6.2,3.1,Centrostephanus,,,,,215.69,201.69,,45.24,2.96,3,NA,NA,Calcite,0.08,,0
+3.1.6.3,3.1,Centrostephanus,,,,,235.79,221.97,,46.44,3.1,2.74,NA,NA,Calcite,0.08,,0
+3.1.6.4,3.1,Centrostephanus,,,,,239.85,0,,74.53,3.06,3.01,NA,NA,Calcite,0.08,broken,1
+3.1.6.5,3.1,Centrostephanus,,,,,213.99,0,,48.59,2.83,2.93,NA,NA,Calcite,0.08,broken,1
+3.1.6.6,3.1,Centrostephanus,,,,,240.07,225.87,,68.05,2.53,2.46,NA,NA,Calcite,0.08,,0
+3.1.7.1,3.1,Marginopora,,,,,216.58,202.99,,13.08,13.51,1.22,NA,NA,Calcite,0.15,,0
+3.1.7.2,3.1,Marginopora,,,,,84.62,78.04,,9.8,10.31,0.93,NA,NA,Calcite,0.15,,0
+3.1.7.3,3.1,Marginopora,,,,,132.08,126.63,,10.16,9.93,1.16,NA,NA,Calcite,0.15,,0
+3.1.7.4,3.1,Marginopora,,,,,49,44.93,,8.47,8.37,0.77,NA,NA,Calcite,0.15,,0
+3.1.7.5,3.1,Marginopora,,,,,91.71,84.23,,10.04,10.49,0.95,NA,NA,Calcite,0.15,,0
+3.1.7.6,3.1,Marginopora,,,,,61.62,53.92,,9.17,9.4,0.72,NA,NA,Calcite,0.15,check weight,1
+3.1.8.1,3.1,Coral,,,,,104.08,99.06,,6.31,3.3,3.44,NA,NA,Aragonite,NA,,0
+3.1.8.2,3.1,Coral,,,,,96.18,92.25,,7.28,2.94,3.03,NA,NA,Aragonite,NA,,0
+3.1.8.3,3.1,Coral,,,,,83.46,80.5,,6.89,3.22,3.09,NA,NA,Aragonite,NA,,0
+3.2.1.1,3.2,Aragonite,,,,,1408.54,1379.91,,10.61,9.14,5.12,NA,NA,Aragonite,NA,,0
+3.2.1.2,3.2,Aragonite,,,,,1549.02,1517.37,,13.85,6.96,6.18,NA,NA,Aragonite,NA,,0
+3.2.1.3,3.2,Aragonite,,,,,2057.86,2030.23,,12.92,8.8,6.84,NA,NA,Aragonite,NA,,0
+3.2.1.4,3.2,Aragonite,,,,,803.08,788.16,,10.9,4.75,6.7,NA,NA,Aragonite,NA,,0
+3.2.1.5,3.2,Aragonite,,,,,2201.25,2180.32,,8.67,7.33,6.51,NA,NA,Aragonite,NA,,0
+3.2.1.6,3.2,Aragonite,,,,,1102.97,1086.74,,8.39,4.87,9.76,NA,NA,Aragonite,NA,,0
+3.2.2.1,3.2,Calcite,,,,,538.03,529.21,,8.51,7.23,3.45,NA,NA,Calcite,0.01,,0
+3.2.2.2,3.2,Calcite,,,,,408.2,402.36,,5.63,5.76,4.78,NA,NA,Calcite,0.01,,0
+3.2.2.3,3.2,Calcite,,,,,1124.71,1114.4,,9.03,8.05,6.2,NA,NA,Calcite,0.01,,0
+3.2.2.4,3.2,Calcite,,,,,179.05,173.56,,8.09,6.64,1.58,NA,NA,Calcite,0.01,,0
+3.2.2.5,3.2,Calcite,,,,,1148.83,1138.95,,8.61,7.62,6.62,NA,NA,Calcite,0.01,,0
+3.2.2.6,3.2,Calcite,,,,,1188.45,1175.7,,8.77,8.55,6.14,NA,NA,Calcite,0.01,,0
+3.2.3.1,3.2,Pecten,,,,,568.38,544.24,,10.33,18.81,1.35,12.289,12.692,Calcite,0.01,"calcx is y, swapped",0
+3.2.3.2,3.2,Pecten,,,,,464.2,454.03,,10.05,13.54,1.44,11.713,10.866,Calcite,0.01,calcx is y,0
+3.2.3.3,3.2,Pecten,,,,,713.84,683.41,,17.84,16.26,1.02,20.266,20.1,Calcite,0.01,,0
+3.2.3.4,3.2,Pecten,,,,,872.37,845.28,,14.21,22.23,1.15,16.854,16.573,Calcite,0.01,calcx is y,0
+3.2.3.5,3.2,Pecten,,,,,513.09,487.42,,19.99,10.81,1.26,22.863,22.354,Calcite,0.01,,0
+3.2.3.6,3.2,Pecten,,,,,1269.71,1216.01,,24.73,18.53,1.2,24.81,23.793,Calcite,0.01,,0
+3.2.4.1,3.2,Saccostrea,,,,,1021.15,950.07,,12.7,12.45,3.17,NA,NA,Calcite,0,large drop,1
+3.2.4.2,3.2,Saccostrea,,,,,407.06,394.46,,12.46,10.41,1.64,NA,NA,Calcite,0,"salt removed, reweighed",0
+3.2.4.3,3.2,Saccostrea,,,,,733.15,717.82,,13.81,10.58,2.79,NA,NA,Calcite,0,questionable,0
+3.2.4.4,3.2,Saccostrea,,,,,565.5,553.64,,11.85,10.7,2.9,NA,NA,Calcite,0,broken?,0
+3.2.4.5,3.2,Saccostrea,,,,,521.06,507.54,,11.68,9.91,2.79,NA,NA,Calcite,0,,0
+3.2.4.6,3.2,Saccostrea,,,,,589.98,573.47,,10.55,9.97,2.81,NA,NA,Calcite,0,,0
+3.2.5.1,3.2,Anadara,,,,,954.72,924.37,,11.5,17.14,2.18,13.225,14.26,Mixed,NA,"calcx is y, swapped",0
+3.2.5.2,3.2,Anadara,,,,,464.96,450.26,,10.48,8.58,1.96,12.188,12.298,Mixed,NA,calcx is x,0
+3.2.5.3,3.2,Anadara,,,,,571.96,554.35,,8.56,12.97,2,10.818,11.352,Mixed,NA,"calcx is y, swapped",0
+3.2.5.4,3.2,Anadara,,,,,385.69,375.72,,9.51,8.17,2.11,10.955,9.673,Mixed,NA,calcx is x,0
+3.2.5.5,3.2,Anadara,,,,,746.14,732.3,,9.3,12.8,2.49,11.948,11.22,Mixed,NA,"calcx is y, swapped",0
+3.2.5.6,3.2,Anadara,,,,,525.02,507.13,,14.29,8.7,1.99,16.94,17.509,Mixed,NA,calcx is x,0
+3.2.6.1,3.2,Centrostephanus,,,,,165.68,146.78,,63.8,2.2,2.22,NA,NA,Calcite,0.08,,0
+3.2.6.2,3.2,Centrostephanus,,,,,234.48,0,,47.12,2.92,2.79,NA,NA,Calcite,0.08,broken,1
+3.2.6.3,3.2,Centrostephanus,,,,,169.57,149.56,,64.58,2.01,2.1,NA,NA,Calcite,0.08,,0
+3.2.6.4,3.2,Centrostephanus,,,,,219.01,0,,71.13,2.91,2.78,NA,NA,Calcite,0.08,broken,1
+3.2.6.5,3.2,Centrostephanus,,,,,230.96,214.23,,58.5,3.03,3.11,NA,NA,Calcite,0.08,,0
+3.2.6.6,3.2,Centrostephanus,,,,,293.56,262.17,,69.3,3.12,3.02,NA,NA,Calcite,0.08,,0
+3.2.7.1,3.2,Marginopora,,,,,114.41,105.92,,11.3,11.21,0.84,NA,NA,Calcite,0.15,,0
+3.2.7.2,3.2,Marginopora,,,,,211.51,195.64,,13.42,13.47,1.23,NA,NA,Calcite,0.15,,0
+3.2.7.3,3.2,Marginopora,,,,,149.09,139.37,,11.13,11.1,1.25,NA,NA,Calcite,0.15,,0
+3.2.7.4,3.2,Marginopora,,,,,74.22,65.81,,9.72,9.53,0.89,NA,NA,Calcite,0.15,,0
+3.2.7.5,3.2,Marginopora,,,,,131.33,121.75,,10.85,10.73,1.35,NA,NA,Calcite,0.15,,0
+3.2.7.6,3.2,Marginopora,,,,,108.4,98.22,,11.03,10.71,0.96,NA,NA,Calcite,0.15,,0
+3.2.8.1,3.2,Coral,,,,,194.95,187.83,,10.87,3.14,3.11,NA,NA,Aragonite,NA,,0
+3.2.8.2,3.2,Coral,,,,,79.85,74.92,,7.36,3.05,2.76,NA,NA,Aragonite,NA,,0
+3.2.8.3,3.2,Coral,,,,,130.09,125.63,,7.81,3.02,3.18,NA,NA,Aragonite,NA,,0
+3.2.8.4,3.2,Coral,,,,,107.21,101.88,,12.01,2.47,2.56,NA,NA,Aragonite,NA,,0
+3.2.8.5,3.2,Coral,,,,,145.45,140.23,,8.01,3.34,3.08,NA,NA,Aragonite,NA,,0
+3.2.8.6,3.2,Coral,,,,,149.32,144.28,,8.09,3.39,3.98,NA,NA,Aragonite,NA,,0
+3.3.1.1,3.3,Aragonite,,,,,2366.38,2336.75,,14.35,8.51,6.62,NA,NA,Aragonite,NA,,0
+3.3.1.2,3.3,Aragonite,,,,,1668.3,1661.72,,13.36,6.89,6.38,NA,NA,Aragonite,NA,something weird,1
+3.3.1.3,3.3,Aragonite,,,,,1373.47,1352.51,,11.72,7.14,6.06,NA,NA,Aragonite,NA,,0
+3.3.1.4,3.3,Aragonite,,,,,1964.97,1943.22,,11.99,9.56,6.56,NA,NA,Aragonite,NA,,0
+3.3.1.5,3.3,Aragonite,,,,,2334.55,2311.04,,9.85,6.51,12.14,NA,NA,Aragonite,NA,,0
+3.3.1.6,3.3,Aragonite,,,,,1879.19,1857.94,,16.38,6.47,7.04,NA,NA,Aragonite,NA,,0
+3.3.2.1,3.3,Calcite,,,,,871.05,860.72,,12.99,5.29,4.8,NA,NA,Calcite,0.01,,0
+3.3.2.2,3.3,Calcite,,,,,574.52,568.84,,7.65,6.43,4.84,NA,NA,Calcite,0.01,,0
+3.3.2.3,3.3,Calcite,,,,,1275.84,1266.23,,11.23,6.34,6.51,NA,NA,Calcite,0.01,,0
+3.3.2.4,3.3,Calcite,,,,,260.33,256.37,,6.95,5.52,2.72,NA,NA,Calcite,0.01,,0
+3.3.2.5,3.3,Calcite,,,,,585.71,579.19,,8.69,5.93,4.95,NA,NA,Calcite,0.01,,0
+3.3.2.6,3.3,Calcite,,,,,478.01,472.74,,7.17,5.92,4.72,NA,NA,Calcite,0.01,,0
+3.3.3.1,3.3,Pecten,,,,,1125.44,1095.97,,17.23,25.19,1.16,18.809,19.39,Calcite,0.01,"calcx is y, swapped",0
+3.3.3.2,3.3,Pecten,,,,,1775.42,1733.11,,28.65,20.3,1.26,32.635,33.474,Calcite,0.01,,0
+3.3.3.3,3.3,Pecten,,,,,1681.09,1645.82,,26.83,17.95,1.3,33.836,29.526,Calcite,0.01,,0
+3.3.3.4,3.3,Pecten,,,,,1306.83,1267.04,,23.6,23.49,1.03,27.694,29.847,Calcite,0.01,,0
+3.3.3.5,3.3,Pecten,,,,,1618.84,1580.39,,26.79,21.65,1.2,32.909,30.775,Calcite,0.01,,0
+3.3.3.6,3.3,Pecten,,,,,947.69,925.35,,14.33,24.11,1.12,19.038,16.737,Calcite,0.01,"calcx is y, swapped",0
+3.3.4.1,3.3,Saccostrea,,,,,819.87,802.34,,20.69,9.82,1.52,NA,NA,Calcite,0,maybe broken,0
+3.3.4.2,3.3,Saccostrea,,,,,548.94,535.55,,12.91,10.65,1.95,NA,NA,Calcite,0,,0
+3.3.4.3,3.3,Saccostrea,,,,,427.86,414.85,,12.28,11.04,1.95,NA,NA,Calcite,0,"somehow gained mass (salt, washed and fixed)",0
+3.3.4.4,3.3,Saccostrea,,,,,558.28,544.02,,11.98,12.31,2.3,NA,NA,Calcite,0,,0
+3.3.4.5,3.3,Saccostrea,,,,,450.37,437.38,,13.09,9.87,1.96,NA,NA,Calcite,0,,0
+3.3.4.6,3.3,Saccostrea,,,,,379.23,371.47,,11.92,8.51,1.61,NA,NA,Calcite,0,,0
+3.3.5.1,3.3,Anadara,,,,,900.6,851.78,,17.59,9.86,2.31,NA,NA,Mixed,NA,maybe broken,1
+3.3.5.2,3.3,Anadara,,,,,1032.5,1014.04,,13.53,11.9,2.23,16.585,16.008,Mixed,NA,calcx is x,0
+3.3.5.3,3.3,Anadara,,,,,544.09,531.31,,11.26,11.13,1.63,12.949,12.357,Mixed,NA,calcx is x,0
+3.3.5.4,3.3,Anadara,,,,,1085.22,1072.79,,11.14,9.59,4.34,13.982,13.446,Mixed,NA,calcx is x,0
+3.3.5.5,3.3,Anadara,,,,,473.95,465.87,,7.79,8.94,2.36,9.298,9.297,Mixed,NA,"calcx is y, swapped",0
+3.3.5.6,3.3,Anadara,,,,,1081.66,1069.25,,13.4,11.17,2.92,16.513,16.158,Mixed,NA,calcx is x,0
+3.3.6.1,3.3,Centrostephanus,,,,,242.69,0,,40.55,2.92,3.03,NA,NA,Calcite,0.08,broken,1
+3.3.6.2,3.3,Centrostephanus,,,,,233.33,211.01,,65.77,2.67,2.66,NA,NA,Calcite,0.08,,0
+3.3.6.3,3.3,Centrostephanus,,,,,206.7,188.19,,65.24,2.25,2.26,NA,NA,Calcite,0.08,broken,1
+3.3.6.4,3.3,Centrostephanus,,,,,185.75,165.54,,67.36,2.24,2.17,NA,NA,Calcite,0.08,broken,1
+3.3.6.5,3.3,Centrostephanus,,,,,233.01,216.18,,63.71,2.79,2.94,NA,NA,Calcite,0.08,,0
+3.3.6.6,3.3,Centrostephanus,,,,,175.28,161.09,,63.17,2.22,2.32,NA,NA,Calcite,0.08,,0
+3.3.7.1,3.3,Marginopora,,,,,114.19,105.72,,11.68,11.53,0.84,NA,NA,Calcite,0.15,,0
+3.3.7.2,3.3,Marginopora,,,,,99.4,91.54,,10.14,10.27,1.04,NA,NA,Calcite,0.15,,0
+3.3.7.3,3.3,Marginopora,,,,,121.24,111.11,,10.56,10.52,1.05,NA,NA,Calcite,0.15,,0
+3.3.7.4,3.3,Marginopora,,,,,97.83,92.14,,8.85,8.86,1.21,NA,NA,Calcite,0.15,,0
+3.3.7.5,3.3,Marginopora,,,,,96.53,90.84,,10.04,9.53,1.06,NA,NA,Calcite,0.15,,0
+3.3.7.6,3.3,Marginopora,,,,,61.43,55.49,,9.22,8.95,0.88,NA,NA,Calcite,0.15,,0
+3.3.8.1,3.3,Coral,,,,,107.11,103.05,,8,2.99,3.13,NA,NA,Aragonite,NA,,0
+3.3.8.2,3.3,Coral,,,,,100.52,94.88,,8.97,2.43,2.53,NA,NA,Aragonite,NA,broken,1
+3.3.8.3,3.3,Coral,,,,,139.68,133.55,,11.8,2.66,2.87,NA,NA,Aragonite,NA,,0
+3.3.8.4,3.3,Coral,,,,,70.2,67.47,,6.19,2.82,3.38,NA,NA,Aragonite,NA,,0
+3.3.8.5,3.3,Coral,,,,,141.55,136.36,,10.76,3.02,2.82,NA,NA,Aragonite,NA,,0
+3.3.8.6,3.3,Coral,,,,,134.36,128.84,,8.16,2.93,3.12,NA,NA,Aragonite,NA,,0
