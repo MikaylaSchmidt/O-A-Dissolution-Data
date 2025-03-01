@@ -19,7 +19,8 @@
 #read in data first
 #1.0 Script for creation of figures for ch 1
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+dShell <- read.csv('./Ch1Clean_MasterSet.csv')
+#dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
 
 #setup in order to prep data & exclude Trial 2 experimental data (wax makes things bad)
 #pData <- subset(dShell, dShell$exptID == 'T1.1'|dShell$exptID == 'T1.2'|dShell$exptID == 'T1.3'|dShell$exptID == 'T4.1'|dShell$exptID == 'T4.2'|dShell$exptID == 'T4.3')
@@ -38,8 +39,8 @@ pData$taxon <- factor(pData$taxon, levels = c('Ethalia','Notocochlis', 'Liloa', 
 taxa <- sort(unique(pData$taxon))
 
 #natica fix
-subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
-pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
+#subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
+#pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
 
 
 #additional variables transformed
@@ -111,10 +112,10 @@ cbind(TAXA2,relSlope)
 legend('bottomright', legend= paste(TAXA2$taxon,' rel slope=',relSlope), col=TAXA2$tColor, lty=TAXA2$tLine, text.font = TAXA2$tFont, pch= TAXA2$tPoint, text.col= TAXA2$tColor)
 
 #alternative porosity plot
-pData$poros <- pData$mass1/(pData$volume * 2.83)
-subCal <- which(pData$polymorph =='Calcite')
-pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
-pData$poros <- 1- pData$poros
+#pData$poros <- pData$mass1/(pData$volume * 2.83)
+#subCal <- which(pData$polymorph =='Calcite')
+#pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
+#pData$poros <- 1- pData$poros
 plot(poros~taxon, data=pData, ylab = 'Porosity (Actual Mass/Expected Mass)', xlab ='', xaxt='n' )
 points(poros~taxon, data = pData)
 abline(h=0)
@@ -239,7 +240,8 @@ axis(1, at=1:length(taxa), labels=taxa, font=3, cex=0.5, las=2)
 #2.0 now a comparison of the two, dependent on measurement
 #setup script
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+#dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+dShell <- read.csv('./Ch1Clean_MasterSet.csv')
 
 pData <- dShell
 TAXA <- unique(pData$taxon)
@@ -252,15 +254,15 @@ TAXA2 <- data.frame(taxon=taxa, tFont = tFont, tPoint=substring(taxa,0,1), tAbre
 pData<-merge(pData,TAXA2,by='taxon')
 
 #natica fix
-subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
-pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
+#subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
+#pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
 
-pData$rootMass <- (pData$mass1)^ (1/3)
-pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))
-pData$deviation <- pData$deviation/pData$cSize
-pData$poros <- pData$mass1/(pData$volume * 2.83)
-subCal <- which(pData$polymorph =='Calcite')
-pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
+#pData$rootMass <- (pData$mass1)^ (1/3)
+#pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))
+#pData$deviation <- pData$deviation/pData$cSize
+#pData$poros <- pData$mass1/(pData$volume * 2.83)
+#subCal <- which(pData$polymorph =='Calcite')
+#pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
 
 
 
@@ -274,7 +276,7 @@ Expt123[(Expt123$exptID == 'T4.3'),'exptNo'] <-'Expt3'
 Expt123[(Expt123$exptID == 'T2.1'),'exptNo'] <-'Expt2'
 Expt123[(Expt123$exptID == 'T2.2'),'exptNo'] <-'Expt2'
 Expt123[(Expt123$exptID == 'T2.3'),'exptNo'] <-'Expt2'
-Expt123$massSA <- Expt123$cMass/Expt123$finalSA
+#Expt123$massSA <- Expt123$cMass/Expt123$finalSA
 
 factor(Expt123$exptNo)
 Expt123$exptNo <- as.factor(Expt123$exptNo)
@@ -288,19 +290,19 @@ str(Expt123)
   
 
 #total carbonate per replicate in mg
-cTotal <- aggregate(Expt123$cMass, by = list(Expt123$exptID),FUN=sum)
-colnames(cTotal)<-c('exptID','cTotal')
-Expt123 <- merge(Expt123, cTotal, by = 'exptID')
+#cTotal <- aggregate(Expt123$cMass, by = list(Expt123$exptID),FUN=sum)
+#colnames(cTotal)<-c('exptID','cTotal')
+#Expt123 <- merge(Expt123, cTotal, by = 'exptID')
 
 #3.2 for plotting
 #% calcium carbonate dissolved over total
-Expt123$percentTotal <- (Expt123$cMass)/(Expt123$cTotal) *100
+#Expt123$percentTotal <- (Expt123$cMass)/(Expt123$cTotal) *100
 
 #now for surface area
-SATotal <- aggregate(Expt123$finalSA, by = list(Expt123$exptID),FUN=sum)
-colnames(SATotal)<-c('exptID','SATotal')
-Expt123 <- merge(Expt123, SATotal, by = 'exptID')
-Expt123$percentSATotal <- (Expt123$finalSA)/(Expt123$SATotal) * 100
+#SATotal <- aggregate(Expt123$finalSA, by = list(Expt123$exptID),FUN=sum)
+#colnames(SATotal)<-c('exptID','SATotal')
+#Expt123 <- merge(Expt123, SATotal, by = 'exptID')
+#Expt123$percentSATotal <- (Expt123$finalSA)/(Expt123$SATotal) * 100
 
 
 #either % SA Total or final SA works - trends by taxon still the same
@@ -407,8 +409,8 @@ AICc(modelDef2)
 
 #first, no taxon version for model selection
 #create new data frame using only the relevant data aka relData
-relData <- Expt123[,c('percentTotal', 'percentSATotal', 'cSize', 'thick', 'poros', 'deviation', 'exptID','exptNo', 'taxon')]
-noTaxon <- relData[,c('percentTotal', 'percentSATotal', 'cSize', 'thick', 'poros', 'deviation', 'exptID' , 'exptNo')]
+relData <- Expt123[,c('percentTotal', 'percentSATotal', 'cSize', 'thick', 'poros', 'deviationStan', 'exptID','exptNo', 'taxon')]
+noTaxon <- relData[,c('percentTotal', 'percentSATotal', 'cSize', 'thick', 'poros', 'deviationStan', 'exptID' , 'exptNo')]
 
 #correlation check for variables
 corDataNum <- Expt123[,c('cMass', 'finalSA', 'cSize', 'thick', 'poros', 'deviation')]
@@ -424,7 +426,7 @@ options(na.action = 'na.fail')
 dredge(model1)
 summary(model1)
 AICc(model1)
-modelBest1 <- lm(percentTotal ~ percentSATotal + cSize, data= noTaxon)
+modelBest1 <- lm(percentTotal ~ percentSATotal + deviationStan, data= noTaxon)
 summary(modelBest1)
 AICc(modelBest1)
 
@@ -432,7 +434,7 @@ model0 <- lm(percentTotal ~., data= relData)
 summary(model0)
 AICc(model0)
 dredge(model0, evaluate = TRUE)
-modelBest0 <- lm(percentTotal ~ percentSATotal + thick + cSize + taxon, data= relData)
+modelBest0 <- lm(percentTotal ~ percentSATotal  + cSize + taxon, data= relData)
 dredge(modelBest0)
 summary(modelBest0) 
 AICc(modelBest0)

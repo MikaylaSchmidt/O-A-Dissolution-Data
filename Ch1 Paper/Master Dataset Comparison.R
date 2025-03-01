@@ -21,7 +21,8 @@
 
 #0.Open clean master dataset 
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+dShell <- read.csv('./Ch1Clean_MasterSet.csv')
+#dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
 
 pData <- dShell
 TAXA <- unique(pData$taxon)
@@ -37,12 +38,12 @@ pData<-merge(pData,TAXA2,by='taxon')
 pData$taxon <- factor(pData$taxon, levels = c('Ethalia','Notocochlis', 'Liloa', 'Turbo', 'Alaona', 'Pinguitellina', 'Fustiaria', 'Halimeda', 'Marginopora', 'Aragonite', 'Calcite'))
 
 #the natica fix + porosity  calc
-subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
-pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
-pData$poros <- pData$mass1/(pData$volume * 2.83)
-subCal <- which(pData$polymorph =='Calcite')
-pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
-pData$poros <- 1- pData$poros
+#subNatNew <- which(pData$taxon == 'Notocochlis' & pData$waxYN == 'No Wax')
+#pData[subNatNew,'finalSA']<- pData[subNatNew, 'finalSA'] * 1.5
+#pData$poros <- pData$mass1/(pData$volume * 2.83)
+#subCal <- which(pData$polymorph =='Calcite')
+#pData[subCal, 'poros'] <- pData[subCal, 'mass1'] / (pData[subCal, 'volume'] * 2.711)
+#pData$poros <- 1- pData$poros
 
 #1.1 Combining Expt 1 and Expt 2 without Expt 4
 #first, you need to subset it
@@ -71,25 +72,25 @@ pData$poros <- 1- pData$poros
   
 #2.1 Combining Expt 1 and Expt 3 without Expt 2, and then subsetting by experiment
   
-  Expt1_3 <- subset(pData, pData$exptID == 'T1.1'|pData$exptID == 'T1.2'|pData$exptID == 'T1.3'|pData$exptID == 'T4.1'|pData$exptID == 'T4.2'|pData$exptID == 'T4.3')
+  Expt1_3 <- subset(pData, pData$exptID == 'T1.1'|pData$exptID == 'T1.2'|pData$exptID == 'T1.3'|pData$exptID == 'T3.1'|pData$exptID == 'T3.2'|pData$exptID == 'T3.3')
   Expt1_3$exptNo <- 'Expt1'
-  Expt1_3[(Expt1_3$exptID == 'T4.1'),'exptNo'] <-'Expt3'
-  Expt1_3[(Expt1_3$exptID == 'T4.2'),'exptNo'] <-'Expt3'
-  Expt1_3[(Expt1_3$exptID == 'T4.3'),'exptNo'] <-'Expt3'
-  Expt1_3$massSA <- Expt1_3$cMass/Expt1_3$finalSA
+  Expt1_3[(Expt1_3$exptID == 'T3.1'),'exptNo'] <-'Expt3'
+  Expt1_3[(Expt1_3$exptID == 'T3.2'),'exptNo'] <-'Expt3'
+  Expt1_3[(Expt1_3$exptID == 'T3.3'),'exptNo'] <-'Expt3'
+  #Expt1_3$massSA <- Expt1_3$cMass/Expt1_3$finalSA
   
   #setup %total 
-  cTotal <- aggregate(Expt1_3$cMass, by = list(Expt1_3$exptID),FUN=sum)
-  colnames(cTotal)<-c('exptID','cTotal')
-  Expt1_3 <- merge(Expt1_3, cTotal, by = 'exptID')
-  Expt1_3$percentTotal <- (Expt1_3$cMass)/(Expt1_3$cTotal) *100
+  #cTotal <- aggregate(Expt1_3$cMass, by = list(Expt1_3$exptID),FUN=sum)
+  #colnames(cTotal)<-c('exptID','cTotal')
+  #Expt1_3 <- merge(Expt1_3, cTotal, by = 'exptID')
+  #Expt1_3$percentTotal <- (Expt1_3$cMass)/(Expt1_3$cTotal) *100
   
   
   #now for surface area
-  SATotal <- aggregate(Expt1_3$finalSA, by = list(Expt1_3$exptID),FUN=sum)
-  colnames(SATotal)<-c('exptID','SATotal')
-  Expt1_3 <- merge(Expt1_3, SATotal, by = 'exptID')
-  Expt1_3$percentSATotal <- (Expt1_3$finalSA)/(Expt1_3$SATotal) * 100
+  #SATotal <- aggregate(Expt1_3$finalSA, by = list(Expt1_3$exptID),FUN=sum)
+  #colnames(SATotal)<-c('exptID','SATotal')
+  #Expt1_3 <- merge(Expt1_3, SATotal, by = 'exptID')
+  #Expt1_3$percentSATotal <- (Expt1_3$finalSA)/(Expt1_3$SATotal) * 100
   
   
 #2.2 Setup and execution of comparison plots
@@ -112,6 +113,9 @@ pData$poros <- 1- pData$poros
     theme_clean() + labs(x = 'Taxon') +
     labs(y = 'Mass Lost/Surface Area (mg/mm\u00b2)') +
     scale_fill_discrete(name = 'pH by time', labels =c('5.1 for 48 hours','7.1 for 168 hours'))
+ 
+#print first graph for final
+  pdf('massSAbyexpt.pdf', width = 13, height=5)
   
   #quick color vector
   myCol <- ifelse(levels(Expt1_3$exptNo)=="Expt1" , rgb(0.1,0.1,0.7,0.5) , 
@@ -119,12 +123,12 @@ pData$poros <- 1- pData$poros
                             "grey90" ) )
   
 #the same plot but not using ggplot
-  boxplot(massSA ~ exptNo * taxon, data = Expt1_3, xaxt = 'n', xlab = "", ylab = '', yaxt = 'n', col= myCol)
-  points(massSA ~ exptNo * taxon, data = Expt1_3)
+  boxplot(massSA ~ exptNo * taxon, data = Expt1_3, xaxt = 'n', xlab = "", ylab = '', yaxt = 'n', col= myCol, xlim=c(1,22))
+  stripchart(massSA ~ factor(exptNo)*taxon, data=Expt1_3, vertical=TRUE, add=TRUE, pch=1)
   mtext('Mass Lost/Surface Area (mg/mm\U00b2)', side=2, line=3)
   #Expt1_3$exptTax <- Expt1_3$exptNo.Expt1_3$taxon
   axis(2, las=1)
-  mtext('Taxon', side = 1, line = 3)
+  mtext('Taxon', side = 1, line = 2)
   mtext(~italic('Ethalia'), side=1, line=0.5, at=1.5)
   mtext(~italic('Notocochlis'), side=1, line=0.5, at=3.5)
   mtext(~italic('Liloa'), side=1, line=0.5, at=5.5)
@@ -133,17 +137,20 @@ pData$poros <- 1- pData$poros
   mtext(~italic('Pinguitellina'), side=1, line=0.7, at=11.5)
   mtext(~italic('Fustiaria'), side=1, line=0.5, at=13.5)
   mtext(~italic('Halimeda'), side=1, line=0.5, at=15.5)
-  mtext(~italic('Marginopora'), side=1, line=0.7, at=17.6)
+  mtext(~italic('Marginopora'), side=1, line=0.7, at=17.5)
   mtext('Aragonite', side=1, line=0.5, at=19.5)
   mtext('Calcite', side=1, line=0.5, at=21.5)
   legend("topleft", legend = c("pH 5.1 for 48 hours","pH 7.1 for 168 hours") , 
          col = c(rgb(0.1,0.1,0.7,0.5) , rgb(0.8,0.1,0.3,0.6)), bty = "o", pch=20 , pt.cex = 3, cex = 1, horiz = FALSE, inset = c(0.03, 0.05))
 
-           
+dev.off()           
 #now do the same plot but for percentTotal/percentSATotal
+pdf('perMassSAbyexpt.pdf', width = 13, height=5)
   Expt1_3$perMassSA <- Expt1_3$percentTotal/Expt1_3$percentSATotal 
-    boxplot(perMassSA ~ exptNo * taxon, data = Expt1_3, xaxt = 'n', xlab = "", ylab = '', yaxt = 'n', col= myCol)
-    #points(massSA ~ exptNo * taxon, data= Expt1_3)
+  boxplot(perMassSA ~ (taxon * exptNo), data = Expt1_3, xlab = "", ylab = '', xaxt = 'n', yaxt="n", col= myCol, xlim=c(1,22))
+  stripchart(perMassSA ~ taxon * exptNo, data=Expt1_3, vertical=TRUE, add=TRUE, pch=1)
+  
+  #points(massSA ~ exptNo * taxon, data= Expt1_3)
     mtext('Standardized Mass Lost/Surface Area', side=2, line=3)
     axis(2, las=1)
     #axis(1, las=1)
@@ -162,7 +169,7 @@ pData$poros <- 1- pData$poros
     abline(h=1)
     legend("topleft", legend = c("pH 5.1 for 48 hours","pH 7.1 for 168 hours") , 
          col = c(rgb(0.1,0.1,0.7,0.5) , rgb(0.8,0.1,0.3,0.6)), bty = "o", pch=20 , pt.cex = 3, cex = 1, horiz = FALSE, inset = c(0.03, 0.05))
-  
+ dev.off() 
   
   
   #now if you wanted to do this in ggplot you could do it like this

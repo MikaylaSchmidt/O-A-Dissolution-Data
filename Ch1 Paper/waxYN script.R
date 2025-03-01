@@ -18,8 +18,9 @@
 
 #intro code from fig gen 2
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-#dShell <- read.csv('./shellsData_Expt2.csv')
-dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+dShell <- read.csv('./shellsData_Expt2.csv')
+#dShell <- read.csv('./Ch1Clean_MasterSet.csv')
+#dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
 
 pData <- dShell
 TAXA <- unique(pData$taxon)
@@ -108,14 +109,23 @@ waxData[subCal,'waxYN'] <- 'Calcite'
 waxData$taxon <- factor(waxData$taxon, levels=c('Ethalia', 'Eth2', 'Notocochlis', 'Nat2', 'Alaona', 'Abranda2', 'Pinguitellina', 'Pingui2', 'Calcite'))
 plot(pMass~taxon, data=waxData)
 plot(percentTotal~taxon, data=waxData)
-plot(massSA~taxon, data=waxData, ylab='Mass Lost/Surface Area (mg/mm\u00b2)' , xlab ='', xaxt ='n')
+
+
+#full plot for thesis
+pdf('waxYNplot.pdf', width = 9, height=5)
+
+
+myCol2 <- data.frame(myCol=c('#CC1A4D99', '#1A1AB380', '#CC1A4D99', '#1A1AB380', '#CC1A4D99', '#1A1AB380', '#CC1A4D99', '#1A1AB380', 'grey90'))
+plot(massSA~taxon, data=waxData, ylab='Mass Lost/Surface Area (mg/mm\u00b2)' , xlab ='', xaxt='n', col= myCol2$myCol)
 points(massSA~taxon, data=waxData)
-axis(side=1, at= c(waxData$taxon), labels = waxData$waxYN, tick = TRUE)
-mtext(~italic('Ethalia'), side=1, line=2.5, at=1.5)
-mtext(~italic('Notocochlis'), side=1, line=2.5, at=3.5)
-mtext(~italic('Alaona'), side=1, line=2.5, at=5.5)
-mtext(~italic('Pingui'), side=1, line=2.7, at = 7.5)
-mtext('Taxon', side =1, line =4.0, at =5)
+mtext(~italic('Ethalia'), side=1, line=1, at=1.5)
+mtext(~italic('Notocochlis'), side=1, line=1, at=3.5)
+mtext(~italic('Alaona'), side=1, line=1, at=5.5)
+mtext(~italic('Pinguitellina'), side=1, line=1.2, at = 7.5)
+mtext('Calcite', side=1, line=1, at=9 )
+mtext('Taxon', side =1, line =2.6, at =5)
+legend(x= 'topleft', legend = c('No Wax','Wax'), col= c('#CC1A4D99', '#1A1AB380'), cex=1.2, pch = 19)
+dev.off()
 #abline(h=mean(waxData$massSA))
 #kruskal.test(massSA~taxon, data=waxData)
 #median(waxData$massSA)

@@ -19,7 +19,9 @@
 #to make the process shorter.
 #intro code from fig gen 2
 setwd("C:/Users/micke/OneDrive/Desktop/Ch1 data")
-dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
+dShell <- read.csv('./shellsData_Expt2.csv')
+#dShell <- read.csv('./Ch1Clean_MasterSet.csv')
+#dShell <- read.csv('./shellsData_Ch1MasterSet.csv', skip=26)
 
 pData <- dShell
 TAXA <- unique(pData$taxon)
