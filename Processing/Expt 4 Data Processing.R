@@ -92,9 +92,11 @@ subDome <- which(dShell$shape == '2dome')
 dShell[subDome,'cSA1'] <- 2 * pi * ((dShell[subDome,'xDim']/2 * dShell[subDome,'yDim']/2) + dShell[subDome,'zDim']^2) 
 
 #cone for scaph
-# is 2 * pi*r(r+sqrt(h^2 +r^2)) 
+#only using the equation for the lateral portion of the cone, as the base contains another cone
+#is 2 * (pi * r * l) with l being slanted side of the cone
+# is 2 * pi*r*sqrt(h^2 +r^2)) 
 subCone <- which(dShell$shape == '2cone')
-dShell[subCone,'cSA1'] <- 2 * pi * dShell[subCone,'xDim']/2 *((dShell[subCone,'xDim']/2)+sqrt((dShell[subCone,'xDim']/2)^2+dShell[subCone,'zDim']^2))
+dShell[subCone,'cSA1'] <- 2 * pi * dShell[subCone,'xDim']/2 *(sqrt((dShell[subCone,'xDim']/2)^2+dShell[subCone,'zDim']^2))
 
 #then, rough surface area for rhomboid Halimeda
 #surface area is 2(xy/2) + 4(zc) where c = ((x/2)^2) + (y/2)^2)^1/2 
@@ -155,9 +157,8 @@ dShell[subSphere,'volume'] <- 4/3 * pi * (dShell[subSphere, 'xDim']/2 * dShell[s
 dShell$densityMV <- dShell$mass1 / dShell$volume
 
 #additional variables transformed
-pData$rootMass <- (pData$mass1)^ (1/3)
-pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
-
+dShell$rootMass <- (dShell$mass1)^ (1/3)
+dShell$deviation <- (abs(dShell$xDim - dShell$cSize) + abs(dShell$yDim - dShell$cSize) +  abs(dShell$zDim - dShell$cSize))/3
 
 
 #1.6 export this data as a csv

@@ -99,8 +99,8 @@ dShell$densityMV <- dShell$mass1 / dShell$volume
 #dShell[subWax,'volume'] <- NA
 #dShell[subWax,'densityMV'] <- NA
 #deviation from spherical and rootMass for an added bonus
-pData$rootMass <- (pData$mass1)^ (1/3)
-pData$deviation <- (abs(pData$xDim - pData$cSize) + abs(pData$yDim - pData$cSize) +  abs(pData$zDim - pData$cSize))/3
+dShell$rootMass <- (dShell$mass1)^ (1/3)
+dShell$deviation <- (abs(dShell$xDim - dShell$cSize) + abs(dShell$yDim - dShell$cSize) +  abs(dShell$zDim - dShell$cSize))/3
 
 
 #1.6 export this data as a csv

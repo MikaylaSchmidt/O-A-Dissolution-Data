@@ -52,9 +52,10 @@ dShell$cSize <- (dShell$xDim * dShell$yDim * dShell$zDim) ^ (1/3)
   dShell[subAna,'finalSA'] <- dShell[subAna,'calcX'] * dShell[subAna,'yDim'] + dShell[subAna,'xDim'] * dShell[subAna,'yDim'] + 2 * dShell[subAna,'yDim'] * dShell[subAna,'zDim'] + 2 * dShell[subAna,'calcX'] * dShell[subAna,'zDim']
   
   #And for 2cone...
-  #is pi*r(sqrt(h^2 +r^2)
+  #only using the equation for the lateral portion of the cone, as the base contains another cone
+  #is 2 * (pi * r * l) with l being slanted side of the cone
+  #aka 2 * pi*r(sqrt(h^2 +r^2)) 
   subCone <- which(dShell$taxon == 'Centrostephanus')
-  #dShell[subCone,'finalSA'] <- pi * dShell[subCone,'yDim']/2 *((dShell[subCone,'zDim']/2)+sqrt((dShell[subCone,'yDim']/2)^2+(dShell[subCone,'xDim'])^2))
   dShell[subCone,'finalSA'] <- 2 * pi *(dShell[subCone,'zDim']/2)*(sqrt((dShell[subCone,'zDim']/2)^2+dShell[subCone,'xDim']^2))
   
   #Finally, one for cylindrical specimens - marginopora and coral (species unknown)
